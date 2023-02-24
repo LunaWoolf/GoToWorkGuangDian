@@ -1,0 +1,22 @@
+﻿title: FirstDay_Morning
+tags:
+---
+(June 6th, A Regular Day At Work)
+Boss He: Morning.
+Boss He: You're 2 min late. It's 9:02 now.
+Boss He: Start working now. It's Monday; there's a lot to do (*sips tea with loud noise*)
+Li: Morning!
+Li: I’ve already started my tasks today. Happy Monday! 
+(Time To Work)
+Boss He: Okay, let’s repeat our mission one more time and get to work.
+Boss He: our mission is…
+Li: PROTECT THE PUBLIC!!!
+Boss He: Protect the public from…
+Li:  FROM DANGEROUS MESSAGE!!!
+Boss He: We are…
+Li: THE GUARDIAN OF PEOPLE’S MIND AND SPIRIT!!!
+Boss He: Okay. Go to work (*sips tea with loud noise*).
+(Time To Work, for real)
+<<StartWork GameManager>>
+===
+
