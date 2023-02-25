@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Yarn.Unity;
@@ -22,6 +23,13 @@ public class GameManager : MonoSingleton<GameManager>
         Home
     }
 
+    [Header("Word Day")]
+    public DateTime gameDate = new DateTime(2019, 6, 6, 0, 0, 0);
+    public int poemViewedToday = 0 ;
+    public int MaxPoemNeedToViewToday = 5;
+
+
+
     public void SetCurrentGameMode(GameMode mode)
     {  currentGameMode = mode;
 
@@ -30,17 +38,11 @@ public class GameManager : MonoSingleton<GameManager>
             case GameMode.Work:
                StartWork();
                break;
-
         }
-
     }
 
     public GameMode GetCurrentGameMode() { return currentGameMode; }
 
-    void Start()
-    {
-        
-    }
 
     [YarnCommand("StartWork")]
     public void TryStartWork()
@@ -57,9 +59,56 @@ public class GameManager : MonoSingleton<GameManager>
         PoemGenerator.instance.GeneratorPoem(5);
     }
 
+    void Start()
+    {
+        Debug.Log(gameDate.Month.ToString("D2") + gameDate.Day.ToString("D2"));
+   
+    }
+
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    
+
+    public void OnPoemPass()
+    {
+        TryGoToNextPoem();
+    }
+
+    public void OnPoemDeny()
+    {
+        TryGoToNextPoem();
+    }
+
+    void TryGoToNextPoem()
+    {
+        poemViewedToday++;
+        if (poemViewedToday < MaxPoemNeedToViewToday)
+        {
+            PoemGenerator.instance.NextPoem();
+        }
+        else
+        {
+            EndOfWorkDay();
+        }
+    }
+
+    void EndOfWorkDay()
+    {
+        PoemGenerator.instance.UnloadPoemPaper();
+        LoadEndOfWorkDayDialogue();
+        Debug.Log("End of day");
+    }
+
+    void LoadEndOfWorkDayDialogue()
+    {
+        string date = gameDate.Month.ToString("D2") + gameDate.Day.ToString("D2");
+      
+        LocalDialogueManager.instance.LoadDialogue("d" + date + "_EndWork");
+        //0606_EndWork
+
     }
 }

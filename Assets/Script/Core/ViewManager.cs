@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class ViewManager : MonoSingleton<ViewManager>
 {
@@ -24,6 +25,7 @@ public class ViewManager : MonoSingleton<ViewManager>
     [SerializeField] Animator PoemCanvasAnimator;
 
 
+
     public Image GetCharacterImage() { if (CharacterImage == null) CharacterImage = GameObject.Find("CharacterImage").GetComponent<Image>(); return CharacterImage; }
     
     public void SwitchDialogueCharacterArt(string c)
@@ -33,8 +35,6 @@ public class ViewManager : MonoSingleton<ViewManager>
         Debug.Log(name);
        
         name = name.Replace(" ", "");
-        //if (name.Contains(" "))
-        //name = c.Replace(" ", "");
 
         GameManager.Character character;
         if (System.Enum.TryParse<GameManager.Character>(name, out character))
@@ -56,21 +56,29 @@ public class ViewManager : MonoSingleton<ViewManager>
     void Start()
     {
 
-        if (PassButton != null) PassButton.onClick.AddListener(OnPassButtonClicked);
-        if (DenyButton != null) DenyButton.onClick.AddListener(OnDenyButtonClicked);
+        if (PassButton != null)
+        {
+            PassButton.onClick.AddListener(OnPassButtonClicked);
+            PassButton.onClick.AddListener(GameManager.instance.OnPoemPass);
+        }
+        if (DenyButton != null)
+        {
+            DenyButton.onClick.AddListener(OnDenyButtonClicked);
+            DenyButton.onClick.AddListener(GameManager.instance.OnPoemDeny);
+        } 
+        
         if (PoemCanvas != null) PoemCanvasAnimator = PoemCanvas.GetComponent<Animator>();
     }
 
-
     void OnPassButtonClicked()
     {
-        PoemGenerator.instance.NextPoem();
 
+        
     }
 
     void OnDenyButtonClicked()
     {
-        PoemGenerator.instance.NextPoem();
+        
     }
 
     public void UnloadAllView()
@@ -82,6 +90,7 @@ public class ViewManager : MonoSingleton<ViewManager>
     public void LoadWorkView()
     {
         WorkCanvas.SetActive(true);
+
     }
 
     public void LoadConversationView()

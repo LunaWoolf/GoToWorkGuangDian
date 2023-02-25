@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PoemPaperEnter
+  m_Name: PoemPaperExit
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -22,15 +22,6 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -1103.3
-        inSlope: 3115.652
-        outSlope: 3115.652
-        tangentMode: 0
-        weightedMode: 3
-        inWeight: 0.33333334
-        outWeight: 0.3506682
-      - serializedVersion: 3
-        time: 0.8333333
         value: 0
         inSlope: 159.52989
         outSlope: 159.52989
@@ -38,6 +29,15 @@ AnimationClip:
         weightedMode: 3
         inWeight: 0.43229848
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.8333333
+        value: -1180.7
+        inSlope: 3115.652
+        outSlope: 3115.652
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0.33333334
+        outWeight: 0.3506682
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -87,15 +87,6 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -1103.3
-        inSlope: 3115.652
-        outSlope: 3115.652
-        tangentMode: 0
-        weightedMode: 3
-        inWeight: 0.33333334
-        outWeight: 0.3506682
-      - serializedVersion: 3
-        time: 0.8333333
         value: 0
         inSlope: 159.52989
         outSlope: 159.52989
@@ -103,6 +94,15 @@ AnimationClip:
         weightedMode: 3
         inWeight: 0.43229848
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.8333333
+        value: -1180.7
+        inSlope: 3115.652
+        outSlope: 3115.652
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0.33333334
+        outWeight: 0.3506682
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4

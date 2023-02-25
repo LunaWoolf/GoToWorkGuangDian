@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Text.RegularExpressions;
 
 public class PoemGenerator : MonoSingleton<PoemGenerator>
@@ -10,7 +11,12 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     public TextAsset verbRef;
     public TextAsset adjRef;
     public TextAsset lineRef;
-    
+
+    public TextAsset nounRef_controversial;
+    public TextAsset verbRef_controversial;
+    public TextAsset adjRef_controversial;
+ 
+
 
     [Header("WordList")]
     List<string> nounsList = new List<string>();
@@ -30,8 +36,14 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     string[] adjs;
     string[] lines;
 
+    string[] nouns_controversial;
+    string[] verbs_controversial;
+    string[] adjs_controversial;
 
+    public PoemPaperController poemPaperController;
 
+    bool waitForNextPoem = false;
+    
 
     void Awake()
     {
@@ -42,6 +54,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     void Start()
     {
         if (PoemPaper != null) PoemPaperAnimator = PoemPaper.GetComponent<Animator>();
+        poemPaperController.OnPaperExitFinish.AddListener(TearPoem);
         //GeneratorPoem(5);
     }
 
@@ -53,7 +66,6 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
             TearPoem();
             GeneratorPoem(5);
         }
-
     }
 
     public void ParseWorkList()
@@ -66,8 +78,12 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
             adjs = adjRef.text.Split("\n");
         if (lineRef != null)
             lines = lineRef.text.Split("\n");
-
-
+        if (nounRef_controversial != null)
+            nouns_controversial = nounRef_controversial.text.Split("\n");
+        if (verbRef_controversial != null)
+            verbs_controversial = verbRef_controversial.text.Split("\n");
+        if (adjRef_controversial != null)
+            adjs_controversial = adjRef_controversial.text.Split("\n");
     }
 
     public void GeneratorPoem(int line)
@@ -179,12 +195,26 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         {
             Destroy(child.gameObject);
         }
+
+        if (waitForNextPoem)
+        {
+            GeneratorPoem(5);
+            LoadPoemPaper();
+            waitForNextPoem = false;
+        }
+
     }
 
     public void NextPoem()
     {
-        PoemPaperAnimator.SetTrigger("Exit");
-        TearPoem();
-        //PoemPaperAnimator.SetTrigger("Enter");
+        UnloadPoemPaper();
+        waitForNextPoem = true;
     }
+
+    public void UnloadPoemPaper() { PoemPaperAnimator.SetTrigger("Exit"); }
+   
+
+    public void LoadPoemPaper(){ PoemPaperAnimator.SetTrigger("Enter"); }
+
+
 }

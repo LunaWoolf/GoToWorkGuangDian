@@ -366,10 +366,13 @@ using Yarn.Unity;
         [SerializeField]
         internal GameObject continueButton = null;
 
-        /// <summary>
-        /// The amount of time to wait after any line
-        /// </summary>
         [SerializeField]
+        internal Button skilAllButton = null;
+
+    /// <summary>
+    /// The amount of time to wait after any line
+    /// </summary>
+    [SerializeField]
         [Min(0)]
         internal float holdTime = 1f;
 
@@ -415,7 +418,33 @@ using Yarn.Unity;
        
         }
 
-        private void Reset()
+        private void Start()
+        {
+#if UNITY_EDITOR
+        skilAllButton.gameObject.SetActive(true);
+        skilAllButton.onClick.AddListener(DebugSpeedRun);
+#endif
+
+    }
+
+    private bool debug = false;
+    private void DebugSpeedRun()
+    {
+        debug = !debug;
+        if (debug)
+        {
+            typewriterEffectSpeed = 10000f;
+            holdTime = .01f;
+            autoAdvance = true;
+        }
+        else
+        {
+            typewriterEffectSpeed = 200f;
+            autoAdvance = false;
+        }
+    }
+
+    private void Reset()
         {
             canvasGroup = GetComponentInParent<CanvasGroup>();
         }
