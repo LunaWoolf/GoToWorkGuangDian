@@ -444,6 +444,12 @@ using Yarn.Unity;
         }
     }
 
+    public void ResetDebug()
+    {
+        if (debug) DebugSpeedRun();
+    }
+
+
     private void Reset()
         {
             canvasGroup = GetComponentInParent<CanvasGroup>();
@@ -464,14 +470,32 @@ using Yarn.Unity;
             var interactable = canvasGroup.interactable;
             canvasGroup.interactable = false;
 
+            var optionView = FindObjectOfType<OptionView>();
             // If we're using a fade effect, run it, and wait for it to finish.
             if (useFadeEffect)
             {
-                yield return StartCoroutine(Effects.FadeAlpha(canvasGroup, 1, 0, fadeOutTime, currentStopToken));
+                if (true)
+                {
+                    yield return StartCoroutine(Effects.FadeAlpha(canvasGroup, 1, 0, fadeOutTime, currentStopToken));
+                }
+                else
+                {
+                    yield return StartCoroutine(Effects.FadeAlpha(canvasGroup, 1, 1, fadeOutTime, currentStopToken));
+                }
+               
                 currentStopToken.Complete();
+               
             }
 
+        if (true)
+        {
             canvasGroup.alpha = 0;
+        }
+        else
+        {
+            canvasGroup.alpha = 1;
+        }
+           
             canvasGroup.blocksRaycasts = false;
             // turning interaction back on, if it needs it
             canvasGroup.interactable = interactable;
@@ -536,8 +560,8 @@ using Yarn.Unity;
             StopAllCoroutines();
 
             //Charaacter Image Luna
-            if (dialogueLine.CharacterName != "")
-                ViewManager.instance.SwitchDialogueCharacterArt(dialogueLine.CharacterName);
+            
+            ViewManager.instance.SwitchDialogueCharacterArt(dialogueLine.CharacterName);
 
         // Begin running the line as a coroutine.
         StartCoroutine(RunLineInternal(dialogueLine, onDialogueLineFinished));
@@ -601,6 +625,7 @@ using Yarn.Unity;
                 if (useFadeEffect)
                 {
                     yield return StartCoroutine(Effects.FadeAlpha(canvasGroup, 0, 1, fadeInTime, currentStopToken));
+
                     if (currentStopToken.WasInterrupted)
                     {
                         // The fade effect was interrupted. Stop this entire

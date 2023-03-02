@@ -5,11 +5,14 @@ using UnityEngine.Events;
 
 //[System.Serializable]
 public class UnityAnimationEvent : UnityEvent<string> { };
-public class PoemPaperController : MonoBehaviour
+public class PoemPaperController : MonoSingleton<PoemPaperController>
 {
    
     [HideInInspector] public UnityAnimationEvent OnAnimationStart = new UnityAnimationEvent();
     [HideInInspector] public UnityAnimationEvent OnAnimationComplete = new UnityAnimationEvent();
+
+    [SerializeField] GameObject PassStamp;
+    [SerializeField] GameObject DenyStamp;
 
     public Animator PoemCanvasAnimator;
 
@@ -47,12 +50,24 @@ public class PoemPaperController : MonoBehaviour
         if (OnAnimationComplete != null)
             OnAnimationComplete.AddListener(SwitchOnAnimationEnd);
 
+        OnPaperExitFinish.AddListener(OnPoemPaperExitAnimationEnd);
+
     }
 
     public void SwitchOnAnimationStart(string name)
     {
         //Excute when Animation Clip Start, name is the name of the clip
+        switch (name)
+        {
+            case "PoemPaperEnter":
+                OnPoemPaperExitAnimationEnd();
+                //Debug.Log("EEEEEEE");
+                break;
+            case "PoemPaperExit":
+                break;
 
+        }
+        Debug.Log(name);
     }
 
     public void SwitchOnAnimationEnd(string name)
@@ -61,6 +76,7 @@ public class PoemPaperController : MonoBehaviour
         switch (name)
         {
             case "PoemPaperEnter":
+                OnPoemPaperExitAnimationEnd();
                 //Debug.Log("EEEEEEE");
                 break;
             case "PoemPaperExit":
@@ -88,6 +104,18 @@ public class PoemPaperController : MonoBehaviour
 
     public void OnPoemPaperExitAnimationEnd()
     {
-
+        DenyStamp.SetActive(false);
+        PassStamp.SetActive(false);
     }
+
+    public void OnPoemPass()
+    {
+        PassStamp.SetActive(true);
+    }
+
+    public void OnPoemDeny()
+    {
+        DenyStamp.SetActive(true);
+    }
+
 }

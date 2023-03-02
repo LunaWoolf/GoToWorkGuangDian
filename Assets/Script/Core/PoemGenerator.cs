@@ -16,7 +16,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     public TextAsset verbRef_controversial;
     public TextAsset adjRef_controversial;
  
-
+    
 
     [Header("WordList")]
     List<string> nounsList = new List<string>();
@@ -31,6 +31,12 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     [Header("Prefab Reference")]
     public GameObject PoemLine;
 
+    [Header("Generate Param")]
+    [Range(0, 100)]
+    public int ValidPrecentag = 70;
+    [Range(0, 100)]
+    public int ControversialPrecentage = 30;
+
     string[] nouns;
     string[] verbs;
     string[] adjs;
@@ -44,7 +50,6 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
     bool waitForNextPoem = false;
     
-
     void Awake()
     {
         ParseWorkList();
@@ -89,26 +94,29 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     public void GeneratorPoem(int line)
     {
         string[] poem = new string[line];
+        int rand = Random.Range(0, 100);
+        bool isValid = (rand < ValidPrecentag) ? true : false;
 
         for (int i = 0; i < line; i++)
         {
-            int rand = Random.Range(0, lines.Length);
-            string line_tem = lines[rand];
-            line_tem = ReplaceVerb(line_tem);
-            line_tem = ReplaceNoun(line_tem);
-            line_tem = ReplaceAdj(line_tem);
+            int randLine = Random.Range(0, lines.Length);
+            string line_tem = lines[randLine];
+
+         
+            line_tem = ReplaceVerb(line_tem, isValid);
+            line_tem = ReplaceNoun(line_tem, isValid);
+            line_tem = ReplaceAdj(line_tem,  isValid);
             poem[i] = line_tem;
             Debug.Log(line_tem);
 
             GameObject p = Instantiate(PoemLine, PoemParent.transform, false);
             p.GetComponent<PoemLine>().SetLine(line_tem);
 
-
         }
         
     }
 
-    public string ReplaceVerb(string line)
+    public string ReplaceVerb(string line, bool isvalid)
     {
         string[] list = Regex.Split(line," ");
         string result = "";
@@ -119,8 +127,65 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
                 string r = s;
                 if (s.Contains("<v>"))
                 {
-                    int rand = Random.Range(0, verbs.Length);
-                    r = r.Replace("<v>", verbs[rand]);
+
+                    int c = Random.Range(0, 100);
+                    bool controversial = (c < ControversialPrecentage) ? true : false;
+                    string w = "Default";
+                    int rand = 0;
+                    int i = 0;
+                    while (GameManager.instance.personalBannedWordMap.ContainsKey(w) || w == "BLANK")
+                    {
+
+                        i++;
+                        if (GameManager.instance.denyPoemCount > 5 || GameManager.instance.personalBannedWordMap.Keys.Count > 10)
+                        {
+                            rand = Random.Range(0, 3);
+                            if (rand % 2 == 0)
+                            {
+                                w = "BLANK";
+                                break;
+                            }
+
+
+                        }
+                        if (!isvalid && controversial)
+                        {
+                            rand = Random.Range(1, verbs_controversial.Length);
+                            w = verbs_controversial[rand];
+
+                        }
+                        else
+                        {
+                            rand = Random.Range(1, verbs.Length);
+                            w = verbs[rand];
+
+                        }
+
+                        if (i == 2)
+                        {
+                            rand = 0;
+                            w = "BLANK";
+                        }
+                    }
+
+                    r = r.Replace("<v>", w);
+
+
+
+                }
+                else
+                {
+                    if (GameManager.instance.denyPoemCount > 5 || GameManager.instance.personalBannedWordMap.Keys.Count > 10)
+                    {
+                        int rand = Random.Range(0, 2);
+                        if (rand % 2 == 0)
+                        {
+                            r = "BLANK";
+                            //break;
+                        }
+
+
+                    }
                 }
 
                 result += r + " ";
@@ -136,7 +201,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         return result;
     }
 
-    public string ReplaceNoun(string line)
+    public string ReplaceNoun(string line, bool isvalid)
     {
         string[] list = Regex.Split(line, " ");
         string result = "";
@@ -147,8 +212,61 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
                 string r = s;
                 if (s.Contains("<n>"))
                 {
-                    int rand = Random.Range(0, nouns.Length);
-                    r = r.Replace("<n>", nouns[rand]);
+                    int c = Random.Range(0, 100);
+                    bool controversial = (c < ControversialPrecentage) ? true : false;
+                    string w = "Default";
+                    int rand = 0;
+                    int i = 0;
+                    while (GameManager.instance.personalBannedWordMap.ContainsKey(w) || w == "BLANK")
+                    {
+                        if (GameManager.instance.denyPoemCount > 5 || GameManager.instance.personalBannedWordMap.Keys.Count > 10)
+                        {
+                            rand = Random.Range(0, 3);
+                            if (rand % 2 == 0)
+                            {
+                                w = "BLANK";
+                                break;
+                            }
+
+
+                        }
+                        i++;
+                        if (!isvalid && controversial)
+                        {
+                            rand = Random.Range(1, nouns_controversial.Length);
+                            w = nouns_controversial[rand];
+
+                        }
+                        else
+                        {
+                            rand = Random.Range(1, nouns.Length);
+                            w = nouns[rand];
+
+                        }
+
+                        if (i == 2)
+                        {
+                            rand = 0;
+                            w = "BLANK";
+                        }
+                    }
+
+                    r = r.Replace("<n>", w);
+
+                }
+                else
+                {
+                    if (GameManager.instance.denyPoemCount > 5 || GameManager.instance.personalBannedWordMap.Keys.Count > 10)
+                    {
+                        int rand = Random.Range(0, 2);
+                        if (rand % 2 == 0)
+                        {
+                            r = "BLANK";
+                            //break;
+                        }
+
+
+                    }
                 }
 
                 result += r + " ";
@@ -162,7 +280,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         return result;
     }
 
-    public string ReplaceAdj(string line)
+    public string ReplaceAdj(string line, bool isvalid)
     {
         string[] list = Regex.Split(line, " ");
         string result = "";
@@ -173,8 +291,61 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
                 string r = s;
                 if (s.Contains("<adj>"))
                 {
-                    int rand = Random.Range(0, adjs.Length);
-                    r = r.Replace("<adj>", adjs[rand]);
+                    int c = Random.Range(0, 100);
+                    bool controversial = (c < ControversialPrecentage) ? true : false;
+                    string w = "Default";
+                    int rand = 0;
+                    int i = 0;
+                    while (GameManager.instance.personalBannedWordMap.ContainsKey(w) || w == "BLANK" )
+                    {
+                        if (GameManager.instance.denyPoemCount > 5 || GameManager.instance.personalBannedWordMap.Keys.Count > 10)
+                        {
+                            rand = Random.Range(0, 3);
+                            if (rand % 2 == 0)
+                            {
+                                w = "BLANK";
+                                break;
+                            }
+
+
+                        }
+                        i++;
+                        if (!isvalid && controversial)
+                        {
+                            rand = Random.Range(1, adjs_controversial.Length);
+                            w = adjs_controversial[rand];
+
+                        }
+                        else
+                        {
+                            rand = Random.Range(1, adjs.Length);
+                            w = adjs[rand];
+                        }
+
+                        if (i == 2)
+                        {
+                            rand = 0;
+                            w = "BLANK";
+                        }
+                    }
+
+                    r = r.Replace("<adj>", w);
+
+
+                }
+                else
+                {
+                    if (GameManager.instance.denyPoemCount > 5 || GameManager.instance.personalBannedWordMap.Keys.Count > 20)
+                    {
+                        int rand = Random.Range(0, 2);
+                        if (rand % 2 == 0)
+                        {
+                            r = "BLANK";
+                            //break;
+                        }
+
+
+                    }
                 }
 
                 result +=  r + " ";
@@ -211,10 +382,10 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         waitForNextPoem = true;
     }
 
-    public void UnloadPoemPaper() { PoemPaperAnimator.SetTrigger("Exit"); }
+    public void UnloadPoemPaper() { if (PoemPaper != null) PoemPaperAnimator = PoemPaper.GetComponent<Animator>(); PoemPaperAnimator.SetTrigger("Exit"); }
    
 
-    public void LoadPoemPaper(){ PoemPaperAnimator.SetTrigger("Enter"); }
+    public void LoadPoemPaper() { if (PoemPaper != null) PoemPaperAnimator = PoemPaper.GetComponent<Animator>(); PoemPaperAnimator.SetTrigger("Enter"); }
 
 
 }

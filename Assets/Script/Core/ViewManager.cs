@@ -13,6 +13,7 @@ public class ViewManager : MonoSingleton<ViewManager>
     [Header("Canvas Reference")]
     [SerializeField] GameObject WorkCanvas;
     [SerializeField] GameObject PoemCanvas;
+    [SerializeField] GameObject MoyuCanvas;
     [SerializeField] GameObject DialogueCanvas;
     [SerializeField] GameObject TutorialCanvas;
 
@@ -22,6 +23,7 @@ public class ViewManager : MonoSingleton<ViewManager>
     [Header("Work Canvas")]
     [SerializeField] Button PassButton;
     [SerializeField] Button DenyButton;
+    [SerializeField] Button MoyuButton;
     [SerializeField] Animator PoemCanvasAnimator;
 
 
@@ -30,7 +32,11 @@ public class ViewManager : MonoSingleton<ViewManager>
     
     public void SwitchDialogueCharacterArt(string c)
     {
-        if (c == string.Empty || c == null) return;
+        if (c == string.Empty || c == null)
+        {
+            GetCharacterImage().gameObject.SetActive(false);
+            return;
+        } 
         string name = c;
         Debug.Log(name);
        
@@ -39,7 +45,7 @@ public class ViewManager : MonoSingleton<ViewManager>
         GameManager.Character character;
         if (System.Enum.TryParse<GameManager.Character>(name, out character))
         {
-
+            GetCharacterImage().gameObject.SetActive(true);
             switch (character)
             {
                 case GameManager.Character.BossHe:
@@ -50,6 +56,7 @@ public class ViewManager : MonoSingleton<ViewManager>
                     break;
             }
         }
+       
     }
 
     
@@ -60,13 +67,20 @@ public class ViewManager : MonoSingleton<ViewManager>
         {
             PassButton.onClick.AddListener(OnPassButtonClicked);
             PassButton.onClick.AddListener(GameManager.instance.OnPoemPass);
+            PassButton.onClick.AddListener(PoemPaperController.instance.OnPoemPass);
+           
         }
         if (DenyButton != null)
         {
             DenyButton.onClick.AddListener(OnDenyButtonClicked);
             DenyButton.onClick.AddListener(GameManager.instance.OnPoemDeny);
-        } 
-        
+            DenyButton.onClick.AddListener(PoemPaperController.instance.OnPoemDeny);
+        }
+
+        if (MoyuButton != null)
+        {
+            MoyuButton.onClick.AddListener(GameManager.instance.StartMoyu);
+        }
         if (PoemCanvas != null) PoemCanvasAnimator = PoemCanvas.GetComponent<Animator>();
     }
 
@@ -85,16 +99,20 @@ public class ViewManager : MonoSingleton<ViewManager>
     {
         WorkCanvas.SetActive(false);
         DialogueCanvas.SetActive(false);
+        MoyuCanvas.SetActive(false);
     }
 
-    public void LoadWorkView()
-    {
-        WorkCanvas.SetActive(true);
+    public void LoadWorkView(){WorkCanvas.SetActive(true);}
+    public void UnloadWorkView() { WorkCanvas.SetActive(false); }
 
-    }
 
     public void LoadConversationView()
     {
         DialogueCanvas.SetActive(true);
+    }
+
+    public void LoadMoyuView()
+    {
+        MoyuCanvas.SetActive(true);
     }
 }

@@ -25,6 +25,17 @@ public class LocalDialogueManager : MonoSingleton<LocalDialogueManager>
     {
         ViewManager.instance.LoadConversationView();
         if (dialogueRunner == null) return;
-        dialogueRunner.StartDialogue(startNode);
+        if (dialogueRunner.IsDialogueRunning)
+        {
+            dialogueRunner.Stop();
+            FindObjectOfType<LineViewCustom>().DialogueComplete();
+            dialogueRunner.ResetDialogue(startNode);
+        }
+        else
+        {
+            Debug.Log("local try to load" + startNode);
+            dialogueRunner.StartDialogue(startNode);
+        }
+       
     }
 }

@@ -23,8 +23,9 @@ public class Word : MonoBehaviour
         tm.text = _Text;
         if (wordbutton == null) wordbutton = this.GetComponentInChildren<Button>();
         wordbutton.onClick.AddListener(OnWordClicked);
+    
 
-      
+
     }
 
     public void SetText(string t) { _Text = t; tm.text = _Text; if(this.gameObject.activeSelf)StartCoroutine(SetCircleSize()); }
@@ -47,6 +48,8 @@ public class Word : MonoBehaviour
         {
             CircleImage.fillAmount = val;
         });
+
+        GameManager.instance.CircledWord(_Text);
     }
 
     void CancleCircledWord()

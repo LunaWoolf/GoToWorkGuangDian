@@ -1,0 +1,23 @@
+﻿title: I_Mirror
+tags:
+---
+You pick up the mirror and look into the mirror.
+You look okay.
+But you know that’s not how other people see you.
+Your eyes lie to you,
+Your eyes lie every time to your brain about everything you see.
+In fact, you look much worse than the person you are staring at in the mirror.
+You know that, clearly. But you believe the lie.
+Beauty += 5; ugly += 5; confident = false;
+===
+
+title: I_Phone
+tags:
+---
+You scroll your phone, so many interesting things.
+Wow…
+Wow…
+Wow…
+You are pleased with your scroll.
+Your life -= 1 hr;
+===

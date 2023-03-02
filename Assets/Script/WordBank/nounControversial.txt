@@ -41,3 +41,7 @@ religion
 god
 weapon
 massacre
+WorkingClass
+rich
+music
+rock

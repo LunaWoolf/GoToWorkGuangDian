@@ -1,4 +1,12 @@
-﻿title: FirstDay_Morning
+﻿
+title: FirstDay_Morning_Test
+tags:
+---
+(June 6th, A Regular Day At Work)
+<<StartWork GameManager>>
+===
+
+title: FirstDay_Morning
 tags:
 ---
 (June 6th, A Regular Day At Work)
@@ -24,9 +32,109 @@ title: d0606_EndWork
 tags:
 ---
 (June 6th, End of a Regular Day At Work)
-You: 5:30pm. Time to go home;
-Boss He: Wait a second.
-Boss He: Here are 5 more lyric I need for tomorrow morning.
-Boss He: Put it on my desk before 9am tomrrow.
+You: 5:30pm. Time to go home.
+Li: Don't forget to put all the paper you worked on today into the paper shredder!
+(oh yeah...how can you forget? Your favorite part of the day.)
+<<StartPaperShredder GameManager>>
+===
+
+title: d0607_Morning
+tags:
+---
+(June 7th, A Regular Day At Work)
+(June 7th, A Regular Day At Work)
+Li: Morningggggg!
+Li: Let's Start Working!
+<<StartWork GameManager>>
+===
+
+
+title: d0607_EndWork
+Tags:
+---
+(June 7th, End of a Regular Day At Work)
+You: 5:30pm. Time to go home.
+<<StartPaperShredder GameManager>>
+===
+
+
+title: d0608_Morning
+tags:
+---
+(June 8th, A Regular Day At Work)
+(June 8th, A Regular Day At Work)
+Li: Morningggggg!
+Li: Let's Start Working!
+<<StartWork GameManager>>
+===
+
+title: d0608_EndWork
+Tags:
+---
+(June 8th, End of a Regular Day At Work)
+You: 5:30pm. Time to go home.
+Boss He: Wait for a second.
+Boss He: Here are 5 more lyrics I need for tomorrow morning.
+Boss He: Put it on my desk before 9 am tomorrow.
 (...I thought I could go home)
+
+-> Go back to work
+-> Just Leave it
+
+Li: Hey…I know how you feel. That’s suck.
+Li: You look like you have something more emergent to do…
+(Hmm…let me see…eating the leftover in the fridge…scrolling on the dating app….watching video frog vs. anime girl…. )
+(yeah, emergent)
+Li: I don’t have any plans tonight, so that I can take care of these.
+Li: Don’t worry about it! I Enjoy this work.
+Li: You can just take care of the paper shredder and go home.
+(Okay then)
+<<StartPaperShredder GameManager>>
+===
+
+
+title: d0609_Morning
+tags:
+---
+(June 9th, A Regular Day At Work)
+(June 9th, A Regular Day At Work)
+Li: Morningggggg!
+Li: Let's Start Working!
+<<StartWork GameManager>>
+===
+
+title: d0609_EndWork
+Tags:
+---
+(June 9th, End of a Regular Day At Work)
+You: 5:30pm. Time to go home.
+Li: Bye
+<<StartPaperShredder GameManager>>
+===
+
+
+title: d0610_Morning
+tags:
+---
+(June 10th, A Regular Day At Work)
+(June 10th, A Regular Day At Work)
+Boss He: Morning.
+Boss He: Introducing your new colleague.
+Boss He: AI CATgpt!
+AI CATgpt: Nice to meet you, I hope we can build a better future for the younger generation of the nation.
+(...)
+Boss He: In order to hire CATgpt, we made some necessary budget cuts.
+Boss He: Anyway, go to work now.
+AI CATgpt: Yes, I would love to start my productive day.
+(You notice that Li’s table has been cleared out)
+<<StartWork GameManager>>
+===
+
+title: d0610_EndWork
+tags:
+---
+(June 10th, End of a Regular Day At Work)
+You: 5:30pm. Time to go home.
+AI CATgpt: I don't need to rest or go home, I run 24 hr. 
+<<StartPaperShredder GameManager>>
 ===
