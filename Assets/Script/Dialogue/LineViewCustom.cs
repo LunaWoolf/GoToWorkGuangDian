@@ -421,8 +421,11 @@ using Yarn.Unity;
         private void Start()
         {
 #if UNITY_EDITOR
-        skilAllButton.gameObject.SetActive(true);
-        skilAllButton.onClick.AddListener(DebugSpeedRun);
+        if (GameManager.instance.isDebug)
+        {
+            skilAllButton.gameObject.SetActive(true);
+            skilAllButton.onClick.AddListener(DebugSpeedRun);
+        }
 #endif
 
     }

@@ -11,34 +11,41 @@ public class PaperShredderManager : MonoBehaviour
     public Button  DenyButton;
     public Button  PassButton;
 
+    public GameObject Canvas;
+
     public List<string> shredderWordList = new List<string>();
 
     // Start is called before the first frame update
     void Start()
     {
         GoBackButton.SetActive(false);
-        shredderWordList = new List<string>(GameManager.instance.personalBannedWordMap.Keys);
+        if (GameManager.instance != null && GameManager.instance.personalBannedWordMap.Keys.Count != 0)
+        {
+            shredderWordList = new List<string>(GameManager.instance.personalBannedWordMap.Keys);
+        }
+        
         StartCoroutine(InstantiateWord());
         DenyButton.onClick.AddListener(EndPaperShredder);
         PassButton.onClick.AddListener(EndPaperShredder);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     IEnumerator InstantiateWord()
     {
 
         foreach (string s in shredderWordList)
         {
+            if (s == "Default") continue;
             Quaternion q = Quaternion.Euler(Random.Range(0.0f, 10.0f), Random.Range(0.0f, 10.0f), Random.Range(0.0f, 50.0f));
-            Instantiate(word, transform.position, q).GetComponent<ShredderWord>().SetWord(s);
-            yield return new WaitForSeconds(2f);
+
+            Instantiate(word, this.transform.position,Quaternion.identity).GetComponent<ShredderWord>().SetWord(s);
+          
+
+
+            yield return new WaitForSeconds(1f);
         }
 
+        yield return new WaitForSeconds(1f);
         GoBackButton.SetActive(true);
 
 
@@ -46,8 +53,8 @@ public class PaperShredderManager : MonoBehaviour
 
     void EndPaperShredder()
     {
-        //ScenesManager.Load
-        GameManager.instance.GoToNextWorkDay();
+      
+        GameManager.instance.GoToAfterwork();
 
     }
 }

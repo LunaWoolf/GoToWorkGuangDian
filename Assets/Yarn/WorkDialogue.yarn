@@ -3,7 +3,9 @@ title: FirstDay_Morning_Test
 tags:
 ---
 (June 6th, A Regular Day At Work)
-<<StartWork GameManager>>
+-> Yes
+-> No
+<<StartWork CommandManager>>
 ===
 
 title: FirstDay_Morning
@@ -11,9 +13,11 @@ tags:
 ---
 (June 6th, A Regular Day At Work)
 Boss He: Morning.
+You: Morning.
 Boss He: You're 2 min late. It's 9:02 now.
 Boss He: Start working now. It's Monday; there's a lot to do (*sips tea with loud noise*)
 Li: Morning!
+You: Morning.
 Li: I’ve already started my tasks today. Happy Monday! 
 (Time To Work)
 Boss He: Okay, let’s repeat our mission one more time and get to work.
@@ -23,9 +27,10 @@ Boss He: Protect the public from…
 Li:  FROM DANGEROUS MESSAGE!!!
 Boss He: We are…
 Li: THE GUARDIAN OF PEOPLE’S MIND AND SPIRIT!!!
+You: ...
 Boss He: Okay. Go to work (*sips tea with loud noise*).
 (Time To Work, for real)
-<<StartWork GameManager>>
+<<StartWork CommandManager>>
 ===
 
 title: d0606_EndWork
@@ -35,7 +40,7 @@ tags:
 You: 5:30pm. Time to go home.
 Li: Don't forget to put all the paper you worked on today into the paper shredder!
 (oh yeah...how can you forget? Your favorite part of the day.)
-<<StartPaperShredder GameManager>>
+<<StartPaperShredder CommandManager>>
 ===
 
 title: d0607_Morning
@@ -45,7 +50,7 @@ tags:
 (June 7th, A Regular Day At Work)
 Li: Morningggggg!
 Li: Let's Start Working!
-<<StartWork GameManager>>
+<<StartWork CommandManager>>
 ===
 
 
@@ -54,7 +59,7 @@ Tags:
 ---
 (June 7th, End of a Regular Day At Work)
 You: 5:30pm. Time to go home.
-<<StartPaperShredder GameManager>>
+<<StartPaperShredder CommandManager>>
 ===
 
 
@@ -65,7 +70,7 @@ tags:
 (June 8th, A Regular Day At Work)
 Li: Morningggggg!
 Li: Let's Start Working!
-<<StartWork GameManager>>
+<<StartWork CommandManager>>
 ===
 
 title: d0608_EndWork
@@ -89,7 +94,7 @@ Li: I don’t have any plans tonight, so that I can take care of these.
 Li: Don’t worry about it! I Enjoy this work.
 Li: You can just take care of the paper shredder and go home.
 (Okay then)
-<<StartPaperShredder GameManager>>
+<<StartPaperShredder CommandManager>>
 ===
 
 
@@ -100,7 +105,7 @@ tags:
 (June 9th, A Regular Day At Work)
 Li: Morningggggg!
 Li: Let's Start Working!
-<<StartWork GameManager>>
+<<StartWork CommandManager>>
 ===
 
 title: d0609_EndWork
@@ -109,7 +114,7 @@ Tags:
 (June 9th, End of a Regular Day At Work)
 You: 5:30pm. Time to go home.
 Li: Bye
-<<StartPaperShredder GameManager>>
+<<StartPaperShredder CommandManager>>
 ===
 
 
@@ -127,7 +132,7 @@ Boss He: In order to hire CATgpt, we made some necessary budget cuts.
 Boss He: Anyway, go to work now.
 AI CATgpt: Yes, I would love to start my productive day.
 (You notice that Li’s table has been cleared out)
-<<StartWork GameManager>>
+<<StartWork CommandManager>>
 ===
 
 title: d0610_EndWork
@@ -136,5 +141,5 @@ tags:
 (June 10th, End of a Regular Day At Work)
 You: 5:30pm. Time to go home.
 AI CATgpt: I don't need to rest or go home, I run 24 hr. 
-<<StartPaperShredder GameManager>>
+<<StartPaperShredder CommandManager>>
 ===

@@ -18,6 +18,8 @@ public class PoemPaperController : MonoSingleton<PoemPaperController>
 
     public UnityEvent OnPaperExitFinish = new UnityEvent();
 
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,10 +62,10 @@ public class PoemPaperController : MonoSingleton<PoemPaperController>
         switch (name)
         {
             case "PoemPaperEnter":
-                OnPoemPaperExitAnimationEnd();
-                //Debug.Log("EEEEEEE");
+                OnPoemPaperEnterAnimationStart();
                 break;
             case "PoemPaperExit":
+                OnPoemPaperExitAnimationStart();
                 break;
 
         }
@@ -76,17 +78,61 @@ public class PoemPaperController : MonoSingleton<PoemPaperController>
         switch (name)
         {
             case "PoemPaperEnter":
-                OnPoemPaperExitAnimationEnd();
-                //Debug.Log("EEEEEEE");
+                OnPoemPaperEnterAnimationEnd();
                 break;
             case "PoemPaperExit":
                 OnPaperExitFinish.Invoke();
-                //Debug.Log("Starttttt");
                 break;
 
         }
         Debug.Log(name);
     }
+
+    public void OnPoemPaperEnterAnimationEnd()
+    {
+        WorkViewController workViewController = FindObjectOfType<WorkViewController>();
+        if (workViewController == null) return;
+        workViewController.SetDenyButtonActive(true);
+        workViewController.SetPassButtonActive(true);
+    }
+
+    public void OnPoemPaperExitAnimationStart()
+    {
+        WorkViewController workViewController = FindObjectOfType<WorkViewController>();
+        if (workViewController == null) return;
+        workViewController.SetDenyButtonActive(false);
+        workViewController.SetPassButtonActive(false);
+    }
+
+    public void OnPoemPaperExitAnimationEnd()
+    {
+        DenyStamp.SetActive(false);
+        PassStamp.SetActive(false);
+
+    }
+
+    public void OnPoemPaperEnterAnimationStart()
+    {
+        DenyStamp.SetActive(false);
+        PassStamp.SetActive(false);
+    }
+
+
+    public void OnPoemPass()
+    {
+       
+        PassStamp.SetActive(true);
+    }
+
+    public void OnPoemDeny()
+    {
+        DenyStamp.SetActive(true);
+    }
+
+
+    ///////////////////////////
+    /////////Animation/////////
+    ///////////////////////////
 
     //Invoke when Animation clip start, name is the name of the clip
     public void AnimationStartHandler(string name)
@@ -100,22 +146,6 @@ public class PoemPaperController : MonoSingleton<PoemPaperController>
     {
         //Debug.Log($"{name} animation complete.");
         OnAnimationComplete?.Invoke(name);
-    }
-
-    public void OnPoemPaperExitAnimationEnd()
-    {
-        DenyStamp.SetActive(false);
-        PassStamp.SetActive(false);
-    }
-
-    public void OnPoemPass()
-    {
-        PassStamp.SetActive(true);
-    }
-
-    public void OnPoemDeny()
-    {
-        DenyStamp.SetActive(true);
     }
 
 }

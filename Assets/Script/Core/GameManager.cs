@@ -3,12 +3,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Yarn.Unity;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
+using System.Text.RegularExpressions;
 
 public class GameManager : MonoSingleton<GameManager>
 {
 
+    public bool isDebug = false;
     GameMode currentGameMode;
 
     public struct personalBannedWord
@@ -20,15 +22,18 @@ public class GameManager : MonoSingleton<GameManager>
     public enum Character
     {
         BossHe,
-        Li
+        Li,
+        CATgpt,
+        You,
     }
 
     public enum GameMode
     {
         Work,
         Moyu,
+        //News,
         Conversation,
-        Home
+        Afterwork
     }
 
     public GameObject eventSystem;
@@ -46,7 +51,9 @@ public class GameManager : MonoSingleton<GameManager>
     int AfterWorkActionCountOfDay = 0;
     int MaxAfterWorkActionCountOfDay = 1;
 
-    List<personalBannedWord> personalBannedWordList = new List<personalBannedWord>();
+    [Header("Work Related")]
+   
+    public List<string> temp_CircledWordList = new List<string>();
     public Dictionary<string, personalBannedWord> personalBannedWordMap = new Dictionary<string, personalBannedWord>();
 
     public void SetCurrentGameMode(GameMode mode)
@@ -63,7 +70,7 @@ public class GameManager : MonoSingleton<GameManager>
     public GameMode GetCurrentGameMode() { return currentGameMode; }
 
 
-    [YarnCommand("StartWork")]
+   
     public void TryStartWork()
     {
         StartWork();
@@ -85,6 +92,18 @@ public class GameManager : MonoSingleton<GameManager>
         ViewManager.instance.UnloadAllView();
         ViewManager.instance.LoadMoyuView();
     
+    }
+
+    public void StartNews()
+    {
+        //SetCurrentGameMode(GameMode.News);
+        if (!PropertyManager.instance.hasShownTutorial)
+        {
+            ViewManager.instance.LoadTutorialView("Tutorial");
+            PropertyManager.instance.hasShownTutorial = true;
+        }
+        ViewManager.instance.UnloadAllView();
+        ViewManager.instance.LoadNewsView();
     }
 
     public void GoBackToWork()
@@ -117,15 +136,22 @@ public class GameManager : MonoSingleton<GameManager>
 
         personalBannedWordMap.Add("Default", bannedWord);
 
-        ViewManager.instance.UnloadWorkView();
+        if(ViewManager.instance != null)
+            ViewManager.instance.UnloadWorkView();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
+        if (isDebug && Input.GetKeyDown(KeyCode.H))
         {
             StartPaperShredder();
+        }
+
+        if (isDebug && Input.GetKeyDown(KeyCode.N))
+        {
+            NewsManager.instance.RefreshCureentValidNews();
+            NewsManager.instance.GeneratreNews();
         }
 
     }
@@ -136,32 +162,49 @@ public class GameManager : MonoSingleton<GameManager>
         WorkActionCountOfDay += x;
         if (WorkActionCountOfDay >= MaxWorkActionCountOfDay) // if run out of action count at work
         {
-            EndOfWorkDay();
+            PoemGenerator.instance.UnloadPoemPaper();
+            StartCoroutine(WaitToEndWork());
             return false;
         }
 
         return true;
     }
 
-    public void OnPoemPass()
+    IEnumerator WaitToEndWork()
     {
-        passPoemCount++;
-        if (AdjustAndCheckWorkActionCountOfDay(1))
-            TryGoToNextPoem();
-       
+        yield return new WaitForSeconds(1f);
+        EndOfWorkDay();
     }
 
-    public void OnPoemDeny()
+    public void OnPoemTryPass()
+    {
+        if (temp_CircledWordList.Count == 0)
+        {
+            passPoemCount++;
+            PoemPaperController.instance.OnPoemPass();
+            PoemGenerator.instance.OnPoemPass();
+            if (AdjustAndCheckWorkActionCountOfDay(1))
+                TryGoToNextPoem();
+            
+        }
+        else
+        {
+            ViewManager.instance.LoadTutorialView("Lyric with controversial words you selected cannot pass. \n Reconsider your choice or deny this piece");
+        }
+    }
+
+    public void OnPoemTryDeny()
     {
         denyPoemCount++;
-        if(AdjustAndCheckWorkActionCountOfDay(1))
+        PoemPaperController.instance.OnPoemDeny();
+        PoemGenerator.instance.OnPoemDeny();
+        if (AdjustAndCheckWorkActionCountOfDay(1))
             TryGoToNextPoem();
     }
 
     void TryGoToNextPoem()
     {
         PoemGenerator.instance.NextPoem();
-      
     }
 
     void EndOfWorkDay()
@@ -189,10 +232,19 @@ public class GameManager : MonoSingleton<GameManager>
         eventSystem.SetActive(true);
     }
 
-    [YarnCommand("GoToNextDay")]
+    public void GoToAfterwork()
+    {
+        SceneManager.UnloadSceneAsync("paperShredder");
+        Debug.Log("Go To After work Day");
+        FindObjectOfType<EventSystem>().gameObject.SetActive(true);
+        eventSystem.SetActive(true);
+
+        ViewManager.instance.UnloadAllView();
+        ViewManager.instance.LoadAfterWorkView();
+    }
+
     public void GoToNextWorkDay()
     {
-
         SceneManager.UnloadSceneAsync("paperShredder");
         
         Debug.Log("Go To Next Day");
@@ -204,8 +256,8 @@ public class GameManager : MonoSingleton<GameManager>
         eventSystem.SetActive(true); 
     }
 
-    [YarnCommand("StartPaperShredder")]
-    void StartPaperShredder()
+  
+    public void StartPaperShredder()
     {
         SceneManager.LoadScene("paperShredder", LoadSceneMode.Additive);
         FindObjectOfType<EventSystem>().gameObject.SetActive(false);
@@ -214,19 +266,51 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void CircledWord(string word)
     {
-        if (personalBannedWordMap.ContainsKey(word))
-        {
-            personalBannedWord bannedWord = personalBannedWordMap[word];
-            bannedWord.count++;
-            personalBannedWordMap[word] = bannedWord;
-        }
-        else
-        {
-            personalBannedWord bannedWord = new personalBannedWord();
-            bannedWord.word = word;
-            bannedWord.count = 0;
+        temp_CircledWordList.Add(word);
+    }
 
-            personalBannedWordMap.Add(word, bannedWord);
+    public void CancleCircledWord(string word)
+    {
+        if(temp_CircledWordList.Contains(word))
+            temp_CircledWordList.Remove(word);
+    }
+
+    public void SaveCircledWord()
+    {
+        foreach (string s in temp_CircledWordList)
+        {
+            if (personalBannedWordMap.ContainsKey(s))
+            {
+                personalBannedWord bannedWord = personalBannedWordMap[s];
+                bannedWord.count++;
+                personalBannedWordMap[s] = bannedWord;
+            }
+            else
+            {
+                personalBannedWord bannedWord = new personalBannedWord();
+                bannedWord.word = s;
+                bannedWord.count = 0;
+
+                personalBannedWordMap.Add(s, bannedWord);
+            }
         }
+
+        temp_CircledWordList.Clear();
+    }
+
+    
+    public string GetRandomBannedWord()
+    {
+
+        string s = "Death";
+        if (this.personalBannedWordMap.Count > 1)// cause the first item in map is "Default
+        {
+            List<string> keyList = new List<string>(this.personalBannedWordMap.Keys);
+            int i = UnityEngine.Random.Range(1, personalBannedWordMap.Keys.Count);
+            s = keyList[i];
+
+        }
+
+        return s;
     }
 }

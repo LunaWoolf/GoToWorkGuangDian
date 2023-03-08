@@ -9,6 +9,8 @@ public class ViewManager : MonoSingleton<ViewManager>
     [Header("Art Bank")]
     [SerializeField]  Sprite BossSprite;
     [SerializeField]  Sprite LiSprite;
+    [SerializeField]  Sprite CATSprite;
+    [SerializeField]  Sprite YouSprite;
 
     [Header("Canvas Reference")]
     [SerializeField] GameObject WorkCanvas;
@@ -16,16 +18,11 @@ public class ViewManager : MonoSingleton<ViewManager>
     [SerializeField] GameObject MoyuCanvas;
     [SerializeField] GameObject DialogueCanvas;
     [SerializeField] GameObject TutorialCanvas;
+    [SerializeField] GameObject NewsCanvas;
+    [SerializeField] GameObject AfterWorkCanvas;
 
     [Header("Dialogue Canvas")]
     [SerializeField] Image CharacterImage;
-
-    [Header("Work Canvas")]
-    [SerializeField] Button PassButton;
-    [SerializeField] Button DenyButton;
-    [SerializeField] Button MoyuButton;
-    [SerializeField] Animator PoemCanvasAnimator;
-
 
 
     public Image GetCharacterImage() { if (CharacterImage == null) CharacterImage = GameObject.Find("CharacterImage").GetComponent<Image>(); return CharacterImage; }
@@ -54,56 +51,40 @@ public class ViewManager : MonoSingleton<ViewManager>
                 case GameManager.Character.Li:
                     GetCharacterImage().sprite = LiSprite;
                     break;
+                case GameManager.Character.CATgpt:
+                    GetCharacterImage().sprite = CATSprite;
+                    break;
+                case GameManager.Character.You:
+                    GetCharacterImage().sprite = YouSprite;
+                    break;
             }
         }
        
     }
 
-    
-    void Start()
-    {
 
-        if (PassButton != null)
-        {
-            PassButton.onClick.AddListener(OnPassButtonClicked);
-            PassButton.onClick.AddListener(GameManager.instance.OnPoemPass);
-            PassButton.onClick.AddListener(PoemPaperController.instance.OnPoemPass);
-           
-        }
-        if (DenyButton != null)
-        {
-            DenyButton.onClick.AddListener(OnDenyButtonClicked);
-            DenyButton.onClick.AddListener(GameManager.instance.OnPoemDeny);
-            DenyButton.onClick.AddListener(PoemPaperController.instance.OnPoemDeny);
-        }
-
-        if (MoyuButton != null)
-        {
-            MoyuButton.onClick.AddListener(GameManager.instance.StartMoyu);
-        }
-        if (PoemCanvas != null) PoemCanvasAnimator = PoemCanvas.GetComponent<Animator>();
-    }
-
-    void OnPassButtonClicked()
-    {
-
-        
-    }
-
-    void OnDenyButtonClicked()
-    {
-        
-    }
+    public void UnloadWorkView() { if (WorkCanvas != null) WorkCanvas.SetActive(false); }
+    public void UnloadTutorialView() { if (TutorialCanvas != null) TutorialCanvas.SetActive(false); }
 
     public void UnloadAllView()
     {
-        WorkCanvas.SetActive(false);
-        DialogueCanvas.SetActive(false);
-        MoyuCanvas.SetActive(false);
+        if (WorkCanvas != null)
+            WorkCanvas.SetActive(false);
+        if (DialogueCanvas != null)
+            DialogueCanvas.SetActive(false);
+        if (MoyuCanvas != null)
+            MoyuCanvas.SetActive(false);
+        if(NewsCanvas != null)
+            NewsCanvas.SetActive(false);
+        if (TutorialCanvas != null)
+            TutorialCanvas.SetActive(false);
+        if (AfterWorkCanvas != null)
+            AfterWorkCanvas.SetActive(false);
+
+        
     }
 
-    public void LoadWorkView(){WorkCanvas.SetActive(true);}
-    public void UnloadWorkView() { WorkCanvas.SetActive(false); }
+    public void LoadWorkView(){ if (WorkCanvas != null) WorkCanvas.SetActive(true);}
 
 
     public void LoadConversationView()
@@ -115,4 +96,27 @@ public class ViewManager : MonoSingleton<ViewManager>
     {
         MoyuCanvas.SetActive(true);
     }
+
+    public void LoadTutorialView(string s)
+    {
+        if (TutorialCanvas == null || TutorialCanvas.GetComponent<TutorialCanvasController>() == null) return;
+        TutorialCanvas.SetActive(true);
+        TutorialCanvas.GetComponent<TutorialCanvasController>().SetInstruction(s);
+    }
+
+
+    public void LoadNewsView()
+    {
+        if (NewsCanvas == null || NewsCanvas.GetComponent<NewsCanvasController>() == null) return;
+        NewsCanvas.SetActive(true);
+        NewsManager.instance.GeneratreNews();
+        //NewsCanvas.GetComponent<NewsCanvasController>().UpdateNews();
+    }
+
+    public void LoadAfterWorkView()
+    {
+        if (AfterWorkCanvas == null) return;
+        AfterWorkCanvas.SetActive(true);
+    }
+
 }

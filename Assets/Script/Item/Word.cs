@@ -23,9 +23,6 @@ public class Word : MonoBehaviour
         tm.text = _Text;
         if (wordbutton == null) wordbutton = this.GetComponentInChildren<Button>();
         wordbutton.onClick.AddListener(OnWordClicked);
-    
-
-
     }
 
     public void SetText(string t) { _Text = t; tm.text = _Text; if(this.gameObject.activeSelf)StartCoroutine(SetCircleSize()); }
@@ -60,6 +57,8 @@ public class Word : MonoBehaviour
         {
             CircleImage.fillAmount = val;
         });
+
+        GameManager.instance.CancleCircledWord(_Text);
     }
 
     public IEnumerator SetCircleSize()
@@ -69,11 +68,4 @@ public class Word : MonoBehaviour
             CircleImage.GetComponent<RectTransform>().sizeDelta = new Vector2(Background.GetComponent<RectTransform>().sizeDelta.x * 1.3f,
                                                                          Background.GetComponent<RectTransform>().sizeDelta.y * 1.3f);
     }
-
- 
-
-    /*static void UpdateCircleFillAmount(float f)
-    {
-        CircleImage.fillAmount = f;
-    }*/
 }

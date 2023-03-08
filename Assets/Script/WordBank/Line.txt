@@ -12,7 +12,7 @@ You will miss that <adj> <n>.
 But <n> is what <n> need.
 Break <n>.
 Free <n>.
-<v>.
+<v> .
 Just <v>.
 It's just a <n>.
 But you, you are so <adj>.
@@ -68,7 +68,3 @@ Will you <v> with me?
 No!
 How long do we need to suffer to see <n>.
 How to end this <n>.
- 
-
-
-

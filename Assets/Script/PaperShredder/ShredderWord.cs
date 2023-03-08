@@ -14,12 +14,6 @@ public class ShredderWord : MonoBehaviour
         letterRefList = this.GetComponentsInChildren<TextMeshPro>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
-
     public void SetWord(string word)
     {
         for (int i = 0; i < letterRefList.Length; i++)

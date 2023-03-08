@@ -1,0 +1,12 @@
+﻿title: ThinkAboutLife
+tags:
+---
+
+Do I feel fulfilled after today’s work?
+
+-> Yes
+-> No
+
+<<SetProperty CommandManager can_write_poem 1>>
+
+===
