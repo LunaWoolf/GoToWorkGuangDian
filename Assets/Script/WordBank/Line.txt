@@ -19,7 +19,7 @@ But you, you are so <adj>.
 How can I <v>, how can I <v>.
 Oh, <n>, I feel so <adj>.
 I know <n>.
-I'm <verb> out the <n>.
+I'm <v> out the <n>.
 When I was a <n>.
 My <n> told me don't <v>.
 When you grow up,

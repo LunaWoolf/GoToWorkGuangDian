@@ -10,7 +10,9 @@ public class TutorialCanvasController : MonoBehaviour
     [SerializeField] Button GotItButton;
 
     [Header("Preset")]
-    [SerializeField] GameObject TutorialUI;
+    [SerializeField] GameObject Tutorial_Default;
+    [SerializeField] GameObject Tutorial_Work_UI;
+    [SerializeField] GameObject Tutorial_News_UI;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,14 +27,20 @@ public class TutorialCanvasController : MonoBehaviour
 
     public void SetInstruction(string text)
     {
+        
         if (instructionText == null) return;
+        UnloadAllTutorial();
         switch (text)
         {
             
-            case "Tutorial":
-                TutorialUI.SetActive(true);
+            case "Tutorial_Work":
+                Tutorial_Work_UI.SetActive(true);
+                break;
+            case "Tutorial_News":
+                Tutorial_News_UI.SetActive(true);
                 break;
             default:
+                Tutorial_Default.SetActive(true);
                 instructionText.text = text;
                 break;
         }
@@ -43,7 +51,17 @@ public class TutorialCanvasController : MonoBehaviour
     public void OnGotItButtonClicked()
     {
         this.gameObject.SetActive(false);
-        TutorialUI.SetActive(false);
+        Tutorial_Default.SetActive(false);
+        Tutorial_Work_UI.SetActive(false);
+        Tutorial_News_UI.SetActive(false);
+    }
+
+    public void UnloadAllTutorial()
+    {
+        instructionText.text = "";
+        Tutorial_Default.SetActive(false);
+        Tutorial_Work_UI.SetActive(false);
+        Tutorial_News_UI.SetActive(false);
     }
 
 

@@ -7,6 +7,11 @@ using UnityEngine.Events;
 public class UnityAnimationEvent : UnityEvent<string> { };
 public class PoemPaperController : MonoSingleton<PoemPaperController>
 {
+    public enum PoemPaperMode
+    { 
+        Read,
+        Write,
+    }
    
     [HideInInspector] public UnityAnimationEvent OnAnimationStart = new UnityAnimationEvent();
     [HideInInspector] public UnityAnimationEvent OnAnimationComplete = new UnityAnimationEvent();
@@ -18,11 +23,13 @@ public class PoemPaperController : MonoSingleton<PoemPaperController>
 
     public UnityEvent OnPaperExitFinish = new UnityEvent();
 
-    
+    public PoemPaperMode poemPaperMode = PoemPaperMode.Read;
+    public PoemGenerator poemGenerator;
 
     // Start is called before the first frame update
     void Start()
     {
+
         PoemCanvasAnimator = this.GetComponent<Animator>();
         //Bind all Animation cips with animation start and end event
         for (int i = 0; i < PoemCanvasAnimator.runtimeAnimatorController.animationClips.Length; i++)
@@ -53,7 +60,7 @@ public class PoemPaperController : MonoSingleton<PoemPaperController>
             OnAnimationComplete.AddListener(SwitchOnAnimationEnd);
 
         OnPaperExitFinish.AddListener(OnPoemPaperExitAnimationEnd);
-
+        poemGenerator = FindObjectOfType<PoemGenerator>();
     }
 
     public void SwitchOnAnimationStart(string name)
@@ -148,4 +155,11 @@ public class PoemPaperController : MonoSingleton<PoemPaperController>
         OnAnimationComplete?.Invoke(name);
     }
 
+
+    public void AddWordToPoem(GameObject Word_go)
+    {
+        if (Word_go.GetComponent<Word>() == null) return;
+        poemGenerator.AddWordToPoem(Word_go.GetComponent<Word>());
+
+    }
 }

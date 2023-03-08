@@ -153,54 +153,6 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
                     Debug.Log("verb w =  " + w);
                     r = r.Replace("<v>", w);
                 }
-                    /*while (GameManager.instance.personalBannedWordMap.ContainsKey(w) || w == "BLANK")
-                    {
-
-                        //i++;
-                        if (GameManager.instance.denyPoemCount > 5 || GameManager.instance.personalBannedWordMap.Keys.Count > 10)
-                        {
-                            rand = Random.Range(0, 3);
-                            if (rand % 2 == 0)
-                            {
-                                w = "BLANK";
-                                //break;
-                            }
-                        }
-                        else if (!isvalid && controversial)
-                        {
-                            rand = Random.Range(0, verbs_controversial.Length);
-                            w = verbs_controversial[rand];
-
-                        }
-                        else
-                        {
-                            rand = Random.Range(0, verbs.Length);
-                            w = verbs[rand];
-
-                        }
-
-                        if (i == 2)
-                        {
-                            rand = 0;
-                            w = "BLANK";
-                        }
-                    }
-
-                    r = r.Replace("<v>", w);
-
-                }
-                /*else
-                {
-                    if (GameManager.instance.denyPoemCount > 5 || GameManager.instance.personalBannedWordMap.Keys.Count > 10)
-                    {
-                        int rand = Random.Range(0, 2);
-                        if (rand % 2 == 0)
-                        {
-                            r = "BLANK";
-                        }
-                    }
-                }*/
-
                 result += r + " ";
             }
 
@@ -381,6 +333,22 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
     public void LoadPoemPaper() { if (PoemPaper != null) PoemPaperAnimator = PoemPaper.GetComponent<Animator>(); PoemPaperAnimator.SetTrigger("Enter"); }
 
-  
+    ///////////////////////////
+    //////Writing Mode/////////
+    ///////////////////////////
+
+
+    [Header("Writing Mode")]
+    PoemLine currentLine;
+    public void AddWordToPoem(Word Word)
+    {
+        if (currentLine == null)
+        {
+            GameObject line = Instantiate(PoemLine, PoemParent.transform, false);
+            currentLine = line.GetComponent<PoemLine>();
+        }
+        
+       // p.GetComponent<PoemLine>().SetLine(line_tem);
+    }
 
 }

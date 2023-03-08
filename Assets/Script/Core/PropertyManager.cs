@@ -16,8 +16,13 @@ public class PropertyManager : MonoSingleton<PropertyManager>
     public List<string[]> DeniedPoem = new List<string[]>();
 
     [Header("Saved Process")]
-    public bool hasShownTutorial = false;
+    public bool hasShownWorkTutorial = false;
+    public bool hasShownNewsTutorial = false;
 
+    [Header("Unlock Writing")]
+    public bool  bReflection= false;
+    public bool  bAesthetic = false;
+    public bool  bRebellious = false;
 
     public string[] GetRandomPassedPoem()
     {

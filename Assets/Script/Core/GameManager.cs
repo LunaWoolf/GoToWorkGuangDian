@@ -81,6 +81,11 @@ public class GameManager : MonoSingleton<GameManager>
     {
         SetCurrentGameMode(GameMode.Work);
         ViewManager.instance.UnloadAllView();
+        if (!PropertyManager.instance.hasShownWorkTutorial)
+        {
+            ViewManager.instance.LoadTutorialView("Tutorial_Work");
+            PropertyManager.instance.hasShownWorkTutorial = true;
+        }
         ViewManager.instance.LoadWorkView();
         PoemGenerator.instance.TearPoem();
         PoemGenerator.instance.GeneratorPoem(5);
@@ -97,17 +102,19 @@ public class GameManager : MonoSingleton<GameManager>
     public void StartNews()
     {
         //SetCurrentGameMode(GameMode.News);
-        if (!PropertyManager.instance.hasShownTutorial)
-        {
-            ViewManager.instance.LoadTutorialView("Tutorial");
-            PropertyManager.instance.hasShownTutorial = true;
-        }
         ViewManager.instance.UnloadAllView();
+        if (!PropertyManager.instance.hasShownNewsTutorial)
+        {
+            ViewManager.instance.LoadTutorialView("News");
+            PropertyManager.instance.hasShownNewsTutorial = true;
+        }
+       
         ViewManager.instance.LoadNewsView();
     }
 
     public void GoBackToWork()
     {
+
         SetCurrentGameMode(GameMode.Work);
         ViewManager.instance.UnloadAllView();
         ViewManager.instance.LoadWorkView();
@@ -198,6 +205,7 @@ public class GameManager : MonoSingleton<GameManager>
         denyPoemCount++;
         PoemPaperController.instance.OnPoemDeny();
         PoemGenerator.instance.OnPoemDeny();
+        SaveCircledWord();
         if (AdjustAndCheckWorkActionCountOfDay(1))
             TryGoToNextPoem();
     }
@@ -245,7 +253,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GoToNextWorkDay()
     {
-        SceneManager.UnloadSceneAsync("paperShredder");
+        //SceneManager.UnloadSceneAsync("paperShredder");
         
         Debug.Log("Go To Next Day");
         gameDate = gameDate.AddDays(1);

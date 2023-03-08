@@ -35,6 +35,8 @@ public class FeedbackPageManager : MonoBehaviour
         }
 
         string FileName = System.DateTime.Now.ToString().Replace("/", "_");
+        FileName = FileName.Replace(" ", "_");
+        FileName = FileName.Replace(":", "_");
 
         string txtDocumentName = Application.streamingAssetsPath + "/PlayTest_Feedback/" + FileName + ".txt";
 

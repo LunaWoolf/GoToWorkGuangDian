@@ -8,5 +8,5 @@ Do I feel fulfilled after today’s work?
 -> No
 
 <<SetProperty CommandManager can_write_poem 1>>
-
+<<GoToNextDay CommandManager>>
 ===

@@ -30,7 +30,7 @@ public class NewsCanvasController : MonoBehaviour
     {
         NewsTitle.text = "";
         NewsBody.text = "";
-        NewsImage.sprite = null;
+        if(NewsImage != null) NewsImage.sprite = null;
 
     }
 
