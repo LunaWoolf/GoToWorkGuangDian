@@ -4,13 +4,18 @@ tags:
 Will I be replaced by CATgpt just like Li one day in the future?
 After all, what makes us different…
 Or what makes me a better choice…
-Check All state
+<<if CheckRebellious()>>
+	<<jump Rebellion>>
+<<endif>>
+
+<<jump NotRebellion>>
 ===
 
 
 title: Rebellion
 tags:
 ---
+
 I don’t always agree with CATgpt.
 They are just robots following codes that tell them what is right and what is wrong.
 Their actions seemed to be guided by a preset standard.
@@ -26,7 +31,10 @@ No…thinking is not enough anymore!
 I need to write things down.
 Tomorrow.
 Tomorrow I’m gonna write things down.
-(You unlock: writing)
+(You unlock writing)
+<<SetProperty CommandManager can_write 1>>
+<<SetProperty CommandManager bRebellious 1>>
+<<GoToNextDay CommandManager>>
 ===
 
 title: NotRebellion
@@ -36,4 +44,5 @@ tags:
 (But something is still missing)
 (That’s something you have to find yourself)
 Time to sleep…
+<<GoToNextDay CommandManager>>
 ===

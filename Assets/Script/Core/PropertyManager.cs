@@ -6,7 +6,7 @@ public class PropertyManager : MonoSingleton<PropertyManager>
 {
     [Header("Player Info")]
     [SerializeField]
-    public string player_name;
+    public string player_name = "default";
     
     [SerializeField] public int society_Artistic_Freedom;
 
@@ -15,14 +15,46 @@ public class PropertyManager : MonoSingleton<PropertyManager>
     public List<string[]> PassedPoem = new List<string[]>();
     public List<string[]> DeniedPoem = new List<string[]>();
 
+    [Header("Work Change")]
+    public bool hasCATgpt = false;
+    public int rebelliousCount = 0;
+
     [Header("Saved Process")]
     public bool hasShownWorkTutorial = false;
     public bool hasShownNewsTutorial = false;
+
+    [Header("After Work")]
+    public bool bCanListenToMusic = false;
+    public bool bHasListenToMusic = false;
+    public bool bCanReadNews = false;
 
     [Header("Unlock Writing")]
     public bool  bReflection= false;
     public bool  bAesthetic = false;
     public bool  bRebellious = false;
+    public bool  bCanWrite = false;
+
+    [Header("Endign")]
+    public bool bHasWritePoem = false;
+
+   
+
+    void Awake()
+    {
+        var objs = FindObjectsOfType<PropertyManager>();
+
+        if (objs.Length > 1)
+        {
+            foreach (var v in objs)
+            {
+                if (v.gameObject != this.gameObject)
+                    Destroy(v.gameObject);
+            }
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+
+    }
 
     public string[] GetRandomPassedPoem()
     {
@@ -31,4 +63,6 @@ public class PropertyManager : MonoSingleton<PropertyManager>
         poem = PassedPoem[i];
         return poem;
     }
+
+
 }

@@ -11,7 +11,7 @@ tags:
     Baker: Well, you can't afford one!
 <<endif>>
 
-<<Jump GoToSleep>>
+<<jump GoToSleep>>
 ===
 
 title: TryUnlockListenToMusic
@@ -20,9 +20,9 @@ tags:
 Does my work have any meaning beyond just paying for my rent?
 
 -> Yes
-<<Jump Fulfilled>>
+    <<jump Fulfilled>>
 -> No
-<<Jump NotFulfilled>>
+    <<jump NotFulfilled>>
 
 ===
 
@@ -30,28 +30,26 @@ title: Fulfilled
 tags:
 ---
 I guess it has a deeper meaning
-Like Li said: “We are the guardian of peoples minds and spirits.” 
+Like Li said “We are the guardian of peoples minds and spirits.” 
 … 
 Are we?
-
--> Yes
-<<Jump Fulfilled>>
+-> Whatever
+    <<jump NotCare>>
 -> No
-<<Jump NotFulfilled>>
+    <<jump NotFulfilled>>
 ===
 
 title: NotFulfilled
 tags:
 ---
-
 I guess not…This job doesn’t have much meaning to me.
 I don’t usually think about my job…
 Should I be more concerned about finding meaning in my daily work?
 
 -> Yes
-<<Jump Care>>
+    <<jump Care>>
 -> No
-<<Jump NotCare>>
+    <<jump NotCare>>
 ===
 
 title: Care
@@ -63,6 +61,9 @@ Maybe I should listen to more music…
 That will help me have a better understanding of what I do every day
 Tomorrow then…I should go to sleep now…
 (You can choose to listen to music tomorrow after work)
+<<SetProperty CommandManager can_listen_to_music 1>>
+<<SetProperty CommandManager bAesthetic 1>>
+<<GoToNextDay CommandManager>>
 ===
 
 
@@ -71,12 +72,17 @@ tags:
 ---
 Too lazy to think more... I should go to sleep…
 (Your train of thought didn't lead anywhere. Try to think more deeply next time)
+<<GoToNextDay CommandManager>>
 ===
 
-title: GoToSleep
+
+title: ListenToMusic
 tags:
 ---
-Too lazy to think more…. I should go to sleep…
-<<SetProperty CommandManager can_write_poem 1>>
+It seems like you're here for the listening party by yourself.
+But that’s okay. You enjoy it
+Something is starting to change, and though you can't quite put your finger on it, you know it's happening.
+(You feel the temptation to think more deeply tomorrow)
+Time to sleep…
 <<GoToNextDay CommandManager>>
 ===

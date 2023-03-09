@@ -24,7 +24,7 @@ When I was a <n>.
 My <n> told me don't <v>.
 When you grow up,
 Would you be the <n> of the <n>.
-He said, "<v>".
+He said, " <v>".
 She's <v> me.
 Long Ago, I give up <v>ing
 Just like the <n> you die in.
@@ -46,7 +46,7 @@ This government need to be <v>.
 This world is <adj>.
 The world is a <n>.
 Let's run away.
-"Where can you <v>"
+"Where can you <v> "
 <n> with <n>.
 It was a <adj> night.
 He say it's the <n> of the nation.

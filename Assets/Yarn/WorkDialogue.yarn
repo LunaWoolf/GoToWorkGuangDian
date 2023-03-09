@@ -100,14 +100,15 @@ tags:
 Boss He: Morning.
 Boss He: Introducing your new colleague.
 Boss He: AI CATgpt!
-AI CATgpt: Nice to meet you. I hope we can build a better future for the younger generation of the nation.
+CATgpt: Nice to meet you. I hope we can build a better future for the younger generation of the nation.
 (...)
 Boss He:To be able to afford hiring CATgpt, we had to make some necessary budget cuts.
 (You notice that Li’s table has been cleared out)
 Boss He: CATgpt will be a really good assistance for you. They will highlight are the potentially inappropriate words for you.
 Boss He: It will make your job way easier.
 Boss He: Go to work now!
-AI CATgpt: Yes, I would love to start my productive day.
+CATgpt: Yes, I would love to start my productive day.
+<<SetProperty CommandManager hasCATgpt 1>>
 <<StartWork CommandManager>>
 ===
 
@@ -116,8 +117,8 @@ tags:
 ---
 (June 9th, End of a Regular Day At Work)
 You: 5:30 pm. Time to go home.
-AI CATgpt: I don't need to rest or go home. I run 24 hr. 
-AI CATgpt: See you tomorrow!
+CATgpt: I don't need to rest or go home. I run 24 hr. 
+CATgpt: See you tomorrow!
 <<StartPaperShredder CommandManager>>
 ===
 
@@ -127,7 +128,7 @@ tags:
 ---
 (A Regular Day At Work)
 Boss He: Morning.
-AI CATgpt: Let’s start our productive day.
+CATgpt: Let’s start our productive day.
 <<StartWork CommandManager>>
 ===
 
@@ -136,6 +137,6 @@ tags:
 ---
 (End of a Regular Day At Work))
 You: 5:30 pm. Time to go home.
-AI CATgpt: See you tomorrow!
+CATgpt: See you tomorrow!
 <<StartPaperShredder CommandManager>>
 ===

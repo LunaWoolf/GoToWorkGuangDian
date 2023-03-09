@@ -36,7 +36,7 @@ public class PoemLine : MonoBehaviour
     {
         
         GameObject w;
-        if (wordCount < 7)
+        if (wordCount < 10)
         {
             w = Instantiate(wordPrefab, line01);
 

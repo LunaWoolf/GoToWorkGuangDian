@@ -19,4 +19,8 @@ MonoBehaviour:
 '
   content: 
   Art: {fileID: 0}
-  restricationList: []
+  restricationList:
+  - property: pass_song_count
+    max: 999
+    min: 5
+    istrue: 0

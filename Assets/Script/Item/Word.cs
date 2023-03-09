@@ -17,6 +17,7 @@ public class Word : MonoBehaviour
     [Header("Variable")]
     public bool circled = false;
 
+    public bool banned = false;
 
     void Start()
     {
@@ -25,7 +26,40 @@ public class Word : MonoBehaviour
         wordbutton.onClick.AddListener(OnWordClicked);
     }
 
-    public void SetText(string t) { _Text = t; tm.text = _Text; if(this.gameObject.activeSelf)StartCoroutine(SetCircleSize()); }
+    public void SetText(string t)
+    {
+        if (t[0] == '?')
+        {
+            banned = true;
+            _Text = t.Substring(1, t.Length-1);
+            tm.text = _Text;
+            if(PropertyManager.instance.hasCATgpt)
+            {
+                tm.color = new Color(0.83f, 0, 0, 1);
+                PropertyManager.instance.rebelliousCount++;
+            }
+               
+        }
+        else
+        {
+            _Text = t; 
+            tm.text = _Text;
+
+            if (PropertyManager.instance.hasCATgpt)
+            {
+                int i = Random.Range(0, 4);
+                if (i < 1) // ramdomly picked as banned word
+                {
+                    banned = true;
+                    tm.color = new Color(0.83f, 0, 0, 1);
+                    PropertyManager.instance.rebelliousCount++;
+                }
+            }
+          
+        }
+        
+        if(this.gameObject.activeSelf)StartCoroutine(SetCircleSize()); 
+    }
     public string GetText(string t) { return _Text = t; }
 
     void OnWordClicked()
@@ -46,6 +80,10 @@ public class Word : MonoBehaviour
             CircleImage.fillAmount = val;
         });
 
+        if (PropertyManager.instance.hasCATgpt && banned) // has ai and follow ai instruction
+        {
+            PropertyManager.instance.rebelliousCount--;
+        }
         GameManager.instance.CircledWord(_Text);
     }
 
@@ -57,6 +95,11 @@ public class Word : MonoBehaviour
         {
             CircleImage.fillAmount = val;
         });
+
+        if (PropertyManager.instance.hasCATgpt && banned) // has ai and follow ai instruction
+        {
+            PropertyManager.instance.rebelliousCount++;
+        }
 
         GameManager.instance.CancleCircledWord(_Text);
     }

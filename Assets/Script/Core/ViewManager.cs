@@ -20,10 +20,28 @@ public class ViewManager : MonoSingleton<ViewManager>
     [SerializeField] GameObject TutorialCanvas;
     [SerializeField] GameObject NewsCanvas;
     [SerializeField] GameObject AfterWorkCanvas;
+    [SerializeField] GameObject WriteCanvas;
+    [SerializeField] GameObject FadeCanvas;
 
     [Header("Dialogue Canvas")]
     [SerializeField] Image CharacterImage;
 
+    void Awake()
+    {
+        var objs = FindObjectsOfType<ViewManager>();
+
+        if (objs.Length > 1)
+        {
+            foreach (var v in objs)
+            {
+                if (v.gameObject != this.gameObject)
+                    Destroy(v.gameObject);
+            }
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+
+    }
 
     public Image GetCharacterImage() { if (CharacterImage == null) CharacterImage = GameObject.Find("CharacterImage").GetComponent<Image>(); return CharacterImage; }
     
@@ -64,6 +82,7 @@ public class ViewManager : MonoSingleton<ViewManager>
 
 
     public void UnloadWorkView() { if (WorkCanvas != null) WorkCanvas.SetActive(false); }
+    public void UnloadNewsView() { if (NewsCanvas != null) NewsCanvas.SetActive(false); }
     public void UnloadTutorialView() { if (TutorialCanvas != null) TutorialCanvas.SetActive(false); }
 
     public void UnloadAllView()
@@ -80,13 +99,15 @@ public class ViewManager : MonoSingleton<ViewManager>
             TutorialCanvas.SetActive(false);
         if (AfterWorkCanvas != null)
             AfterWorkCanvas.SetActive(false);
+        if (WriteCanvas != null)
+            WriteCanvas.SetActive(false);
 
-        
+
     }
 
     public void LoadWorkView(){ if (WorkCanvas != null) WorkCanvas.SetActive(true);}
 
-
+    public void LoadWriteView()  { if (WriteCanvas != null) WriteCanvas.SetActive(true); }
     public void LoadConversationView()
     {
         DialogueCanvas.SetActive(true);
@@ -110,7 +131,6 @@ public class ViewManager : MonoSingleton<ViewManager>
         if (NewsCanvas == null || NewsCanvas.GetComponent<NewsCanvasController>() == null) return;
         NewsCanvas.SetActive(true);
         NewsManager.instance.GeneratreNews();
-        //NewsCanvas.GetComponent<NewsCanvasController>().UpdateNews();
     }
 
     public void LoadAfterWorkView()
@@ -119,4 +139,15 @@ public class ViewManager : MonoSingleton<ViewManager>
         AfterWorkCanvas.SetActive(true);
     }
 
+    public void FadeToBlack()
+    { 
+        if(FadeCanvas == null) return;
+        FadeCanvas.GetComponent<Animator>().SetTrigger("Fade");
+    }
+
+    public void FadeToBlack_end()
+    {
+        if (FadeCanvas == null) return;
+        FadeCanvas.GetComponent<Animator>().SetTrigger("FadeEnd");
+    }
 }

@@ -23,10 +23,17 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     List<string> verbList = new List<string>();
     List<string> adjList =  new List<string>();
 
-    [Header("UI Reference")]
-    public GameObject PoemParent;
-    public GameObject PoemPaper;
-    Animator PoemPaperAnimator;
+    [Header("UI Reference_Read")]
+    public GameObject PoemParent_Read;
+    public GameObject PoemPaper_Read;
+    Animator PoemPaperAnimator_Read;
+    public PoemPaperController poemPaperController_Read;
+
+    [Header("UI Reference_Write")]
+    public GameObject PoemParent_Write;
+    public GameObject PoemPaper_Write;
+    Animator PoemPaperAnimator_Write;
+    public PoemPaperController poemPaperController_Write;
 
     [Header("Prefab Reference")]
     public GameObject PoemLine;
@@ -46,7 +53,6 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     string[] verbs_controversial;
     string[] adjs_controversial;
 
-    public PoemPaperController poemPaperController;
 
     bool waitForNextPoem = false;
 
@@ -54,14 +60,26 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
     void Awake()
     {
+        var objs = FindObjectsOfType<PoemGenerator>();
+
+        if (objs.Length > 1)
+        {
+            foreach (var v in objs)
+            {
+                if (v.gameObject != this.gameObject)
+                    Destroy(v.gameObject);
+            }
+        }
+
+        DontDestroyOnLoad(this.gameObject);
         ParseWorkList();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        if (PoemPaper != null) PoemPaperAnimator = PoemPaper.GetComponent<Animator>();
-        poemPaperController.OnPaperExitFinish.AddListener(TearPoem);
+        if (PoemPaper_Read != null) PoemPaperAnimator_Read = PoemPaper_Read.GetComponent<Animator>();
+        poemPaperController_Read.OnPaperExitFinish.AddListener(TearPoem);
         //GeneratorPoem(5);
     }
 
@@ -112,7 +130,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
             poem[i] = line_tem;
             Debug.Log(line_tem);
 
-            GameObject p = Instantiate(PoemLine, PoemParent.transform, false);
+            GameObject p = Instantiate(PoemLine, PoemParent_Read.transform, false);
             p.GetComponent<PoemLine>().SetLine(line_tem);
         }
         currentPoem = poem;
@@ -140,7 +158,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
                     if (!isvalid && controversial)
                     {
                         rand = Random.Range(0, verbs_controversial.Length);
-                        w = verbs_controversial[rand];
+                        w = "?" + verbs_controversial[rand];
 
                     }
                     else
@@ -150,7 +168,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
                     }
 
-                    Debug.Log("verb w =  " + w);
+                    //Debug.Log("verb w =  " + w);
                     r = r.Replace("<v>", w);
                 }
                 result += r + " ";
@@ -182,36 +200,18 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
                     string w = "Default";
                     int rand = 0;
                     int i = 0;
-                    while (GameManager.instance.personalBannedWordMap.ContainsKey(w) || w == "BLANK")
+
+                    if (!isvalid && controversial)
                     {
-                        i++;
-                        if (GameManager.instance.denyPoemCount > 5 || GameManager.instance.personalBannedWordMap.Keys.Count > 10)
-                        {
-                            rand = Random.Range(0, 3);
-                            if (rand % 2 == 0)
-                            {
-                                w = "BLANK";
-                                //break;
-                            }
-                        }
-                        else if (!isvalid && controversial)
-                        {
-                            rand = Random.Range(1, nouns_controversial.Length);
-                            w = nouns_controversial[rand];
+                        rand = Random.Range(1, nouns_controversial.Length);
+                        w = "?" + nouns_controversial[rand];
 
-                        }
-                        else
-                        {
-                            rand = Random.Range(1, nouns.Length);
-                            w = nouns[rand];
+                    }
+                    else
+                    {
+                        rand = Random.Range(1, nouns.Length);
+                        w = nouns[rand];
 
-                        }
-
-                        if (i == 2)
-                        {
-                            rand = 0;
-                            w = "BLANK";
-                        }
                     }
 
                     r = r.Replace("<n>", w);
@@ -245,38 +245,19 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
                     string w = "Default";
                     int rand = 0;
                     int i = 0;
-                    while (GameManager.instance.personalBannedWordMap.ContainsKey(w) || w == "BLANK" )
+
+                    if (!isvalid && controversial)
                     {
-                        i++;
-                        if (GameManager.instance.denyPoemCount > 5 || GameManager.instance.personalBannedWordMap.Keys.Count > 10)
-                        {
-                            rand = Random.Range(0, 3);
-                            if (rand % 2 == 0)
-                            {
-                                w = "BLANK";
-                                //break;
-                            }
+                        rand = Random.Range(1, adjs_controversial.Length);
+                        w = "?" + adjs_controversial[rand];
 
-
-                        }
-                        else if (!isvalid && controversial)
-                        {
-                            rand = Random.Range(1, adjs_controversial.Length);
-                            w = adjs_controversial[rand];
-
-                        }
-                        else
-                        {
-                            rand = Random.Range(1, adjs.Length);
-                            w = adjs[rand];
-                        }
-
-                        if (i == 2)
-                        {
-                            rand = 0;
-                            w = "BLANK";
-                        }
                     }
+                    else
+                    {
+                        rand = Random.Range(1, adjs.Length);
+                        w = adjs[rand];
+                    }
+
 
                     r = r.Replace("<adj>", w);
 
@@ -297,7 +278,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
     public void TearPoem()
     {
-        foreach (Transform child in PoemParent.transform)
+        foreach (Transform child in PoemParent_Read.transform)
         {
             Destroy(child.gameObject);
         }
@@ -328,10 +309,10 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         PropertyManager.instance.DeniedPoem.Add(currentPoem);
     }
 
-    public void UnloadPoemPaper() { if (PoemPaper != null) PoemPaperAnimator = PoemPaper.GetComponent<Animator>(); PoemPaperAnimator.SetTrigger("Exit"); }
+    public void UnloadPoemPaper() { if (PoemPaper_Read != null) PoemPaperAnimator_Read = PoemPaper_Read.GetComponent<Animator>(); PoemPaperAnimator_Read.SetTrigger("Exit"); }
    
 
-    public void LoadPoemPaper() { if (PoemPaper != null) PoemPaperAnimator = PoemPaper.GetComponent<Animator>(); PoemPaperAnimator.SetTrigger("Enter"); }
+    public void LoadPoemPaper() { if (PoemPaper_Read != null) PoemPaperAnimator_Read = PoemPaper_Read.GetComponent<Animator>(); PoemPaperAnimator_Read.SetTrigger("Enter"); }
 
     ///////////////////////////
     //////Writing Mode/////////
@@ -340,15 +321,32 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
     [Header("Writing Mode")]
     PoemLine currentLine;
-    public void AddWordToPoem(Word Word)
+    public void AddWordToPoem(string word)
     {
         if (currentLine == null)
         {
-            GameObject line = Instantiate(PoemLine, PoemParent.transform, false);
+            GameObject line = Instantiate(PoemLine, PoemParent_Write.transform, false);
             currentLine = line.GetComponent<PoemLine>();
         }
-        
-       // p.GetComponent<PoemLine>().SetLine(line_tem);
+
+        currentLine.GetComponent<PoemLine>().SetLine(word);
+
+        // p.GetComponent<PoemLine>().SetLine(line_tem);
     }
 
+    public void AddNewLineToPoem()
+    {
+        GameObject line = Instantiate(PoemLine, PoemParent_Write.transform, false);
+        currentLine = line.GetComponent<PoemLine>();
+    }
+
+    public void MoveWritePoemToReadPoem()
+    {
+        //Parent of poem -> paragraph
+        PoemParent_Write.transform.parent = PoemPaper_Read.transform;
+        PoemParent_Write.GetComponent<RectTransform>().position = PoemParent_Read.GetComponent<RectTransform>().position;
+        PoemParent_Write.GetComponent<RectTransform>().localScale = PoemParent_Read.GetComponent<RectTransform>().localScale;
+        PoemParent_Write.GetComponent<RectTransform>().rotation = PoemParent_Read.GetComponent<RectTransform>().rotation;
+        
+    }
 }

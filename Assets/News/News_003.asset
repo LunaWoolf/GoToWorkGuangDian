@@ -18,4 +18,8 @@ MonoBehaviour:
     in a recent interview.
   content: 
   Art: {fileID: 0}
-  restricationList: []
+  restricationList:
+  - property: banned_word_count
+    max: 999
+    min: 1
+    istrue: 0

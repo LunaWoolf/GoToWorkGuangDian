@@ -31,6 +31,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Work,
         Moyu,
+        Write,
         //News,
         Conversation,
         Afterwork
@@ -40,12 +41,14 @@ public class GameManager : MonoSingleton<GameManager>
 
     [Header("Word Day")]
     public DateTime gameDate = new DateTime(2019, 6, 6, 0, 0, 0);
+    [SerializeField] int dayCounter = 0;
     public int poemViewedToday = 0 ;
-    public int MaxPoemNeedToViewToday = 5;
+    [SerializeField] int PoemViewedToday = 0;
     [SerializeField] public int denyPoemCount = 0;
     [SerializeField] public int passPoemCount = 0;
-    [SerializeField] int WorkActionCountOfDay = 0;
-    [SerializeField] int MaxWorkActionCountOfDay = 5;
+    [SerializeField] public int WorkActionCountOfDay = 0;
+    [SerializeField] public int MaxWorkActionCountOfDay = 5;
+    public UnityEvent onAction;
 
     [Header("After Work Day")]
     int AfterWorkActionCountOfDay = 0;
@@ -88,7 +91,31 @@ public class GameManager : MonoSingleton<GameManager>
         }
         ViewManager.instance.LoadWorkView();
         PoemGenerator.instance.TearPoem();
-        PoemGenerator.instance.GeneratorPoem(5);
+
+        if (PropertyManager.instance.bHasWritePoem)
+        {
+           // PoemGenerator.instance.MoveWritePoemToReadPoem();
+            //PoemGenerator.instance.GeneratorPoem(5);
+        }
+        else
+        {
+            PoemGenerator.instance.GeneratorPoem(5);
+        }
+           
+      
+    }
+
+    public void StartWrite()
+    {
+        SetCurrentGameMode(GameMode.Write);
+        ViewManager.instance.UnloadAllView();
+        ViewManager.instance.LoadTutorialView("Drag and Drop Words On To  the Paper To Write");
+        /*if (!PropertyManager.instance.hasShownWorkTutorial)
+        {
+            ViewManager.instance.LoadTutorialView("Tutorial_Write");
+            //PropertyManager.instance.hasShownWorkTutorial = true;
+        }*/
+        ViewManager.instance.LoadWriteView();
     }
 
     public void StartMoyu()
@@ -103,21 +130,23 @@ public class GameManager : MonoSingleton<GameManager>
     {
         //SetCurrentGameMode(GameMode.News);
         ViewManager.instance.UnloadAllView();
-        if (!PropertyManager.instance.hasShownNewsTutorial)
+        ViewManager.instance.LoadTutorialView("Read News on your phone can help you have a better understanding about the work around you. \n But it will also take up your work time quickly. \n Be careful, you don't want to loose your job right now.");
+        /*if (!PropertyManager.instance.hasShownNewsTutorial)
         {
             ViewManager.instance.LoadTutorialView("News");
             PropertyManager.instance.hasShownNewsTutorial = true;
-        }
-       
+        }*/
         ViewManager.instance.LoadNewsView();
     }
 
     public void GoBackToWork()
     {
-
-        SetCurrentGameMode(GameMode.Work);
-        ViewManager.instance.UnloadAllView();
-        ViewManager.instance.LoadWorkView();
+        AdjustAndCheckWorkActionCountOfDay(0);
+        {
+            SetCurrentGameMode(GameMode.Work);
+            ViewManager.instance.UnloadAllView();
+            ViewManager.instance.LoadWorkView();
+        }
     }
 
     void Awake()
@@ -126,11 +155,15 @@ public class GameManager : MonoSingleton<GameManager>
 
         if (objs.Length > 1)
         {
-            Destroy(this.gameObject);
+            foreach (var v in objs)
+            {
+                if (v.gameObject != this.gameObject)
+                    Destroy(v.gameObject);
+            }
         }
 
         DontDestroyOnLoad(this.gameObject);
-
+        
     }
 
     void Start()
@@ -167,6 +200,7 @@ public class GameManager : MonoSingleton<GameManager>
     public bool AdjustAndCheckWorkActionCountOfDay(int x)
     {
         WorkActionCountOfDay += x;
+        if(x > 0) onAction.Invoke();
         if (WorkActionCountOfDay >= MaxWorkActionCountOfDay) // if run out of action count at work
         {
             PoemGenerator.instance.UnloadPoemPaper();
@@ -185,10 +219,18 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void OnPoemTryPass()
     {
+        if (PropertyManager.instance.bHasWritePoem)
+        {
+            LoadEndGameScene();
+            FindObjectOfType<PoemPaperController>().OnPoemPass();
+            return;
+        }
+
         if (temp_CircledWordList.Count == 0)
         {
             passPoemCount++;
-            PoemPaperController.instance.OnPoemPass();
+            PoemViewedToday++;
+            FindObjectOfType<PoemPaperController>().OnPoemPass();
             PoemGenerator.instance.OnPoemPass();
             if (AdjustAndCheckWorkActionCountOfDay(1))
                 TryGoToNextPoem();
@@ -202,12 +244,27 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void OnPoemTryDeny()
     {
-        denyPoemCount++;
-        PoemPaperController.instance.OnPoemDeny();
-        PoemGenerator.instance.OnPoemDeny();
-        SaveCircledWord();
-        if (AdjustAndCheckWorkActionCountOfDay(1))
-            TryGoToNextPoem();
+        if (PropertyManager.instance.bHasWritePoem)
+        {
+            LoadEndGameScene();
+            FindObjectOfType<PoemPaperController>().OnPoemDeny();
+            return;
+        }
+
+        if (temp_CircledWordList.Count > 0)
+        {
+            denyPoemCount++;
+            PoemViewedToday++;
+            FindObjectOfType<PoemPaperController>().OnPoemDeny();
+            PoemGenerator.instance.OnPoemDeny();
+            SaveCircledWord();
+            if (AdjustAndCheckWorkActionCountOfDay(1))
+                TryGoToNextPoem();
+        }
+        else
+        {
+            ViewManager.instance.LoadTutorialView("You must present your reason for denying a piece. \n Clicked on inappropriate or controversial words to circle them, or let this piece pass ");
+        }
     }
 
     void TryGoToNextPoem()
@@ -219,29 +276,47 @@ public class GameManager : MonoSingleton<GameManager>
     {
         PoemGenerator.instance.UnloadPoemPaper();
         ViewManager.instance.UnloadWorkView();
-        LoadEndOfWorkDayDialogue();
+        if (!CheckedReachForEnding())
+        {
+            LoadEndOfWorkDayDialogue();
+        }
         Debug.Log("End of day");
     }
 
     void LoadEndOfWorkDayDialogue()
     {
         string date = gameDate.Month.ToString("D2") + gameDate.Day.ToString("D2");
-      
-        LocalDialogueManager.instance.LoadDialogue("d" + date + "_EndWork");
 
+        if (LocalDialogueManager.instance.IsDialogueExsist("d" + date + "_EndWork"))
+        {
+            LocalDialogueManager.instance.LoadDialogue("d" + date + "_EndWork");
+        }
+        else
+        {
+            LocalDialogueManager.instance.LoadDialogue("default_EndWork");
+        }
     }
 
     void LoadMorningWorkDayDialogue()
     {
         string date = gameDate.Month.ToString("D2") + gameDate.Day.ToString("D2");
 
-        LocalDialogueManager.instance.LoadDialogue("d" + date + "_Morning");
+        if (LocalDialogueManager.instance.IsDialogueExsist("d" + date + "_Morning"))
+        {
+            LocalDialogueManager.instance.LoadDialogue("d" + date + "_Morning");
+        }
+        else
+        {
+            LocalDialogueManager.instance.LoadDialogue("default_morning");
+        }
+
         FindObjectOfType<EventSystem>().gameObject.SetActive(true);
         eventSystem.SetActive(true);
     }
 
     public void GoToAfterwork()
     {
+        SetCurrentGameMode(GameMode.Afterwork);
         SceneManager.UnloadSceneAsync("paperShredder");
         Debug.Log("Go To After work Day");
         FindObjectOfType<EventSystem>().gameObject.SetActive(true);
@@ -253,18 +328,45 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GoToNextWorkDay()
     {
+        StartCoroutine(GoToNextWorkDayWithFadeToBlack());
+    }
+    IEnumerator GoToNextWorkDayWithFadeToBlack()
+    {
         //SceneManager.UnloadSceneAsync("paperShredder");
-        
+        ViewManager.instance.FadeToBlack();
+        yield return new WaitForSeconds(1f);
         Debug.Log("Go To Next Day");
         gameDate = gameDate.AddDays(1);
+        dayCounter++;
         WorkActionCountOfDay = 0;
-        LoadMorningWorkDayDialogue();
-
+        if (!CheckedReachForEnding())
+        {
+            LoadMorningWorkDayDialogue();
+        }
+        PoemViewedToday = 0;
         FindObjectOfType<EventSystem>().gameObject.SetActive(true);
         eventSystem.SetActive(true); 
     }
 
-  
+    bool CheckedReachForEnding()
+    {
+        if (PropertyManager.instance.bHasWritePoem) return false;
+
+        if (PoemViewedToday == 0) // if yesterday all spend on phone
+        {
+            LocalDialogueManager.instance.LoadDialogue("Ending_LoseJob_Phone");
+            return true;
+        }
+        else if (dayCounter > 9) // replace by ai
+        {
+            LocalDialogueManager.instance.LoadDialogue("Ending_LoseJob_AI");
+            return true;
+        }
+
+        return false;
+    }
+
+
     public void StartPaperShredder()
     {
         SceneManager.LoadScene("paperShredder", LoadSceneMode.Additive);
@@ -316,9 +418,22 @@ public class GameManager : MonoSingleton<GameManager>
             List<string> keyList = new List<string>(this.personalBannedWordMap.Keys);
             int i = UnityEngine.Random.Range(1, personalBannedWordMap.Keys.Count);
             s = keyList[i];
-
         }
-
         return s;
     }
+
+    public void LoadEndGameScene()
+    {
+        StartCoroutine(IE_LoadEndGameScene());
+       
+    }
+
+    IEnumerator IE_LoadEndGameScene()
+    {
+        ViewManager.instance.FadeToBlack_end();
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("Feedback", LoadSceneMode.Single);
+    }
+
+
 }

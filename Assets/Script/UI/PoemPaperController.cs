@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 //[System.Serializable]
 public class UnityAnimationEvent : UnityEvent<string> { };
-public class PoemPaperController : MonoSingleton<PoemPaperController>
+public class PoemPaperController : MonoBehaviour
 {
     public enum PoemPaperMode
     { 
@@ -30,36 +30,41 @@ public class PoemPaperController : MonoSingleton<PoemPaperController>
     void Start()
     {
 
-        PoemCanvasAnimator = this.GetComponent<Animator>();
-        //Bind all Animation cips with animation start and end event
-        for (int i = 0; i < PoemCanvasAnimator.runtimeAnimatorController.animationClips.Length; i++)
+        if (poemPaperMode == PoemPaperMode.Read)
         {
-            AnimationClip clip = PoemCanvasAnimator.runtimeAnimatorController.animationClips[i];
+            PoemCanvasAnimator = this.GetComponent<Animator>();
+            //Bind all Animation cips with animation start and end event
+            for (int i = 0; i < PoemCanvasAnimator.runtimeAnimatorController.animationClips.Length; i++)
+            {
+                AnimationClip clip = PoemCanvasAnimator.runtimeAnimatorController.animationClips[i];
 
-            AnimationEvent animationStartEvent = new AnimationEvent();
-            animationStartEvent.time = 0;
-            animationStartEvent.functionName = "AnimationStartHandler";
-            animationStartEvent.stringParameter = clip.name;
+                AnimationEvent animationStartEvent = new AnimationEvent();
+                animationStartEvent.time = 0;
+                animationStartEvent.functionName = "AnimationStartHandler";
+                animationStartEvent.stringParameter = clip.name;
 
-            AnimationEvent animationEndEvent = new AnimationEvent();
-            animationEndEvent.time = clip.length;
-            animationEndEvent.functionName = "AnimationCompleteHandler";
-            animationEndEvent.stringParameter = clip.name;
+                AnimationEvent animationEndEvent = new AnimationEvent();
+                animationEndEvent.time = clip.length;
+                animationEndEvent.functionName = "AnimationCompleteHandler";
+                animationEndEvent.stringParameter = clip.name;
 
-            clip.AddEvent(animationStartEvent);
-            clip.AddEvent(animationEndEvent);
+                clip.AddEvent(animationStartEvent);
+                clip.AddEvent(animationEndEvent);
+            }
+
+            if (OnAnimationStart != null)
+            {
+                OnAnimationStart.AddListener(SwitchOnAnimationStart);
+
+            }
+
+            if (OnAnimationComplete != null)
+                OnAnimationComplete.AddListener(SwitchOnAnimationEnd);
+
+            OnPaperExitFinish.AddListener(OnPoemPaperExitAnimationEnd);
+
         }
-
-        if (OnAnimationStart != null)
-        {
-            OnAnimationStart.AddListener(SwitchOnAnimationStart);
-            
-        }
-     
-        if (OnAnimationComplete != null)
-            OnAnimationComplete.AddListener(SwitchOnAnimationEnd);
-
-        OnPaperExitFinish.AddListener(OnPoemPaperExitAnimationEnd);
+       
         poemGenerator = FindObjectOfType<PoemGenerator>();
     }
 
@@ -113,27 +118,27 @@ public class PoemPaperController : MonoSingleton<PoemPaperController>
 
     public void OnPoemPaperExitAnimationEnd()
     {
-        DenyStamp.SetActive(false);
-        PassStamp.SetActive(false);
+        if (DenyStamp != null) DenyStamp.SetActive(false);
+        if (PassStamp != null) PassStamp.SetActive(false);
 
     }
 
     public void OnPoemPaperEnterAnimationStart()
     {
-        DenyStamp.SetActive(false);
-        PassStamp.SetActive(false);
+        if (DenyStamp != null) DenyStamp.SetActive(false);
+        if (PassStamp != null) PassStamp.SetActive(false);
     }
 
 
     public void OnPoemPass()
     {
-       
-        PassStamp.SetActive(true);
+
+        if (PassStamp != null) PassStamp.SetActive(true);
     }
 
     public void OnPoemDeny()
     {
-        DenyStamp.SetActive(true);
+        if (DenyStamp != null) DenyStamp.SetActive(true);
     }
 
 
@@ -156,10 +161,10 @@ public class PoemPaperController : MonoSingleton<PoemPaperController>
     }
 
 
-    public void AddWordToPoem(GameObject Word_go)
+    public void TryAddWordToPoem(string s)
     {
-        if (Word_go.GetComponent<Word>() == null) return;
-        poemGenerator.AddWordToPoem(Word_go.GetComponent<Word>());
-
+        //if (Word_go.GetComponent<Word>() == null) return;
+        if (s == "") return;
+        poemGenerator.AddWordToPoem(s);
     }
 }

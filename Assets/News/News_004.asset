@@ -17,4 +17,8 @@ MonoBehaviour:
   title: Young generation complains about artistic freedom.
   content: 
   Art: {fileID: 0}
-  restricationList: []
+  restricationList:
+  - property: banned_word_count
+    max: 999
+    min: 4
+    istrue: 0

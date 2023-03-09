@@ -7,6 +7,7 @@ public class ShredderWord : MonoBehaviour
 {
 
     [SerializeField] TextMeshPro[] letterRefList;
+    public string word;
 
     // Start is called before the first frame update
     void Start()
@@ -14,13 +15,14 @@ public class ShredderWord : MonoBehaviour
         letterRefList = this.GetComponentsInChildren<TextMeshPro>();
     }
 
-    public void SetWord(string word)
+    public void SetWord(string _word)
     {
+        word = _word;
         for (int i = 0; i < letterRefList.Length; i++)
         {
             if (i < word.Length)
             {
-                letterRefList[i].text = word[i].ToString();
+                letterRefList[i].text = _word[i].ToString();
             }
             else
             {

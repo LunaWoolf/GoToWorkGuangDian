@@ -37,6 +37,16 @@ public class NewsCanvasController : MonoBehaviour
     void OnCloseButtonClicked()
     {
         ClearNewsView();
-        GameManager.instance.GoBackToWork();
+        if (GameManager.instance.GetCurrentGameMode() == GameManager.GameMode.Work)
+        {
+            GameManager.instance.AdjustAndCheckWorkActionCountOfDay(1);
+            GameManager.instance.GoBackToWork();
+        }
+        if (GameManager.instance.GetCurrentGameMode() == GameManager.GameMode.Afterwork)
+        {
+            LocalDialogueManager.instance.LoadDialogue("GoToSleepAfterReadNews");
+            ViewManager.instance.UnloadNewsView();
+        }
+
     }
 }

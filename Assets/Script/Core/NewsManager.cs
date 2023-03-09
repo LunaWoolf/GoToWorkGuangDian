@@ -19,7 +19,22 @@ public class NewsManager : MonoSingleton<NewsManager>
     }
 
 
+    void Awake()
+    {
+        var objs = FindObjectsOfType<NewsManager>();
 
+        if (objs.Length > 1)
+        {
+            foreach (var v in objs)
+            {
+                if (v.gameObject != this.gameObject)
+                    Destroy(v.gameObject);
+            }
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+
+    }
     void Update()
     {
         
@@ -79,7 +94,6 @@ public class NewsManager : MonoSingleton<NewsManager>
                     {
                         r += p_line + "\n";
                     }
-
                 }
               
 

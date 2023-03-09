@@ -10,6 +10,24 @@ public class LocalDialogueManager : MonoSingleton<LocalDialogueManager>
     [Header("Reference")]
     DialogueRunner dialogueRunner;
     // Start is called before the first frame update
+
+    void Awake()
+    {
+        var objs = FindObjectsOfType<LocalDialogueManager>();
+
+        if (objs.Length > 1)
+        {
+            foreach (var v in objs)
+            {
+                if (v.gameObject != this.gameObject)
+                    Destroy(v.gameObject);
+            }
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+
+    }
+
     void Start()
     {
         dialogueRunner = GameObject.FindObjectOfType<DialogueRunner>();
@@ -21,10 +39,17 @@ public class LocalDialogueManager : MonoSingleton<LocalDialogueManager>
         
     }
 
+    public bool IsDialogueExsist(string startNode)
+    {
+        if (dialogueRunner == null) return false;
+        return dialogueRunner.NodeExists(startNode);
+    }
+
     public void LoadDialogue(string startNode)
     {
         ViewManager.instance.LoadConversationView();
         if (dialogueRunner == null) return;
+        
         if (dialogueRunner.IsDialogueRunning)
         {
             dialogueRunner.Stop();
@@ -36,6 +61,7 @@ public class LocalDialogueManager : MonoSingleton<LocalDialogueManager>
             Debug.Log("local try to load" + startNode);
             dialogueRunner.StartDialogue(startNode);
         }
-       
+
+      
     }
 }
