@@ -106,6 +106,7 @@ public class PoemPaperController : MonoBehaviour
         if (workViewController == null) return;
         workViewController.SetDenyButtonActive(true);
         workViewController.SetPassButtonActive(true);
+        workViewController.SetNewsButtonActive(true);
     }
 
     public void OnPoemPaperExitAnimationStart()
@@ -114,6 +115,7 @@ public class PoemPaperController : MonoBehaviour
         if (workViewController == null) return;
         workViewController.SetDenyButtonActive(false);
         workViewController.SetPassButtonActive(false);
+        workViewController.SetNewsButtonActive(false);
     }
 
     public void OnPoemPaperExitAnimationEnd()

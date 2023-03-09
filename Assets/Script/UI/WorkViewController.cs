@@ -69,6 +69,11 @@ public class WorkViewController : MonoBehaviour
         DenyButton.enabled = isOn;
     }
 
+    public void SetNewsButtonActive(bool isOn)
+    {
+        NewsButton.enabled = isOn;
+    }
+  
     public void InitalActionCount(int action)
     {
         for (int i = 0; i < action; i++)
