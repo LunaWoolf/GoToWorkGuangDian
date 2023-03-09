@@ -45,7 +45,7 @@ public class WorkViewController : MonoBehaviour
         }
         if (PoemCanvas != null) PoemCanvasAnimator = PoemCanvas.GetComponent<Animator>();
 
-        InitalActionCount(GameManager.instance.MaxWorkActionCountOfDay - GameManager.instance.WorkActionCountOfDay);
+        //InitalActionCount(GameManager.instance.MaxWorkActionCountOfDay - GameManager.instance.WorkActionCountOfDay);
         GameManager.instance.onAction.AddListener(OnUseOneAction);
     }
 
@@ -81,6 +81,8 @@ public class WorkViewController : MonoBehaviour
             ActionCountList.Add(Instantiate(ActionCountPrefab, ActionCountParent.transform, false));
         }
     }
+
+   
 
     public void OnUseOneAction()
     {

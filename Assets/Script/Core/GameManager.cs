@@ -92,6 +92,10 @@ public class GameManager : MonoSingleton<GameManager>
         ViewManager.instance.LoadWorkView();
         PoemGenerator.instance.TearPoem();
 
+        //temp
+        if(FindObjectOfType<WorkViewController>() != null)
+            FindObjectOfType<WorkViewController>().InitalActionCount(GameManager.instance.MaxWorkActionCountOfDay - GameManager.instance.WorkActionCountOfDay);
+
         if (PropertyManager.instance.bHasWritePoem)
         {
            // PoemGenerator.instance.MoveWritePoemToReadPoem();
