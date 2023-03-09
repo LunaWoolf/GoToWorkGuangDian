@@ -447,8 +447,10 @@ public class GameManager : MonoSingleton<GameManager>
         personalBannedWord bannedWord = new personalBannedWord();
         bannedWord.word = s;
         bannedWord.count = 0;
-
-        personalBannedWordMap.Add(s, bannedWord);
+        if (!personalBannedWordMap.ContainsKey(s))
+        {
+            personalBannedWordMap.Add(s, bannedWord);
+        }
     }
 
 }
