@@ -1,12 +1,24 @@
 ﻿title: ThinkAboutLife
 tags:
 ---
+<<if $gold_amount < 10>>
+    Baker: Well, you can't afford one!
+<<endif>>
+<<if $gold_amount < 10>>
+    Baker: Well, you can't afford one!
+<<endif>>
+<<if $gold_amount < 10>>
+    Baker: Well, you can't afford one!
+<<endif>>
 
-Do I feel fulfilled after today’s work?
+<<Jump GoToSleep>>
+===
 
--> Yes
--> No
 
+title: GoToSleep
+tags:
+---
+Too lazy to think more…. I should go to sleep…
 <<SetProperty CommandManager can_write_poem 1>>
 <<GoToNextDay CommandManager>>
 ===
