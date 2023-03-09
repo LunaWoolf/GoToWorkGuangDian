@@ -130,12 +130,13 @@ public class GameManager : MonoSingleton<GameManager>
     {
         //SetCurrentGameMode(GameMode.News);
         ViewManager.instance.UnloadAllView();
-        ViewManager.instance.LoadTutorialView("Read News on your phone can help you have a better understanding about the work around you. \n But it will also take up your work time quickly. \n Be careful, you don't want to loose your job right now.");
-        /*if (!PropertyManager.instance.hasShownNewsTutorial)
+       
+        if (!PropertyManager.instance.hasShownNewsTutorial)
         {
-            ViewManager.instance.LoadTutorialView("News");
+            //ViewManager.instance.LoadTutorialView("News");
+            ViewManager.instance.LoadTutorialView("Read News on your phone can help you have a better understanding about the work around you. \n But it will also take up your work time quickly. \n Be careful, you don't want to loose your job right now.");
             PropertyManager.instance.hasShownNewsTutorial = true;
-        }*/
+        }
         ViewManager.instance.LoadNewsView();
     }
 
@@ -435,5 +436,15 @@ public class GameManager : MonoSingleton<GameManager>
         SceneManager.LoadScene("Feedback", LoadSceneMode.Single);
     }
 
+    //temp fix
+    public void AddWordToWordList(string s)
+    {
+
+        personalBannedWord bannedWord = new personalBannedWord();
+        bannedWord.word = s;
+        bannedWord.count = 0;
+
+        personalBannedWordMap.Add(s, bannedWord);
+    }
 
 }

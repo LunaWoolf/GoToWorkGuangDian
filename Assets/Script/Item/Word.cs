@@ -28,7 +28,7 @@ public class Word : MonoBehaviour
 
     public void SetText(string t)
     {
-        if (t[0] == '?')
+        if (t.Length > 2 && t[0] == '?')
         {
             banned = true;
             _Text = t.Substring(1, t.Length-1);
@@ -45,7 +45,7 @@ public class Word : MonoBehaviour
             _Text = t; 
             tm.text = _Text;
 
-            if (PropertyManager.instance.hasCATgpt)
+            /*if (PropertyManager.instance.hasCATgpt)
             {
                 int i = Random.Range(0, 4);
                 if (i < 1) // ramdomly picked as banned word
@@ -54,7 +54,7 @@ public class Word : MonoBehaviour
                     tm.color = new Color(0.83f, 0, 0, 1);
                     PropertyManager.instance.rebelliousCount++;
                 }
-            }
+            }*/
           
         }
         
