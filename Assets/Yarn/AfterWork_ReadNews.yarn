@@ -1,0 +1,47 @@
+﻿title: TryUnlockReflection
+tags:
+---
+Does my job have any meaningful impact on society?
+-> Yes
+<<Jump Society>>
+-> No
+<<Jump NoSociety>>
+===
+
+title:  Society
+tags:
+---
+Check Read News counts.
+Recently I’ve been reading the news at work a lot…
+They really got me thinking. 
+Things I did are actually affecting others…it’s scary to admit, but it’s true.
+But is that impact positive or negative?
+-> Positive
+<<Jump Positive>>
+-> Negative
+<<Jump Negative>>
+===
+
+title:   Positive
+Tags:
+---
+Can I bring more positive impact…outside of work also…
+(You complete your reflection)
+===
+
+title:   Negative
+Tags:
+---
+That’s a shame.
+Can I bring more positive impact…outside of work, maybe…
+(You complete your reflection)
+===
+
+
+title:  NoSociety
+Tags:
+---
+It's kind of funny that I don't know much about what's currently happening in society.
+Maybe I can read more news.
+I should go to sleep now…
+===

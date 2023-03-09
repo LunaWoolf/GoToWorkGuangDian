@@ -47,7 +47,6 @@ title: d0607_Morning
 tags:
 ---
 (June 7th, A Regular Day At Work)
-(June 7th, A Regular Day At Work)
 Li: Morningggggg!
 Li: Let's Start Working!
 <<StartWork CommandManager>>
@@ -65,7 +64,6 @@ You: 5:30pm. Time to go home.
 title: d0608_Morning
 tags:
 ---
-(June 8th, A Regular Day At Work)
 (June 8th, A Regular Day At Work)
 Li: Morningggggg!
 Li: Let's Start Working!
@@ -87,8 +85,7 @@ Boss He: Put it on my desk before 9 am tomorrow.
 
 Li: Hey…I know how you feel. That’s suck.
 Li: You look like you have something more emergent to do…
-(Hmm…let me see…eating the leftover in the fridge…scrolling on the dating app….watching video frog vs. anime girl…. )
-(yeah, emergent)
+(Not really to be honest...)
 Li: I don’t have any plans tonight, so that I can take care of these.
 Li: Don’t worry about it! I Enjoy this work.
 Li: You can just take care of the paper shredder and go home.
@@ -99,25 +96,46 @@ Li: You can just take care of the paper shredder and go home.
 title: d0609_Morning
 tags:
 ---
-(June 10th, A Regular Day At Work)
-(June 10th, A Regular Day At Work)
+(June 9th, A Regular Day At Work)
 Boss He: Morning.
 Boss He: Introducing your new colleague.
 Boss He: AI CATgpt!
-AI CATgpt: Nice to meet you, I hope we can build a better future for the younger generation of the nation.
+AI CATgpt: Nice to meet you. I hope we can build a better future for the younger generation of the nation.
 (...)
-Boss He: In order to hire CATgpt, we made some necessary budget cuts.
-Boss He: Anyway, go to work now.
-AI CATgpt: Yes, I would love to start my productive day.
+Boss He:To be able to afford hiring CATgpt, we had to make some necessary budget cuts.
 (You notice that Li’s table has been cleared out)
+Boss He: CATgpt will be a really good assistance for you. They will highlight are the potentially inappropriate words for you.
+Boss He: It will make your job way easier.
+Boss He: Go to work now!
+AI CATgpt: Yes, I would love to start my productive day.
 <<StartWork CommandManager>>
 ===
 
 title: d0609_EndWork
 tags:
 ---
-(June 10th, End of a Regular Day At Work)
-You: 5:30pm. Time to go home.
-AI CATgpt: I don't need to rest or go home, I run 24 hr. 
+(June 9th, End of a Regular Day At Work)
+You: 5:30 pm. Time to go home.
+AI CATgpt: I don't need to rest or go home. I run 24 hr. 
+AI CATgpt: See you tomorrow!
+<<StartPaperShredder CommandManager>>
+===
+
+
+title: default_morning
+tags: 
+---
+(A Regular Day At Work)
+Boss He: Morning.
+AI CATgpt: Let’s start our productive day.
+<<StartWork CommandManager>>
+===
+
+title: default_EndWork
+tags: 
+---
+(End of a Regular Day At Work))
+You: 5:30 pm. Time to go home.
+AI CATgpt: See you tomorrow!
 <<StartPaperShredder CommandManager>>
 ===

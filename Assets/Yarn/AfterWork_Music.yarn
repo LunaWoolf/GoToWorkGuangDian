@@ -1,0 +1,82 @@
+﻿title: ThinkAboutLife
+tags:
+---
+<<if $gold_amount < 10>>
+    Baker: Well, you can't afford one!
+<<endif>>
+<<if $gold_amount < 10>>
+    Baker: Well, you can't afford one!
+<<endif>>
+<<if $gold_amount < 10>>
+    Baker: Well, you can't afford one!
+<<endif>>
+
+<<Jump GoToSleep>>
+===
+
+title: TryUnlockListenToMusic
+tags:
+---
+Does my work have any meaning beyond just paying for my rent?
+
+-> Yes
+<<Jump Fulfilled>>
+-> No
+<<Jump NotFulfilled>>
+
+===
+
+title: Fulfilled
+tags:
+---
+I guess it has a deeper meaning
+Like Li said: “We are the guardian of peoples minds and spirits.” 
+… 
+Are we?
+
+-> Yes
+<<Jump Fulfilled>>
+-> No
+<<Jump NotFulfilled>>
+===
+
+title: NotFulfilled
+tags:
+---
+
+I guess not…This job doesn’t have much meaning to me.
+I don’t usually think about my job…
+Should I be more concerned about finding meaning in my daily work?
+
+-> Yes
+<<Jump Care>>
+-> No
+<<Jump NotCare>>
+===
+
+title: Care
+tags:
+---
+Yeah… I should care more about what I’m doing…
+Perhaps I should pay closer attention to the subject matter I work with every day.
+Maybe I should listen to more music…
+That will help me have a better understanding of what I do every day
+Tomorrow then…I should go to sleep now…
+(You can choose to listen to music tomorrow after work)
+===
+
+
+title: NotCare
+tags:
+---
+Too lazy to think more... I should go to sleep…
+(Your train of thought didn't lead anywhere. Try to think more deeply next time)
+===
+
+title: GoToSleep
+tags:
+---
+Too lazy to think more…. I should go to sleep…
+<<SetProperty CommandManager can_write_poem 1>>
+<<GoToNextDay CommandManager>>
+===

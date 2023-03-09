@@ -1,5 +1,24 @@
-﻿title: Ending
+﻿title: Ending_LoseJob_Phone
 tags:
 ---
+(A Regular Day At Work)
+Boss He: Hey.
+Boss He: I have something to tell you.
+Boss He: I know you spent your whole day on your phone yesterday.
+Boss He: We really don’t need someone like you in our team. We've decided to automate some of the tasks that you've been handling, in order to increase efficiency and accuracy.
+Boss He: Nice working with you. Please hand me back your staff id and leave the building.
+Boss He: Bye.
+===
 
+title: Ending_LoseJob_AI
+tags:
+---
+(A Regular Day At Work)
+Boss He: Hey.
+Boss He: I have something to tell you.
+Boss He: I’m sorry to inform you that you will no longer be working with us.
+Boss He: We've decided to automate some of the tasks that you've been handling in order to increase efficiency and accuracy.
+Boss He: Our dear friend CATgpt will pick up what you left and be a better piece of our team.
+Boss He: I’m really sorry, but the decision has been made. Please hand me back your staff id and leave the building.
+Boss He: Bye.
 ===
