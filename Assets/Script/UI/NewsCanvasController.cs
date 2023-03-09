@@ -11,18 +11,28 @@ public class NewsCanvasController : MonoBehaviour
     [SerializeField] TextMeshProUGUI NewsBody;
     [SerializeField] Image NewsImage;
     [SerializeField] Button CloseButton;
+    [SerializeField] Button NextButton;
+    [SerializeField] int currentSessionViewCount = 0;
 
     void Start()
     {
-        CloseButton.onClick.AddListener(OnCloseButtonClicked);
+        if(CloseButton != null) CloseButton.onClick.AddListener(OnCloseButtonClicked);
+        if (NextButton != null) NextButton.onClick.AddListener(OnNextButtonClicked);
+
     }
 
+    private void OnEnable()
+    {
+        currentSessionViewCount = 0;
+        NextButton.gameObject.SetActive(true);
+    }
     // Update is called once per frame
     public void UpdateNews(News n)
     {
         NewsTitle.text = n.title;
         NewsBody.text = n.content;
         NewsImage = n.Art;
+
 
     }
 
@@ -48,5 +58,17 @@ public class NewsCanvasController : MonoBehaviour
             ViewManager.instance.UnloadNewsView();
         }
 
+    }
+
+    void OnNextButtonClicked()
+    {
+        NewsManager.instance.RefreshCureentValidNews();
+        NewsManager.instance.GeneratreNews();
+        currentSessionViewCount += 1;
+
+        if (currentSessionViewCount >= 2)
+        {
+            NextButton.gameObject.SetActive(false);
+        }
     }
 }
