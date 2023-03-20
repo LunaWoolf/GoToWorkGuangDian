@@ -5437,7 +5437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c72942960a24a73950c714bd744d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebug: 1
+  isDebug: 0
   eventSystem: {fileID: 742836702}
   dayCounter: 0
   poemViewedToday: 0

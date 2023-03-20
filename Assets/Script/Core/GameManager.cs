@@ -98,8 +98,10 @@ public class GameManager : MonoSingleton<GameManager>
 
         if (PropertyManager.instance.bHasWritePoem)
         {
-           // PoemGenerator.instance.MoveWritePoemToReadPoem();
+            // PoemGenerator.instance.MoveWritePoemToReadPoem();
             //PoemGenerator.instance.GeneratorPoem(5);
+            //PoemGenerator.instance.GeneratorPoem(5);
+            PoemGenerator.instance.TearPoemAfterWrite();
         }
         else
         {
@@ -188,6 +190,7 @@ public class GameManager : MonoSingleton<GameManager>
     // Update is called once per frame
     void Update()
     {
+        /*
         if (isDebug && Input.GetKeyDown(KeyCode.H))
         {
             StartPaperShredder();
@@ -197,7 +200,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             NewsManager.instance.RefreshCureentValidNews();
             NewsManager.instance.GeneratreNews();
-        }
+        }*/
 
     }
 
@@ -227,6 +230,7 @@ public class GameManager : MonoSingleton<GameManager>
         if (PropertyManager.instance.bHasWritePoem)
         {
             LoadEndGameScene();
+
             FindObjectOfType<PoemPaperController>().OnPoemPass();
             return;
         }

@@ -115,6 +115,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
     public string[] GeneratorPoem(int line)
     {
+        Debug.Log("Gen 5");
         string[] poem = new string[line];
         int rand = Random.Range(0, 100);
         bool isValid = (rand < ValidPrecentag) ? true : false;
@@ -276,18 +277,33 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         return result;
     }
 
-    public void TearPoem()
+    //temp
+    public void TearPoemAfterWrite()
     {
         foreach (Transform child in PoemParent_Read.transform)
         {
             Destroy(child.gameObject);
+            //Debug.Log("Tear 1");
         }
+    }
 
+    public void TearPoem()
+    {
+       
         if (waitForNextPoem)
         {
+            foreach (Transform child in PoemParent_Read.transform)
+            {
+                Destroy(child.gameObject);
+                //Debug.Log("Tear 1");
+            }
+
+            Debug.Log("Tear 5");
             GeneratorPoem(5);
             LoadPoemPaper();
             waitForNextPoem = false;
+
+           
         }
 
     }
