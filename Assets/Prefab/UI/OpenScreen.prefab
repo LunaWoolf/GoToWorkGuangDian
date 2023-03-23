@@ -344,7 +344,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &113364762473812238
 RectTransform:
   m_ObjectHideFlags: 0
@@ -442,6 +442,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13886d43d4ecb4ccdb0e7d1a5e5a8d2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartButton: {fileID: 8401675643993474800}
+  NameInputField: {fileID: 113364762603458448}
 --- !u!1 &113364762603458454
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,6 +1014,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42ee9831897d54992b7c96659fdd328c, type: 3}
+--- !u!114 &8401675643993474800 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8433693841294703372, guid: 42ee9831897d54992b7c96659fdd328c, type: 3}
+  m_PrefabInstance: {fileID: 113364762058653180}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8401675643993474801 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8433693841294703373, guid: 42ee9831897d54992b7c96659fdd328c, type: 3}

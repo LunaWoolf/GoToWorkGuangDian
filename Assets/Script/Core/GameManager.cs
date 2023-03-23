@@ -11,6 +11,7 @@ public class GameManager : MonoSingleton<GameManager>
 {
 
     public bool isDebug = false;
+    public bool isLoadOpenScene = false;
     GameMode currentGameMode;
 
     public struct personalBannedWord
@@ -59,6 +60,7 @@ public class GameManager : MonoSingleton<GameManager>
     public List<string> temp_CircledWordList = new List<string>();
     public Dictionary<string, personalBannedWord> personalBannedWordMap = new Dictionary<string, personalBannedWord>();
 
+ 
     public void SetCurrentGameMode(GameMode mode)
     {  currentGameMode = mode;
 
@@ -91,9 +93,9 @@ public class GameManager : MonoSingleton<GameManager>
         }
         ViewManager.instance.LoadWorkView();
         PoemGenerator.instance.TearPoem();
-
+        PoemGenerator.instance.TryGoToNextPoem();
         //temp
-        if(FindObjectOfType<WorkViewController>() != null)
+        if (FindObjectOfType<WorkViewController>() != null)
             FindObjectOfType<WorkViewController>().InitalActionCount(GameManager.instance.MaxWorkActionCountOfDay - GameManager.instance.WorkActionCountOfDay);
 
         if (PropertyManager.instance.bHasWritePoem)
@@ -175,6 +177,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     void Start()
     {
+        if(!isDebug || isLoadOpenScene)
+            SceneManager.LoadScene("OpenScene", LoadSceneMode.Additive);
+
         Debug.Log(gameDate.Month.ToString("D2") + gameDate.Day.ToString("D2"));
 
         personalBannedWord bannedWord = new personalBannedWord();
@@ -185,12 +190,14 @@ public class GameManager : MonoSingleton<GameManager>
 
         if(ViewManager.instance != null)
             ViewManager.instance.UnloadWorkView();
+
+     
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*
+        
         if (isDebug && Input.GetKeyDown(KeyCode.H))
         {
             StartPaperShredder();
@@ -200,7 +207,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             NewsManager.instance.RefreshCureentValidNews();
             NewsManager.instance.GeneratreNews();
-        }*/
+        }
 
     }
 
@@ -253,6 +260,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void OnPoemTryDeny()
     {
+        // Load Ending // Temp logic 
         if (PropertyManager.instance.bHasWritePoem)
         {
             LoadEndGameScene();
@@ -264,7 +272,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             denyPoemCount++;
             PoemViewedToday++;
-            FindObjectOfType<PoemPaperController>().OnPoemDeny();
+            FindObjectOfType<PoemPaperController>().OnPoemDeny(); //Turn on stamp
             PoemGenerator.instance.OnPoemDeny();
             SaveCircledWord();
             if (AdjustAndCheckWorkActionCountOfDay(1))
@@ -326,7 +334,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void GoToAfterwork()
     {
         SetCurrentGameMode(GameMode.Afterwork);
-        SceneManager.UnloadSceneAsync("paperShredder");
+        ScenesManager.instance.UnloadScene("paperShredder");
         Debug.Log("Go To After work Day");
         FindObjectOfType<EventSystem>().gameObject.SetActive(true);
         eventSystem.SetActive(true);

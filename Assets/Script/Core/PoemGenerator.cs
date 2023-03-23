@@ -80,6 +80,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     {
         if (PoemPaper_Read != null) PoemPaperAnimator_Read = PoemPaper_Read.GetComponent<Animator>();
         poemPaperController_Read.OnPaperExitFinish.AddListener(TearPoem);
+        poemPaperController_Read.OnPaperExitFinish.AddListener(TryGoToNextPoem);
         //GeneratorPoem(5);
     }
 
@@ -289,23 +290,25 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
     public void TearPoem()
     {
-       
+        foreach (Transform child in PoemParent_Read.transform)
+        {
+            Destroy(child.gameObject);
+
+        }
+        Debug.Log("Tear");
+     
+
+    }
+
+    public void TryGoToNextPoem()
+    {
+
         if (waitForNextPoem)
         {
-            foreach (Transform child in PoemParent_Read.transform)
-            {
-                Destroy(child.gameObject);
-                //Debug.Log("Tear 1");
-            }
-
-            Debug.Log("Tear 5");
             GeneratorPoem(5);
             LoadPoemPaper();
             waitForNextPoem = false;
-
-           
         }
-
     }
 
     public void NextPoem()

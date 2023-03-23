@@ -188,6 +188,11 @@ public class ScenesManager : MonoSingleton<ScenesManager>
         // allow scene activation for queued level
     }
 
+    public void UnloadScene(string scene)
+    {
+        SceneManager.UnloadSceneAsync(scene);
+    }
+
     public void ResetGame()
     {
 #if !UNITY_EDITOR
