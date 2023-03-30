@@ -51,7 +51,7 @@ public class NewsManager : MonoSingleton<NewsManager>
 
     }
 
-    public void GeneratreNews()
+    public News GeneratreNews()
     {
         int rand = Random.Range(0, currentValidNews.Count);
         News currentNews = currentValidNews[rand];
@@ -67,9 +67,10 @@ public class NewsManager : MonoSingleton<NewsManager>
 
         if (newsCanvasController == null)
             newsCanvasController = FindObjectOfType<NewsCanvasController>();
+        if (newsCanvasController != null)
+            newsCanvasController.UpdateNews(AfterProcessNews);
 
-        newsCanvasController.UpdateNews(AfterProcessNews);
-
+        return AfterProcessNews;
     }
 
     string ProcessNewsInfo(string line)

@@ -22,6 +22,7 @@ public class ViewManager : MonoSingleton<ViewManager>
     [SerializeField] GameObject AfterWorkCanvas;
     [SerializeField] GameObject WriteCanvas;
     [SerializeField] GameObject FadeCanvas;
+    [SerializeField] GameObject MessageCanvas;
 
     [Header("Dialogue Canvas")]
     [SerializeField] Image CharacterImage;
@@ -44,7 +45,7 @@ public class ViewManager : MonoSingleton<ViewManager>
     }
 
     public Image GetCharacterImage() { if (CharacterImage == null) CharacterImage = GameObject.Find("CharacterImage").GetComponent<Image>(); return CharacterImage; }
-    
+    public MessageCanvasController GetMessageCanvas() { return FindObjectOfType<MessageCanvasController>(); }
     public void SwitchDialogueCharacterArt(string c)
     {
         if (c == string.Empty || c == null)

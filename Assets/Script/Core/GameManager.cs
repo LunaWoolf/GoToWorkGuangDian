@@ -237,7 +237,6 @@ public class GameManager : MonoSingleton<GameManager>
         if (PropertyManager.instance.bHasWritePoem)
         {
             LoadEndGameScene();
-
             FindObjectOfType<PoemPaperController>().OnPoemPass();
             return;
         }

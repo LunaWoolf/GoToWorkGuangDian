@@ -321,11 +321,14 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     {
 
         PropertyManager.instance.PassedPoem.Add(currentPoem);
+        ViewManager.instance.GetMessageCanvas().GenerateMessageBlock();
     }
 
     public void OnPoemDeny()
     {
         PropertyManager.instance.DeniedPoem.Add(currentPoem);
+        ViewManager.instance.GetMessageCanvas().GenerateMessageBlock();
+
     }
 
     public void UnloadPoemPaper() { if (PoemPaper_Read != null) PoemPaperAnimator_Read = PoemPaper_Read.GetComponent<Animator>(); PoemPaperAnimator_Read.SetTrigger("Exit"); }
