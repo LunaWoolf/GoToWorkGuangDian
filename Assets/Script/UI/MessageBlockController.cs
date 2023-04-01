@@ -11,6 +11,8 @@ public class MessageBlockController : MonoBehaviour
     [SerializeField] TextMeshProUGUI NewsBody;
     [SerializeField] Image BackgroundImage;
 
+    [SerializeField] float DisappearTime = 5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +35,7 @@ public class MessageBlockController : MonoBehaviour
 
     IEnumerator SelfDestroy()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(DisappearTime);
         Destroy(this.gameObject);
     }
 }

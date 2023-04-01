@@ -7,6 +7,7 @@ using TMPro;
 public class MessageCanvasController : MonoBehaviour
 {
     [SerializeField] GameObject MessageBlock;
+    [SerializeField] int DisappearTime = 5;
     public Camera cam;
     // Start is called before the first frame update
     void Start()
