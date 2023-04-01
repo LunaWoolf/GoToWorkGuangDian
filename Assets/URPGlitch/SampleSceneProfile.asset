@@ -72,16 +72,16 @@ MonoBehaviour:
   active: 1
   scanLineJitter:
     m_OverrideState: 1
-    m_Value: 0.083
+    m_Value: 0.403
   verticalJump:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.154
   horizontalShake:
     m_OverrideState: 1
-    m_Value: 0.052
+    m_Value: 0.145
   colorDrift:
     m_OverrideState: 1
-    m_Value: 0.001
+    m_Value: 0.43
 --- !u!114 &-7011558710299706105
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -103,10 +103,10 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.25
+    m_Value: 0.283
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.4
+    m_Value: 0.422
   rounded:
     m_OverrideState: 0
     m_Value: 0
@@ -159,7 +159,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.00001
+    m_Value: 0.274
 --- !u!114 &5932969237171010068
 MonoBehaviour:
   m_ObjectHideFlags: 3

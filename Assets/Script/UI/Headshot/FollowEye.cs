@@ -6,7 +6,7 @@ using UnityEngine;
 public class FollowEye : MonoBehaviour
 {
     [SerializeField] GameObject pupil;
-   
+    [SerializeField] float moveSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -43,10 +43,11 @@ public class FollowEye : MonoBehaviour
         }
 
 
-        Vector3 pupilPosition = new Vector3(Mathf.Clamp(ScreenmousePos.x, mostLeftCorner, mostRightCorner),
+        Vector3 pupilTargetPosition = new Vector3(Mathf.Clamp(ScreenmousePos.x, mostLeftCorner, mostRightCorner),
                                             Mathf.Clamp(ScreenmousePos.y, mostTopCorner, mostBottomCorner),
                                             0);
+        Vector3 direction = (pupilTargetPosition - pupil.GetComponent<RectTransform>().position).normalized;
 
-        pupil.GetComponent<RectTransform>().position = pupilPosition;
+        pupil.GetComponent<RectTransform>().position += moveSpeed * Time.deltaTime * direction;
     }
 }

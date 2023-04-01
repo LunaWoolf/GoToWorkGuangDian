@@ -78,7 +78,7 @@ MonoBehaviour:
     m_Value: 0
   horizontalShake:
     m_OverrideState: 1
-    m_Value: 0.017
+    m_Value: 0.032
   colorDrift:
     m_OverrideState: 1
     m_Value: 0
