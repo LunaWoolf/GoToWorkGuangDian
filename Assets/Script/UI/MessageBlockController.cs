@@ -11,6 +11,10 @@ public class MessageBlockController : MonoBehaviour
     [SerializeField] TextMeshProUGUI NewsBody;
     [SerializeField] Image BackgroundImage;
 
+    [Header("Show Head Shot")]
+    [SerializeField] GameObject headShot;
+    [SerializeField] public bool isShowHeadShot;
+
     [SerializeField] float DisappearTime = 5f;
 
     // Start is called before the first frame update
@@ -37,5 +41,12 @@ public class MessageBlockController : MonoBehaviour
     {
         yield return new WaitForSeconds(DisappearTime);
         Destroy(this.gameObject);
+    }
+
+    public void ToogleHeadShot(bool isOn)
+    {
+        isShowHeadShot = isOn;
+        headShot.SetActive(isOn);
+
     }
 }
