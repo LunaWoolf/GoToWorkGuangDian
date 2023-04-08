@@ -7,28 +7,46 @@ public class WriteCanvasContoller : MonoBehaviour
 {
     [SerializeField] Button FinishButton;
     [SerializeField] Button NewLineButton;
+    [SerializeField] Button DeleteLineButton;
+    PoemGenerator poemGenerator;
     // Start is called before the first frame update
     void Start()
     {
+        poemGenerator = FindObjectOfType<PoemGenerator>();
         AddBasicWordToWordBand();
         FinishButton.onClick.AddListener(OnFinishButtonClicked);
         NewLineButton.onClick.AddListener(OnNewLineButtonClicked);
+        DeleteLineButton.onClick.AddListener(OnDeleteButtonClicked);
+
+        // poemGeneratorGenerateEmptyLine()
     }
 
     void OnFinishButtonClicked()
     {
         //Save Poem
         PropertyManager.instance.bHasWritePoem = true;
-        FindObjectOfType<PoemGenerator>().MoveWritePoemToReadPoem();
+        poemGenerator.MoveWritePoemToReadPoem();
         GameManager.instance.GoToNextWorkDay();
         //temp fix
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
+
+        //Unload Write Scene
+        ScenesManager.instance.UnloadScene("WriteScene");
+
+
+    }
+
+    void OnDeleteButtonClicked()
+    {
+        if (poemGenerator != null)
+            poemGenerator.DeleteLastWord();
+
     }
 
     void OnNewLineButtonClicked()
     {
-        if(FindObjectOfType<PoemGenerator>() != null)
-            FindObjectOfType<PoemGenerator>().AddNewLineToPoem();
+        if(poemGenerator != null)
+            poemGenerator.AddNewLineToPoem();
   
     }
 

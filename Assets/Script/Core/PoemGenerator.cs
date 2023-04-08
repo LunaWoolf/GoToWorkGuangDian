@@ -114,6 +114,13 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
       
     }
 
+    public string GenerateEmptyLine()
+    {
+        int randLine = Random.Range(0, lines.Length);
+        string line_tem = lines[randLine];
+        return line_tem;
+    }
+
     public string[] GeneratorPoem(int line)
     {
         Debug.Log("Gen 5");
@@ -321,13 +328,15 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     {
 
         PropertyManager.instance.PassedPoem.Add(currentPoem);
-        ViewManager.instance.GetMessageCanvas().GenerateMessageBlock();
+        ViewManager.instance.GetMessageCanvas().GenerateNewsMessageBlock();
+        ViewManager.instance.GetMessageCanvas().GenerateReviewMessageBlock();
     }
 
     public void OnPoemDeny()
     {
         PropertyManager.instance.DeniedPoem.Add(currentPoem);
-        ViewManager.instance.GetMessageCanvas().GenerateMessageBlock();
+        ViewManager.instance.GetMessageCanvas().GenerateNewsMessageBlock();
+
 
     }
 
@@ -370,5 +379,21 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         PoemParent_Write.GetComponent<RectTransform>().localScale = PoemParent_Read.GetComponent<RectTransform>().localScale;
         PoemParent_Write.GetComponent<RectTransform>().rotation = PoemParent_Read.GetComponent<RectTransform>().rotation;
         
+    }
+
+    public void AssignWriteModeReference(GameObject _poemParent, GameObject _poemPaper, Animator _PoemPaperAnimator, PoemPaperController _controller)
+    {
+       PoemParent_Write = _poemParent;
+       PoemPaper_Write = _poemPaper;
+       PoemPaperAnimator_Write = _PoemPaperAnimator;
+       poemPaperController_Write = _controller;
+    }
+
+    public void DeleteLastWord()
+    {
+        if (currentLine == null) return;
+        currentLine.GetComponent<PoemLine>().removeLastWord();
+
+
     }
 }

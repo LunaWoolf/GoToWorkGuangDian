@@ -26,7 +26,7 @@ public class PoemLine : MonoBehaviour
         foreach (string word in _line)
         {
           
-                insertWord(word);
+            insertWord(word);
         }
 
     }
@@ -54,5 +54,19 @@ public class PoemLine : MonoBehaviour
 
         w.GetComponent<Word>().SetText(word);
         wordList.Add(w.GetComponent<Word>());
+    }
+
+
+    public void removeLastWord()
+    {
+        if (wordCount > 0)
+        {
+            GameObject w = wordList[wordList.Count - 1].gameObject;
+            wordList.Remove(w.GetComponent<Word>());
+            Destroy(w);
+            wordCount--;
+
+        }
+        
     }
 }

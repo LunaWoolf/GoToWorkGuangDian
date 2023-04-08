@@ -178,7 +178,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1782,6 +1782,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8816302008714369956, guid: a403baae26c81f64ebb8282b767a66b4, type: 3}
+      propertyPath: currentSceneCamera
+      value: 
+      objectReference: {fileID: 21132671}
     - target: {fileID: 8816302008714369957, guid: a403baae26c81f64ebb8282b767a66b4, type: 3}
       propertyPath: m_Name
       value: paperShredder_MouseInput

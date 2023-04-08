@@ -26,6 +26,11 @@ public class PoemPaperController : MonoBehaviour
     public PoemPaperMode poemPaperMode = PoemPaperMode.Read;
     public PoemGenerator poemGenerator;
 
+    [Header("UI Reference_Write")]
+    public GameObject PoemParent_Write;
+    public GameObject PoemPaper_Write;
+    public PoemPaperController poemPaperController_Write;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,6 +68,10 @@ public class PoemPaperController : MonoBehaviour
 
             OnPaperExitFinish.AddListener(OnPoemPaperExitAnimationEnd);
 
+        }
+        else if (poemPaperMode == PoemPaperMode.Write)
+        {
+            FindObjectOfType<PoemGenerator>().AssignWriteModeReference(PoemParent_Write, PoemPaper_Write, this.GetComponent<Animator>(), poemPaperController_Write);
         }
        
         poemGenerator = FindObjectOfType<PoemGenerator>();
@@ -169,4 +178,7 @@ public class PoemPaperController : MonoBehaviour
         if (s == "") return;
         poemGenerator.AddWordToPoem(s);
     }
+
+
+   
 }

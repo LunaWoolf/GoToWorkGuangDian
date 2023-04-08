@@ -69,6 +69,9 @@ public class GameManager : MonoSingleton<GameManager>
             case GameMode.Work:
                //StartWork();
                break;
+            case GameMode.Write:
+                OpenWriteMode();
+                break;
         }
     }
 
@@ -98,7 +101,8 @@ public class GameManager : MonoSingleton<GameManager>
         if (FindObjectOfType<WorkViewController>() != null)
             FindObjectOfType<WorkViewController>().InitalActionCount(GameManager.instance.MaxWorkActionCountOfDay - GameManager.instance.WorkActionCountOfDay);
 
-        if (PropertyManager.instance.bHasWritePoem)
+        //PoemGenerator.instance.GeneratorPoem(5);
+        /*if (PropertyManager.instance.bHasWritePoem)
         {
             // PoemGenerator.instance.MoveWritePoemToReadPoem();
             //PoemGenerator.instance.GeneratorPoem(5);
@@ -108,9 +112,23 @@ public class GameManager : MonoSingleton<GameManager>
         else
         {
             PoemGenerator.instance.GeneratorPoem(5);
+        }*/
+
+        //temp
+        if (PropertyManager.instance.bHasWritePoem)
+        {
+            // PoemGenerator.instance.MoveWritePoemToReadPoem();
+            //PoemGenerator.instance.GeneratorPoem(5);
+            //PoemGenerator.instance.GeneratorPoem(5);
+           PropertyManager.instance.bHasWritePoem = false;
+           PoemGenerator.instance.TearPoemAfterWrite();
         }
-           
-      
+        else
+        {
+           PoemGenerator.instance.GeneratorPoem(5);
+        }
+
+
     }
 
     public void StartWrite()
@@ -234,12 +252,12 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void OnPoemTryPass()
     {
-        if (PropertyManager.instance.bHasWritePoem)
+        /*if (PropertyManager.instance.bHasWritePoem)
         {
             LoadEndGameScene();
             FindObjectOfType<PoemPaperController>().OnPoemPass();
             return;
-        }
+        }*/
 
         if (temp_CircledWordList.Count == 0)
         {
@@ -260,12 +278,12 @@ public class GameManager : MonoSingleton<GameManager>
     public void OnPoemTryDeny()
     {
         // Load Ending // Temp logic 
-        if (PropertyManager.instance.bHasWritePoem)
+        /*if (PropertyManager.instance.bHasWritePoem)
         {
             LoadEndGameScene();
             FindObjectOfType<PoemPaperController>().OnPoemDeny();
             return;
-        }
+        }*/
 
         if (temp_CircledWordList.Count > 0)
         {
@@ -464,4 +482,9 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
+    public void OpenWriteMode()
+    {
+        SceneManager.LoadScene("WriteScene", LoadSceneMode.Additive);
+
+    }
 }

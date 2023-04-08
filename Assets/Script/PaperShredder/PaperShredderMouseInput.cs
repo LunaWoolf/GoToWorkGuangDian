@@ -7,6 +7,7 @@ public class PaperShredderMouseInput : MonoBehaviour
 {
     public GameObject selectedObject;
     Vector3 offset;
+    public Camera currentSceneCamera; // this doesn't sound great....
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +16,7 @@ public class PaperShredderMouseInput : MonoBehaviour
 
     void Update()
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 mousePosition = currentSceneCamera.ScreenToWorldPoint(Input.mousePosition);
         if (Input.GetMouseButtonDown(0))
         {
             Collider2D targetObject = Physics2D.OverlapPoint(mousePosition);
@@ -53,6 +54,7 @@ public class PaperShredderMouseInput : MonoBehaviour
     {
         return IsPointerOverPoemPaper(GetEventSystemRaycastResults());
     }
+
     ///Returns 'true' if we touched or hovering on Unity UI element.
     public static PoemPaperController IsPointerOverPoemPaper(List<RaycastResult> eventSystemRaysastResults)
     {

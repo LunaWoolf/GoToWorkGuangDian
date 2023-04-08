@@ -18,18 +18,45 @@ public class MessageCanvasController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //GenerateMessageBlock();
+        if(GameManager.instance.isDebug && Input.GetKeyDown(KeyCode.M))
+            GenerateNewsMessageBlock();
     }
 
 
-    public void GenerateMessageBlock()
+    public void GenerateNewsMessageBlock()
     {
-        GameObject m = Instantiate(MessageBlock, this.transform);
-        float xPos = Random.Range(0, Screen.width);
-        float yPos = Random.Range(0, Screen.height);
-        Vector3 spawnPosition = new Vector3(xPos, yPos, 0f);
-        m.transform.position = cam.ScreenToViewportPoint(spawnPosition);
+        MessageBlockController m = Instantiate(MessageBlock, this.transform).
+                                    GetComponent<MessageBlockController>().Init(MessageBlockController.MessageType.News, NewsManager.instance.GeneratreNews(), " ");
+        float xPos = Random.Range(-Screen.width * 4, Screen.height * 15);
+        float yPos = Random.Range(-Screen.height * 4, Screen.height * 4);
 
-        m.GetComponent<MessageBlockController>().SetMessage(NewsManager.instance.GeneratreNews());
+        Vector3 spawnPosition = new Vector3(xPos, yPos, 0f);
+        //Debug.Log("x  " + xPos);
+        //Debug.Log("y  " + yPos);
+        m.GetComponent<RectTransform>().position = cam.ScreenToViewportPoint(spawnPosition);
+
+        //m.GetComponent<MessageBlockController>().SetNewsMessage(NewsManager.instance.GeneratreNews());
+    }
+
+    public void GenerateReviewMessageBlock()
+    {
+         int digit = Random.Range(1, 6);
+         int Plays = Random.Range(0, 1000000) / (10 ^ digit);
+         int Sales = Random.Range(0, Plays)/ (10 ^ digit);
+         int Likes = Random.Range(0, Plays)/ (10 ^ digit);
+         //int Feedback = Random.Range(0, 5);
+
+       
+
+        string ReviewText = "Plays: " + Plays + "\nSales: " + Sales + "\nLikes: " + Likes;
+
+        MessageBlockController m = Instantiate(MessageBlock, this.transform).
+                                    GetComponent<MessageBlockController>().Init(MessageBlockController.MessageType.Review, null, ReviewText);
+
+        float xPos = Random.Range(-Screen.width * 4, 0);
+        float yPos = Random.Range(0, Screen.height * 4);
+
+        Vector3 spawnPosition = new Vector3(xPos, yPos, 0f);
+        m.GetComponent<RectTransform>().position = cam.ScreenToViewportPoint(spawnPosition);
     }
 }
