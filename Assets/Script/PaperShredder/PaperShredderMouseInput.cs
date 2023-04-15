@@ -45,7 +45,10 @@ public class PaperShredderMouseInput : MonoBehaviour
                 }
                 else if (IsPointerOverSingleWord())
                 {
-                    IsPointerOverSingleWord().SetText(selectedObject.GetComponentInParent<ShredderWord>().word);
+                    if (selectedObject.GetComponentInParent<ShredderWord>())
+                    {
+                        IsPointerOverSingleWord().SetText(selectedObject.GetComponentInParent<ShredderWord>().word);
+                    }
                 }
 
                 selectedObject = null;

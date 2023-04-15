@@ -22,7 +22,10 @@ public class ShredderWord : MonoBehaviour
         {
             if (i < word.Length)
             {
-                letterRefList[i].text = _word[i].ToString();
+                if (_word[i] == '.' || _word[i] == '?' || _word[i] == '!' || _word[i] == ',') 
+                    continue;
+                else
+                    letterRefList[i].text = _word[i].ToString();
             }
             else
             {

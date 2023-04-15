@@ -68,7 +68,7 @@ public class PoemLine : MonoBehaviour
         }
         else if (word.Contains("<>"))
         {
-            word = word.Replace("<>", "         .");
+            word = word.Replace("<>", "[         ]");
         
 
             w.GetComponent<Word>().SetWordType(Word.WordType.Empty);

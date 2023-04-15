@@ -12,8 +12,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     public bool isDebug = false;
     public bool isLoadOpenScene = false;
-    GameMode currentGameMode;
+    GameMode currentGameMode = GameMode.Conversation;
 
+   
     public struct personalBannedWord
     {
         public string word;
@@ -30,6 +31,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public enum GameMode
     {
+        
         Work,
         Moyu,
         Write,
@@ -50,6 +52,10 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] public int WorkActionCountOfDay = 0;
     [SerializeField] public int MaxWorkActionCountOfDay = 5;
     public UnityEvent onAction;
+    public UnityEvent onStartWork;
+    public float WorkDayTimer;
+    public float WorkDayTimeLimit;
+    public bool  isPauseWorkDayTimer = false;
 
     [Header("After Work Day")]
     int AfterWorkActionCountOfDay = 0;
@@ -77,8 +83,6 @@ public class GameManager : MonoSingleton<GameManager>
 
     public GameMode GetCurrentGameMode() { return currentGameMode; }
 
-
-   
     public void TryStartWork()
     {
         StartWork();
@@ -88,6 +92,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void StartWork()
     {
         SetCurrentGameMode(GameMode.Work);
+        onStartWork.Invoke();
         ViewManager.instance.UnloadAllView();
         if (!PropertyManager.instance.hasShownWorkTutorial)
         {
@@ -235,11 +240,26 @@ public class GameManager : MonoSingleton<GameManager>
             NewsManager.instance.GeneratreNews();
         }
 
+        //increase Timer
+        if (!isPauseWorkDayTimer && currentGameMode == GameMode.Work)
+        {
+            WorkDayTimer += Time.deltaTime;
+           
+            if (WorkDayTimer > WorkDayTimeLimit)
+            {
+                EndOfWorkDay();
+            }
+        }
+
+     
     }
 
 
     public bool AdjustAndCheckWorkActionCountOfDay(int x)
     {
+        //Stop using work action for now
+        return true;
+
         WorkActionCountOfDay += x;
         if(x > 0) onAction.Invoke();
         if (WorkActionCountOfDay >= MaxWorkActionCountOfDay) // if run out of action count at work
@@ -316,6 +336,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     void EndOfWorkDay()
     {
+        SetCurrentGameMode(GameMode.Conversation);
         PoemGenerator.instance.UnloadPoemPaper();
         ViewManager.instance.UnloadWorkView();
         if (!CheckedReachForEnding())

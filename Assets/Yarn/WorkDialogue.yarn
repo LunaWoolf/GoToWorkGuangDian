@@ -14,12 +14,9 @@ tags:
 (June 6th, A Regular Day At Work)
 Boss He: Morning.
 You: Morning.
-Boss He: You're 2 min late. It's 9:02 now.
-Boss He: Start working now. It's Monday; there's a lot to do (*sips tea with loud noise*)
-Li: Morning!
+Boss He: You're 2 min late. It's 9:02 now. (*sips tea with loud noise*)
+Li: Morning! Happy Monday! 
 You: Morning.
-Li: I’ve already started my tasks today. Happy Monday! 
-(Time To Work)
 Boss He: Okay, let’s repeat our mission one more time and get to work.
 Boss He: our mission is…
 Li: PROTECT THE PUBLIC!!!
@@ -29,7 +26,7 @@ Boss He: We are…
 Li: THE GUARDIAN OF PEOPLE’S MIND AND SPIRIT!!!
 You: ...
 Boss He: Okay. Go to work (*sips tea with loud noise*).
-(Time To Work, for real)
+(Time To Work)
 <<StartWork CommandManager>>
 ===
 
@@ -38,10 +35,11 @@ tags:
 ---
 (June 6th, End of a Regular Day At Work)
 You: 5:30pm. Time to go home.
-Li: Don't forget to put all the paper you worked on today into the paper shredder!
+Li: Don't forget to put all the paper you worked on today into the paper shredder! I will go after you!
 (oh yeah...how can you forget? Your favorite part of the day.)
 <<StartPaperShredder CommandManager>>
 ===
+
 
 title: d0607_Morning
 tags:
@@ -51,7 +49,6 @@ Li: Morningggggg!
 Li: Let's Start Working!
 <<StartWork CommandManager>>
 ===
-
 
 title: d0607_EndWork
 Tags:
@@ -65,38 +62,6 @@ title: d0608_Morning
 tags:
 ---
 (June 8th, A Regular Day At Work)
-Li: Morningggggg!
-Li: Let's Start Working!
-<<StartWork CommandManager>>
-===
-
-title: d0608_EndWork
-Tags:
----
-(June 8th, End of a Regular Day At Work)
-You: 5:30pm. Time to go home.
-Boss He: Wait for a second.
-Boss He: Here are 5 more lyrics I need for tomorrow morning.
-Boss He: Put it on my desk before 9 am tomorrow.
-(...I thought I could go home)
-
--> (Go back to work)
--> (Go home)
-
-Li: Hey…I know how you feel. That’s suck.
-Li: You look like you have something more emergent to do…
-(Not really to be honest...)
-Li: I don’t have any plans tonight, so that I can take care of these.
-Li: Don’t worry about it! I Enjoy this work.
-Li: You can just take care of the paper shredder and go home.
-(Okay then)
-<<StartPaperShredder CommandManager>>
-===
-
-title: d0609_Morning
-tags:
----
-(June 9th, A Regular Day At Work)
 Boss He: Morning.
 Boss He: Introducing your new colleague.
 Boss He: AI CATgpt!
@@ -112,10 +77,10 @@ CATgpt: Yes, I would love to start my productive day.
 <<StartWork CommandManager>>
 ===
 
-title: d0609_EndWork
-tags:
+title: d0608_EndWork
+Tags:
 ---
-(June 9th, End of a Regular Day At Work)
+(June 8th, End of a Regular Day At Work)
 You: 5:30 pm. Time to go home.
 CATgpt: I don't need to rest or go home. I run 24 hr. 
 CATgpt: See you tomorrow!

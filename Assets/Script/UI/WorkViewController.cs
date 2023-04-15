@@ -11,6 +11,7 @@ public class WorkViewController : MonoBehaviour
     [SerializeField] Button DenyButton;
     [SerializeField] Button MoyuButton;
     [SerializeField] Button NewsButton;
+    [SerializeField] Button ReviseButton;
     [SerializeField] Animator PoemCanvasAnimator;
 
     [Header("ActionCount")]
@@ -45,6 +46,12 @@ public class WorkViewController : MonoBehaviour
         }
         if (PoemCanvas != null) PoemCanvasAnimator = PoemCanvas.GetComponent<Animator>();
 
+        if (ReviseButton != null)
+        {
+            ReviseButton.onClick.AddListener(OnReviseButtonClicked);
+        }
+        
+
         //InitalActionCount(GameManager.instance.MaxWorkActionCountOfDay - GameManager.instance.WorkActionCountOfDay);
         GameManager.instance.onAction.AddListener(OnUseOneAction);
     }
@@ -55,6 +62,11 @@ public class WorkViewController : MonoBehaviour
      
     }
 
+    void OnReviseButtonClicked()
+    {
+        Debug.Log("On Revise Button Clicked");
+        PoemGenerator.instance.OnPoemRevise.Invoke();
+    }
     void OnDenyButtonClicked()
     {
         GameManager.instance.OnPoemTryDeny();

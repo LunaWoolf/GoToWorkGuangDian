@@ -413,7 +413,7 @@ using Yarn.Unity;
 
         private void Awake()
         {
-            canvasGroup.alpha = 1;
+            canvasGroup.alpha = 0;
             canvasGroup.blocksRaycasts = false;
        
         }
@@ -421,7 +421,7 @@ using Yarn.Unity;
         private void Start()
         {
 #if UNITY_EDITOR
-        if (GameManager.instance.isDebug)
+        if (GameManager.instance && GameManager.instance.isDebug)
         {
             skilAllButton.gameObject.SetActive(true);
             skilAllButton.onClick.AddListener(DebugSpeedRun);
@@ -564,6 +564,7 @@ using Yarn.Unity;
 
             //Charaacter Image Luna
             
+        if (ViewManager.instance)
             ViewManager.instance.SwitchDialogueCharacterArt(dialogueLine.CharacterName);
 
         // Begin running the line as a coroutine.

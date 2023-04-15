@@ -34,6 +34,7 @@ public class Word : MonoBehaviour
 
     public void SetWordType(WordType type)
     {
+     
         currentWordType = type;
         switch (type)
         {
@@ -43,7 +44,7 @@ public class Word : MonoBehaviour
                     //wordbutton.GetComponent<Image>().color = new Color(0, 0, 0, 0f);
                 }
                 isCircledable = false;
-                tm.fontStyle = FontStyles.Underline;
+                //tm.fontStyle = FontStyles.Underline;
                 break;
         }
 
@@ -54,6 +55,7 @@ public class Word : MonoBehaviour
         tm.text = _Text;
         if (wordbutton == null) wordbutton = this.GetComponentInChildren<Button>();
         wordbutton.onClick.AddListener(OnWordClicked);
+        PoemGenerator.instance.OnPoemRevise.AddListener(ReviseWord);
     }
 
     public void SetText(string t)
@@ -120,6 +122,7 @@ public class Word : MonoBehaviour
 
     void CancleCircledWord()
     {
+        if (!isCircledable) return;
         circled = false;
 
         LeanTween.value(gameObject, 1f, 0f, .5f).setOnUpdate((float val) =>
@@ -141,5 +144,25 @@ public class Word : MonoBehaviour
         if (CircleImage != null && Background != null) 
             CircleImage.GetComponent<RectTransform>().sizeDelta = new Vector2(Background.GetComponent<RectTransform>().sizeDelta.x * 1.3f,
                                                                          Background.GetComponent<RectTransform>().sizeDelta.y * 1.3f);
+    }
+
+    public void ReviseWord()
+    {
+        if (circled)
+        {
+            switch (currentWordType)
+            {
+                case WordType.Noun:
+                    SetText(PoemGenerator.instance.GetRandomNoun());
+                    break;
+                case WordType.Verb:
+                    SetText(PoemGenerator.instance.GetRandomVerb());
+                    break;
+                case WordType.Adj:
+                    SetText(PoemGenerator.instance.GetRandomAdj());
+                    break;
+            }
+
+        }
     }
 }

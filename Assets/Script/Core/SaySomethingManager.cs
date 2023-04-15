@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 using Yarn;
+using TMPro;
 
 public class SaySomethingManager : MonoBehaviour
 {
@@ -46,6 +47,11 @@ public class SaySomethingManager : MonoBehaviour
         Debug.Log(line_tem);
 
         PoemLine.GetComponent<PoemLine>().SetLine(line_tem);
+        foreach (Word w in PoemLine.GetComponentsInChildren<Word>())
+        { 
+            w.isCircledable = false;
+            w.tm.fontStyle = FontStyles.Bold;
+        }
     }
 
 

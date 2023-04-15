@@ -37,7 +37,7 @@ public class PropertyManager : MonoSingleton<PropertyManager>
     [Header("Endign")]
     public bool bHasWritePoem = false;
 
-   
+    public int money = 0;
 
     void Awake()
     {

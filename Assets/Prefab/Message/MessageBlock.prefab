@@ -277,7 +277,7 @@ MonoBehaviour:
   headshotImage: {fileID: 241858811}
   LeftEye: {fileID: 3426778508703784744}
   RightEye: {fileID: 581018332}
-  DisappearTime: 20
+  DisappearTime: 3
   messageType: 0
 --- !u!1 &3814144037983122431
 GameObject:

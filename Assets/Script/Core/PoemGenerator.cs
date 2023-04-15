@@ -58,6 +58,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
     string[] currentPoem;
 
+    public UnityEvent OnPoemRevise;
     void Awake()
     {
         var objs = FindObjectsOfType<PoemGenerator>();
@@ -177,9 +178,9 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
                     }
 
                     //Debug.Log("verb w =  " + w);
-                    r = r.Replace("<v>", w);
+                    r = r.Replace("<v>", w) + "<v>";
                 }
-                result += r + "<v>" + " ";
+                result += r  + " ";
             }
 
             result = result.Substring(0, result.Length - 1);
@@ -222,11 +223,11 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
                     }
 
-                    r = r.Replace("<n>", w);
+                    r = r.Replace("<n>", w) + "<n>";
 
                 }
 
-                result += r + "<n>" + " ";
+                result += r + " ";
             }
             result = result.Substring(0, result.Length - 1);
         }
@@ -267,11 +268,11 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
                     }
 
 
-                    r = r.Replace("<adj>", w);
+                    r = r.Replace("<adj>", w) + "<adj>";
 
 
                 }
-                result +=  r + "<adj>" + " ";
+                result +=  r  + " ";
             }
 
             result = result.Substring(0, result.Length - 1);
@@ -328,7 +329,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
         PropertyManager.instance.PassedPoem.Add(currentPoem);
         ViewManager.instance.GetMessageCanvas().GenerateNewsMessageBlock();
-        ViewManager.instance.GetMessageCanvas().GenerateReviewMessageBlock();
+        //ViewManager.instance.GetMessageCanvas().GenerateReviewMessageBlock();
     }
 
     public void OnPoemDeny()
@@ -392,7 +393,68 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     {
         if (currentLine == null) return;
         currentLine.GetComponent<PoemLine>().removeLastWord();
+    }
 
+    public string GetRandomNoun()
+    {
+        int c = Random.Range(0, 100);
+        bool controversial = (c < ControversialPrecentage) ? true : false;
+        string w = " ";
+        int rand = 0;
 
+        if (controversial)
+        {
+            rand = Random.Range(1, nouns_controversial.Length);
+            w = "?" + nouns_controversial[rand];
+
+        }
+        else
+        {
+            rand = Random.Range(1, nouns.Length);
+            w = nouns[rand];
+        }
+        return w;
+    }
+
+    public string GetRandomVerb()
+    {
+        int c = Random.Range(0, 100);
+        bool controversial = (c < ControversialPrecentage) ? true : false;
+        string w = " ";
+        int rand = 0;
+
+        if (controversial)
+        {
+            rand = Random.Range(1, verbs_controversial.Length);
+            w = "?" + verbs_controversial[rand];
+
+        }
+        else
+        {
+            rand = Random.Range(1, verbs.Length);
+            w = verbs[rand];
+        }
+        return w;
+    }
+
+    public string GetRandomAdj()
+    {
+        int c = Random.Range(0, 100);
+        bool controversial = (c < ControversialPrecentage) ? true : false;
+        string w = " ";
+        int rand = 0;
+
+        if (controversial)
+        {
+            rand = Random.Range(1, adjs_controversial.Length);
+            w = "?" + adjs_controversial[rand];
+
+        }
+        else
+        {
+            rand = Random.Range(1, adjs.Length);
+            w = adjs[rand];
+        }
+        return w;
     }
 }

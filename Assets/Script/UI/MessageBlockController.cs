@@ -20,7 +20,7 @@ public class MessageBlockController : MonoBehaviour
 
 
 
-    [SerializeField] float DisappearTime = 5f;
+    [SerializeField] float DisappearTime = 3f;
 
     [SerializeField] MessageType messageType = MessageType.News;
 
