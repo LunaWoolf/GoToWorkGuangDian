@@ -34,14 +34,20 @@ public class PaperShredderMouseInput : MonoBehaviour
         {
             if (selectedObject)
             {
+                
                 PoemPaperController ppController = IsPointerOverPoemPaper();
-                if (ppController != null )
+                if (ppController != null)
                 {
                     if (selectedObject.GetComponentInParent<ShredderWord>())
                     {
                         ppController.TryAddWordToPoem(selectedObject.GetComponentInParent<ShredderWord>().word);
                     }
                 }
+                else if (IsPointerOverSingleWord())
+                {
+                    IsPointerOverSingleWord().SetText(selectedObject.GetComponentInParent<ShredderWord>().word);
+                }
+
                 selectedObject = null;
             }
                
@@ -53,6 +59,11 @@ public class PaperShredderMouseInput : MonoBehaviour
     public static PoemPaperController IsPointerOverPoemPaper()
     {
         return IsPointerOverPoemPaper(GetEventSystemRaycastResults());
+    }
+
+    public static Word IsPointerOverSingleWord()
+    {
+        return IsPointerOverSingleWord(GetEventSystemRaycastResults());
     }
 
     ///Returns 'true' if we touched or hovering on Unity UI element.
@@ -76,6 +87,25 @@ public class PaperShredderMouseInput : MonoBehaviour
         }
         return null;
     }
+
+    ///Returns 'true' if we touched or hovering on Unity UI element.
+    public static Word IsPointerOverSingleWord(List<RaycastResult> eventSystemRaysastResults)
+    {
+        for (int index = 0; index < eventSystemRaysastResults.Count; index++)
+        {
+            RaycastResult curRaysastResult = eventSystemRaysastResults[index];
+            if (curRaysastResult.gameObject.GetComponentInParent<Word>())
+            {
+                return curRaysastResult.gameObject.GetComponentInParent<Word>();
+            }
+
+            else if (curRaysastResult.gameObject.GetComponentInChildren<Word>())
+                return curRaysastResult.gameObject.GetComponentInChildren<Word>();
+
+        }
+        return null;
+    }
+
     ///Gets all event systen raycast results of current mouse or touch position.
     static List<RaycastResult> GetEventSystemRaycastResults()
     {

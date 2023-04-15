@@ -19,7 +19,7 @@ public class PaperShredderManager : MonoBehaviour
     void Start()
     {
         if (GoBackButton != null) GoBackButton.SetActive(false);
-        if (GameManager.instance.isDebug)
+        if (GameManager.instance != null && GameManager.instance.isDebug)
         {
             if (GoBackButton != null) GoBackButton.SetActive(true);
         }

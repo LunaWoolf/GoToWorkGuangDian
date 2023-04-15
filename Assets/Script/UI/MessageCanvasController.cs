@@ -7,15 +7,16 @@ using TMPro;
 public class MessageCanvasController : MonoBehaviour
 {
     [SerializeField] GameObject MessageBlock;
-   
+    HeadshotManager headshotManager;
     public Camera cam;
-    // Start is called before the first frame update
+
+    
     void Start()
     {
-        
+        headshotManager = GetComponent<HeadshotManager>();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         if(GameManager.instance.isDebug && Input.GetKeyDown(KeyCode.M))
@@ -26,7 +27,7 @@ public class MessageCanvasController : MonoBehaviour
     public void GenerateNewsMessageBlock()
     {
         MessageBlockController m = Instantiate(MessageBlock, this.transform).
-                                    GetComponent<MessageBlockController>().Init(MessageBlockController.MessageType.News, NewsManager.instance.GeneratreNews(), " ");
+                                   GetComponent<MessageBlockController>().Init(MessageBlockController.MessageType.News, NewsManager.instance.GeneratreNews(), " ");
         float xPos = Random.Range(-Screen.width * 4, Screen.height * 15);
         float yPos = Random.Range(-Screen.height * 4, Screen.height * 4);
 
@@ -35,9 +36,15 @@ public class MessageCanvasController : MonoBehaviour
         //Debug.Log("y  " + yPos);
         m.GetComponent<RectTransform>().position = cam.ScreenToViewportPoint(spawnPosition);
 
-        //m.GetComponent<MessageBlockController>().SetNewsMessage(NewsManager.instance.GeneratreNews());
+        var h = headshotManager.GetRandomHeadShot();
+        m.ToogleAndSetHeadShot(true,h.head_sprite,
+                                    h.left_eye_position,
+                                    h.righ_eye_position);
+
     }
 
+
+    
     public void GenerateReviewMessageBlock()
     {
          int digit = Random.Range(1, 6);
@@ -45,8 +52,6 @@ public class MessageCanvasController : MonoBehaviour
          int Sales = Random.Range(0, Plays)/ (10 ^ digit);
          int Likes = Random.Range(0, Plays)/ (10 ^ digit);
          //int Feedback = Random.Range(0, 5);
-
-       
 
         string ReviewText = "Plays: " + Plays + "\nSales: " + Sales + "\nLikes: " + Likes;
 

@@ -25,7 +25,6 @@ public class PoemLine : MonoBehaviour
 
         foreach (string word in _line)
         {
-          
             insertWord(word);
         }
 
@@ -52,6 +51,33 @@ public class PoemLine : MonoBehaviour
         }
         wordCount++;
 
+        if (word.Contains("<v>"))
+        {
+            word = word.Replace("<v>", "");
+            w.GetComponent<Word>().SetWordType(Word.WordType.Verb);
+        }
+        else if (word.Contains("<n>"))
+        {
+            word = word.Replace("<n>", "");
+            w.GetComponent<Word>().SetWordType(Word.WordType.Noun);
+        }
+        else if (word.Contains("<adj>"))
+        {
+            word = word.Replace("<adj>", "");
+            w.GetComponent<Word>().SetWordType(Word.WordType.Adj);
+        }
+        else if (word.Contains("<>"))
+        {
+            word = word.Replace("<>", "         .");
+        
+
+            w.GetComponent<Word>().SetWordType(Word.WordType.Empty);
+        }
+        else
+        {
+            w.GetComponent<Word>().SetWordType(Word.WordType.None);
+        }
+
         w.GetComponent<Word>().SetText(word);
         wordList.Add(w.GetComponent<Word>());
     }
@@ -68,5 +94,14 @@ public class PoemLine : MonoBehaviour
 
         }
         
+    }
+
+    public void ClearLine()
+    {
+        foreach (Word w in this.GetComponentsInChildren<Word>())
+        {
+            Destroy(w.gameObject);
+        }
+        wordCount = 0;
     }
 }

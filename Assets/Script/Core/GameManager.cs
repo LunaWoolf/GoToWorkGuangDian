@@ -178,7 +178,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     void Awake()
     {
-        var objs = FindObjectsOfType<GameManager>();
+        /*var objs = FindObjectsOfType<GameManager>();
 
         if (objs.Length > 1)
         {
@@ -189,12 +189,20 @@ public class GameManager : MonoSingleton<GameManager>
             }
         }
 
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(this.gameObject);*/
         
     }
 
     void Start()
     {
+
+        if (!gameObject.activeInHierarchy)
+        {
+            return;
+        }
+
+        Debug.Log("starttt");
+
         if(!isDebug || isLoadOpenScene)
             SceneManager.LoadScene("OpenScene", LoadSceneMode.Additive);
 

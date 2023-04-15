@@ -110,7 +110,6 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
             verbs_controversial = verbRef_controversial.text.Split("\n");
         if (adjRef_controversial != null)
             adjs_controversial = adjRef_controversial.text.Split("\n");
-
       
     }
 
@@ -180,7 +179,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
                     //Debug.Log("verb w =  " + w);
                     r = r.Replace("<v>", w);
                 }
-                result += r + " ";
+                result += r + "<v>" + " ";
             }
 
             result = result.Substring(0, result.Length - 1);
@@ -227,7 +226,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
                 }
 
-                result += r + " ";
+                result += r + "<n>" + " ";
             }
             result = result.Substring(0, result.Length - 1);
         }
@@ -272,7 +271,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
 
                 }
-                result +=  r + " ";
+                result +=  r + "<adj>" + " ";
             }
 
             result = result.Substring(0, result.Length - 1);

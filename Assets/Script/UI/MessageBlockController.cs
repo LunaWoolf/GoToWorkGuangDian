@@ -14,6 +14,11 @@ public class MessageBlockController : MonoBehaviour
     [Header("Show Head Shot")]
     [SerializeField] GameObject headShot;
     [SerializeField] public bool isShowHeadShot;
+    [SerializeField] Image headshotImage;
+    [SerializeField] GameObject LeftEye;
+    [SerializeField] GameObject RightEye;
+
+
 
     [SerializeField] float DisappearTime = 5f;
 
@@ -84,9 +89,19 @@ public class MessageBlockController : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    public void ToogleHeadShot(bool isOn)
+    public void ToogleAndSetHeadShot(bool isOn, Sprite image,Vector3 LeftEyePos, Vector3 RightEyePos)
     {
         isShowHeadShot = isOn;
         headShot.SetActive(isOn);
+        if (isOn)
+        {
+            headshotImage.sprite = image;
+            LeftEye.GetComponent<RectTransform>().localPosition = LeftEyePos;
+            RightEye.GetComponent<RectTransform>().localPosition = RightEyePos;
+            //LeftEye.transform.localPosition = LeftEyePos;
+            //RightEye.transform.localPosition = RightEyePos;
+        }
     }
+
+   
 }

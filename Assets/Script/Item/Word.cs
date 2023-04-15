@@ -7,6 +7,16 @@ using TMPro;
 
 public class Word : MonoBehaviour
 {
+    [SerializeField]
+    public enum WordType
+    {
+        None,
+        Verb,
+        Noun,
+        Adj,
+        Empty,
+    }
+
     [Header("Reference")]
     [SerializeField]string _Text;
     public Button wordbutton;
@@ -15,9 +25,29 @@ public class Word : MonoBehaviour
     public GameObject Background;
 
     [Header("Variable")]
+    public bool isCircledable = true;
     public bool circled = false;
-
     public bool banned = false;
+    public bool isInserable = false;
+
+    public WordType currentWordType;
+
+    public void SetWordType(WordType type)
+    {
+        currentWordType = type;
+        switch (type)
+        {
+            case WordType.Empty:
+                if (wordbutton)
+                {
+                    //wordbutton.GetComponent<Image>().color = new Color(0, 0, 0, 0f);
+                }
+                isCircledable = false;
+                tm.fontStyle = FontStyles.Underline;
+                break;
+        }
+
+    }
 
     void Start()
     {
@@ -73,6 +103,7 @@ public class Word : MonoBehaviour
 
     void CircledWord()
     {
+        if (!isCircledable) return;
         circled = true;
         Hashtable options = new Hashtable();
         LeanTween.value(gameObject, 0f, 1f, .5f).setOnUpdate((float val) =>

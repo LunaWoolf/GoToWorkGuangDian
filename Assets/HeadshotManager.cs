@@ -15,19 +15,31 @@ public class HeadshotManager : MonoBehaviour
         public Vector3 righ_eye_position;
     }
 
-    [Header("Reference")]
-    Image HeadImage;
-    RectTransform LeftEye;
-    RectTransform RightEye;
+    //[Header("Reference")]
+    //Image HeadImage;
+    //RectTransform LeftEye;
+    //RectTransform RightEye;
 
     [SerializeField]public List<headShot> headShotList = new List<headShot>();
 
     public void SetHeadShot(headShot head)
     {
-        HeadImage.sprite = head.head_sprite;
+        /*HeadImage.sprite = head.head_sprite;
         LeftEye.position = head.left_eye_position;
-        RightEye.position = head.righ_eye_position;
+        RightEye.position = head.righ_eye_position;*/
     }
+
+
+    public headShot GetRandomHeadShot()
+    {
+        int i = Random.Range(0, headShotList.Count);
+        //headShot h = headShotList[Random.Range(0, headShotList.Count)];
+        headShot h = headShotList[i];
+        return h;
+     
+    }
+
+
 
     // Update is called once per frame
     void Update()
