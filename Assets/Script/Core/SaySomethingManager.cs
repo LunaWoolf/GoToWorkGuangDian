@@ -33,7 +33,22 @@ public class SaySomethingManager : MonoBehaviour
 
     void OnDoneButtonClicked()
     {
+        //Save Poem
+        //PropertyManager.instance.bHasWritePoem = true;
+        GameManager.instance.GoToNextWorkDay();
+        string line = "";
 
+        foreach (Word w in PoemLine.GetComponent<PoemLine>().wordList)
+        {
+            line += " " + w.GetUnProcessText();
+        }
+
+        PropertyManager.instance.writeLines.Add(line);
+        //temp fix
+        //Destroy(this.gameObject);
+
+        //Unload Write Scene
+        ScenesManager.instance.UnloadScene("SaySomethingScene");
 
     }
 

@@ -19,6 +19,7 @@ public class Word : MonoBehaviour
 
     [Header("Reference")]
     [SerializeField]string _Text;
+    [SerializeField] string _UnProcessText;
     public Button wordbutton;
     public TextMeshProUGUI tm;
     public Image CircleImage;
@@ -52,20 +53,23 @@ public class Word : MonoBehaviour
 
     void Start()
     {
-        tm.text = _Text;
+        if(tm) tm.text = _Text;
         if (wordbutton == null) wordbutton = this.GetComponentInChildren<Button>();
-        wordbutton.onClick.AddListener(OnWordClicked);
+        if (wordbutton != null) wordbutton.onClick.AddListener(OnWordClicked);
         PoemGenerator.instance.OnPoemRevise.AddListener(ReviseWord);
     }
 
     public void SetText(string t)
     {
+        _UnProcessText = t;
+
         if (t.Length > 2 && t[0] == '?')
         {
             banned = true;
             _Text = t.Substring(1, t.Length-1);
+            _Text = _Text.Replace("_", " ");
             tm.text = _Text;
-            if(PropertyManager.instance.hasCATgpt)
+            if(PropertyManager.instance.hasCATgpt || GameManager.instance.isDebug)
             {
                 tm.color = new Color(0.83f, 0, 0, 1);
                 PropertyManager.instance.rebelliousCount++;
@@ -74,7 +78,9 @@ public class Word : MonoBehaviour
         }
         else
         {
-            _Text = t; 
+            banned = true;
+            _Text = t;
+            _Text = _Text.Replace("_", " ");
             tm.text = _Text;
 
             /*if (PropertyManager.instance.hasCATgpt)
@@ -92,7 +98,9 @@ public class Word : MonoBehaviour
         
         if(this.gameObject.activeSelf)StartCoroutine(SetCircleSize()); 
     }
-    public string GetText(string t) { return _Text = t; }
+    public string GetText() { return _Text; }
+
+    public string GetUnProcessText() { return _UnProcessText; }
 
     void OnWordClicked()
     {
@@ -113,11 +121,11 @@ public class Word : MonoBehaviour
             CircleImage.fillAmount = val;
         });
 
-        if (PropertyManager.instance.hasCATgpt && banned) // has ai and follow ai instruction
+        if (banned) // has ai and follow ai instruction
         {
-            PropertyManager.instance.rebelliousCount--;
+            PropertyManager.instance.rebelliousCount += 1;
         }
-        GameManager.instance.CircledWord(_Text);
+        GameManager.instance.CircledWordInCurrentPoem(_Text);
     }
 
     void CancleCircledWord()
@@ -130,12 +138,12 @@ public class Word : MonoBehaviour
             CircleImage.fillAmount = val;
         });
 
-        if (PropertyManager.instance.hasCATgpt && banned) // has ai and follow ai instruction
+        if (banned) // has ai and follow ai instruction
         {
-            PropertyManager.instance.rebelliousCount++;
+            PropertyManager.instance.rebelliousCount -= 1;
         }
 
-        GameManager.instance.CancleCircledWord(_Text);
+        GameManager.instance.CancleCircledWordInCurrentPoem(_Text);
     }
 
     public IEnumerator SetCircleSize()
@@ -153,15 +161,20 @@ public class Word : MonoBehaviour
             switch (currentWordType)
             {
                 case WordType.Noun:
+                    GameManager.instance.CancleCircledWordInCurrentPoem(_Text);
                     SetText(PoemGenerator.instance.GetRandomNoun());
                     break;
                 case WordType.Verb:
+                    GameManager.instance.CancleCircledWordInCurrentPoem(_Text);
                     SetText(PoemGenerator.instance.GetRandomVerb());
                     break;
                 case WordType.Adj:
+                    GameManager.instance.CancleCircledWordInCurrentPoem(_Text);
                     SetText(PoemGenerator.instance.GetRandomAdj());
                     break;
             }
+
+                
 
         }
     }

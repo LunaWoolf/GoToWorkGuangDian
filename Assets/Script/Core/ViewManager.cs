@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using TMPro;
+using System;
 
 public class ViewManager : MonoSingleton<ViewManager>
 {
@@ -10,7 +12,7 @@ public class ViewManager : MonoSingleton<ViewManager>
     [SerializeField]  Sprite BossSprite;
     [SerializeField]  Sprite LiSprite;
     [SerializeField]  Sprite CATSprite;
-    [SerializeField]  Sprite YouSprite;
+    //[SerializeField]  Sprite YouSprite;
 
     [Header("Canvas Reference")]
     [SerializeField] GameObject WorkCanvas;
@@ -26,6 +28,10 @@ public class ViewManager : MonoSingleton<ViewManager>
 
     [Header("Dialogue Canvas")]
     [SerializeField] Image CharacterImage;
+
+    [SerializeField] TextMeshProUGUI TimerText;
+
+    [SerializeField] public TextMeshProUGUI MoneyText;
 
     void Awake()
     {
@@ -43,6 +49,22 @@ public class ViewManager : MonoSingleton<ViewManager>
         DontDestroyOnLoad(this.gameObject);
 
     }
+
+    public void SetTimerText(float time)
+    {
+        TimeSpan timeSpan = TimeSpan.FromSeconds(time);
+        string formattedTime = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);
+
+        if (TimerText)
+            TimerText.text = formattedTime;
+    }
+
+    public void SetMoneyText(int money)
+    {
+        if (MoneyText)
+            MoneyText.text = money.ToString();
+    }
+
 
     public Image GetCharacterImage() { if (CharacterImage == null) CharacterImage = GameObject.Find("CharacterImage").GetComponent<Image>(); return CharacterImage; }
     public MessageCanvasController GetMessageCanvas() { return FindObjectOfType<MessageCanvasController>(); }
@@ -74,7 +96,7 @@ public class ViewManager : MonoSingleton<ViewManager>
                     GetCharacterImage().sprite = CATSprite;
                     break;
                 case GameManager.Character.You:
-                    GetCharacterImage().sprite = YouSprite;
+                    //GetCharacterImage().sprite = YouSprite;
                     break;
             }
         }

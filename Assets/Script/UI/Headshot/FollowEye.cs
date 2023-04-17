@@ -7,11 +7,13 @@ public class FollowEye : MonoBehaviour
 {
     [SerializeField] GameObject pupil;
     [SerializeField] float moveSpeed;
+    public Camera cam;
+    public Canvas canvas;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        canvas = GetComponentInParent<Canvas>();
     }
 
     // Update is called once per frame
@@ -21,19 +23,19 @@ public class FollowEye : MonoBehaviour
 
         Vector3 ScreenmousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
-        //float xMin = this.GetComponent<RectTransform>().rect.center.x - this.GetComponent<RectTransform>().rect.width * 2;
-        //float xMax = this.GetComponent<RectTransform>().rect.center.x + this.GetComponent<RectTransform>().rect.width * 2;
-        //float yMin = this.GetComponent<RectTransform>().rect.center.y - this.GetComponent<RectTransform>().rect.height * 2;
-        //float yMax = this.GetComponent<RectTransform>().rect.center.y + this.GetComponent<RectTransform>().rect.height * 2;
-
-
+      
         Vector3[] v = new Vector3[4];
-        this.GetComponent<RectTransform>().GetWorldCorners(v);
+        this.GetComponent<RectTransform>().GetLocalCorners(v); // Get the corners in local space
+        for (int i = 0; i < 4; i++)
+        {
+            v[i] = transform.TransformPoint(v[i]); // Convert the corners to world space
+        }
 
         float mostLeftCorner = float.MaxValue;
         float mostRightCorner = float.MinValue;
         float mostTopCorner = float.MaxValue;
         float mostBottomCorner = float.MinValue;
+
         foreach (var pos in v)
         {
             mostLeftCorner = Mathf.Min(mostLeftCorner, pos.x);
@@ -43,11 +45,19 @@ public class FollowEye : MonoBehaviour
         }
 
 
-        Vector3 pupilTargetPosition = new Vector3(Mathf.Clamp(ScreenmousePos.x, mostLeftCorner, mostRightCorner),
-                                            Mathf.Clamp(ScreenmousePos.y, mostTopCorner, mostBottomCorner),
-                                            0);
+        //Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(new Vector3(ScreenmousePos.x, ScreenmousePos.y, 0));
+
+        // Convert the mouse position from screen space to world space that suit prespective canvas
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, Input.mousePosition, canvas.worldCamera, out localPoint);
+
+        Vector3 pupilTargetPosition = new Vector3(Mathf.Clamp(localPoint.x, mostLeftCorner, mostRightCorner),
+                                            Mathf.Clamp(localPoint.y, mostTopCorner, mostBottomCorner),
+                                            pupil.GetComponent<RectTransform>().position.z);
+
         Vector3 direction = (pupilTargetPosition - pupil.GetComponent<RectTransform>().position).normalized;
 
         pupil.GetComponent<RectTransform>().position += moveSpeed * Time.deltaTime * direction;
+
     }
 }

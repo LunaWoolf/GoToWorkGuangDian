@@ -65,7 +65,7 @@ public class MessageBlockController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = new Vector3(this.transform.position.x + Random.Range(-0.01f, 0.01f), this.transform.position.y + Random.Range(-0.01f, 0.01f), 0);
+        this.transform.position = new Vector3(this.transform.position.x + Random.Range(-0.01f, 0.01f), this.transform.position.y + Random.Range(-0.01f, 0.01f), this.transform.position.z);
         BackgroundImage.color += new Color(Random.Range(-0.01f, 0.01f), Random.Range(-0.01f, 0.01f), Random.Range(-0.01f, 0.01f));
     }
 

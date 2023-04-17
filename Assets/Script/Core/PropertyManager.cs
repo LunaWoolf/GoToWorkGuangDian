@@ -39,6 +39,8 @@ public class PropertyManager : MonoSingleton<PropertyManager>
 
     public int money = 0;
 
+    public List<string> writeLines = new List<string>();
+
     void Awake()
     {
         var objs = FindObjectsOfType<PropertyManager>();

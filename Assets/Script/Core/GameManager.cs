@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using System.Text.RegularExpressions;
+using TMPro;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -56,6 +57,8 @@ public class GameManager : MonoSingleton<GameManager>
     public float WorkDayTimer;
     public float WorkDayTimeLimit;
     public bool  isPauseWorkDayTimer = false;
+    public float maxDayLimit;
+
 
     [Header("After Work Day")]
     int AfterWorkActionCountOfDay = 0;
@@ -93,6 +96,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         SetCurrentGameMode(GameMode.Work);
         onStartWork.Invoke();
+        WorkDayTimer = 0;
         ViewManager.instance.UnloadAllView();
         if (!PropertyManager.instance.hasShownWorkTutorial)
         {
@@ -244,7 +248,7 @@ public class GameManager : MonoSingleton<GameManager>
         if (!isPauseWorkDayTimer && currentGameMode == GameMode.Work)
         {
             WorkDayTimer += Time.deltaTime;
-           
+            ViewManager.instance.SetTimerText(WorkDayTimeLimit - WorkDayTimer);
             if (WorkDayTimer > WorkDayTimeLimit)
             {
                 EndOfWorkDay();
@@ -293,6 +297,12 @@ public class GameManager : MonoSingleton<GameManager>
             PoemViewedToday++;
             FindObjectOfType<PoemPaperController>().OnPoemPass();
             PoemGenerator.instance.OnPoemPass();
+
+            PropertyManager.instance.money += 5;
+            PropertyManager.instance.money -= PropertyManager.instance.rebelliousCount * 2;
+            PropertyManager.instance.rebelliousCount = 0;
+
+            ViewManager.instance.SetMoneyText(PropertyManager.instance.money);
             if (AdjustAndCheckWorkActionCountOfDay(1))
                 TryGoToNextPoem();
             
@@ -320,6 +330,9 @@ public class GameManager : MonoSingleton<GameManager>
             FindObjectOfType<PoemPaperController>().OnPoemDeny(); //Turn on stamp
             PoemGenerator.instance.OnPoemDeny();
             SaveCircledWord();
+            PropertyManager.instance.money += 2;
+            PropertyManager.instance.rebelliousCount = 0;
+            ViewManager.instance.SetMoneyText(PropertyManager.instance.money);
             if (AdjustAndCheckWorkActionCountOfDay(1))
                 TryGoToNextPoem();
         }
@@ -411,16 +424,17 @@ public class GameManager : MonoSingleton<GameManager>
         eventSystem.SetActive(true); 
     }
 
+    
     bool CheckedReachForEnding()
     {
         if (PropertyManager.instance.bHasWritePoem) return false;
 
         if (PoemViewedToday == 0) // if yesterday all spend on phone
         {
-            LocalDialogueManager.instance.LoadDialogue("Ending_LoseJob_Phone");
+            //LocalDialogueManager.instance.LoadDialogue("Ending_LoseJob_Phone");
             return true;
         }
-        else if (dayCounter > 9) // replace by ai
+        else if (dayCounter > maxDayLimit) // replace by ai
         {
             LocalDialogueManager.instance.LoadDialogue("Ending_LoseJob_AI");
             return true;
@@ -437,12 +451,12 @@ public class GameManager : MonoSingleton<GameManager>
 
     }
 
-    public void CircledWord(string word)
+    public void CircledWordInCurrentPoem(string word)
     {
         temp_CircledWordList.Add(word);
     }
 
-    public void CancleCircledWord(string word)
+    public void CancleCircledWordInCurrentPoem(string word)
     {
         if(temp_CircledWordList.Contains(word))
             temp_CircledWordList.Remove(word);
@@ -495,7 +509,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         ViewManager.instance.FadeToBlack_end();
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene("Feedback", LoadSceneMode.Single);
+        SceneManager.LoadScene("End_Poem", LoadSceneMode.Single);
     }
 
     //temp fix
@@ -513,7 +527,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void OpenWriteMode()
     {
-        SceneManager.LoadScene("WriteScene", LoadSceneMode.Additive);
+        SceneManager.LoadScene("SaySomethingScene", LoadSceneMode.Additive);
+
 
     }
 }

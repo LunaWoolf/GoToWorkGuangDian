@@ -10,7 +10,7 @@ public class PoemLine : MonoBehaviour
     public Transform line02;
 
     public int wordCount = 0;
-    List<Word> wordList = new List<Word>();
+    public List<Word> wordList = new List<Word>();
 
     [SerializeField]string[] _line;
 
@@ -68,7 +68,7 @@ public class PoemLine : MonoBehaviour
         }
         else if (word.Contains("<>"))
         {
-            word = word.Replace("<>", "[         ]");
+            word = word.Replace("<>", "[__________]");
         
 
             w.GetComponent<Word>().SetWordType(Word.WordType.Empty);
