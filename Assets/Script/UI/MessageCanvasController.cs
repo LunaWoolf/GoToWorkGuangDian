@@ -17,7 +17,7 @@ public class MessageCanvasController : MonoBehaviour
     void Start()
     {
         headshotManager = GetComponent<HeadshotManager>();
-        //GameManager.instance.onStartWork.AddListener(StartAutoGenerateMessage);
+        StartAutoGenerateMessage();
     }
 
     
@@ -57,38 +57,6 @@ public class MessageCanvasController : MonoBehaviour
 
         m.gameObject.GetComponent<RectTransform>().position += new Vector3(xOffset, yOffset, 0);
 
-
-        /*float xPos = 0;
-        float yPos = 0;
-        if (isOnLeftSide)
-        {
-            xPos = Random.Range(0, 0);
-            yPos = Random.Range(-0, 0);
-        }
-        else
-        {
-            xPos = Random.Range(-Screen.width /2, Screen.width /2);
-            yPos = Random.Range(-Screen.height /2, Screen.height /2);
-        }*/
-
-        //Vector3 spawnPosition = new Vector3(xPos, yPos, 0);
-
-        //xPos = canvasWidth / 2f + screenSpacePosition.x;
-        //yPos = canvasHeight / 2f  + screenSpacePosition.y;
-
-        //Vector2 spawnPosition = new Vector2(xPos, yPos);
-
-        //m.gameObject.GetComponent<RectTransform>().position = cam.ScreenToViewportPoint(spawnPosition);
-        //m.gameObject.GetComponent<RectTransform>().anchoredPosition = this..GetComponent<RectTransform>().sizeDelta;
-
-        //Debug.Log("x  " + xPos);
-        //Debug.Log("y  " + yPos);
-        //Vector3 pos;
-        //RectTransformUtility.ScreenPointToWorldPointInRectangle(m.gameObject.GetComponent<RectTransform>(), spawnPosition, cam, out pos);
-        //m.gameObject.GetComponent<RectTransform>().position = pos;
-        //S
-
-
         var h = headshotManager.GetRandomHeadShot();
         m.ToogleAndSetHeadShot(true,h.head_sprite,
                                     h.left_eye_position,
@@ -101,7 +69,7 @@ public class MessageCanvasController : MonoBehaviour
     {
         GenerateNewsMessageBlock();
         yield return new WaitForSeconds(2f);
-        if(GameManager.instance.GetCurrentGameMode() == GameManager.GameMode.Work)
+        if(GameManager.instance.GetCurrentGameMode() == GameManager.GameMode.Bus)
             StartCoroutine(GenerateNewsMessageBlock_Auto());
     }
 

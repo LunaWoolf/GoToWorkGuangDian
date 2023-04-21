@@ -65,8 +65,8 @@ public class PaperShredderManager : MonoBehaviour
 
     void EndPaperShredder()
     {
-      
-        GameManager.instance.GoToAfterwork();
+        GameManager.instance.GoToBus();
+        //GameManager.instance.GoToAfterwork();
 
     }
 }

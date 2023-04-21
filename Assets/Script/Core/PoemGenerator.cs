@@ -328,16 +328,11 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     {
 
         PropertyManager.instance.PassedPoem.Add(currentPoem);
-
-        ViewManager.instance.GetMessageCanvas().GenerateNewsMessageBlock();
-        
     }
 
     public void OnPoemDeny()
     {
         PropertyManager.instance.DeniedPoem.Add(currentPoem);
-        ViewManager.instance.GetMessageCanvas().GenerateNewsMessageBlock();
-
 
     }
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 0
   priority: 0
   title: '"Are we not allow to say  ''<banned_word>''  anymore ?"'
-  content: <pass_song>
+  content: 
   Art: {fileID: 0}
   restricationList:
   - property: banned_word_count

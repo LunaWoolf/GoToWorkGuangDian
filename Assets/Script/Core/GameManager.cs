@@ -13,7 +13,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public bool isDebug = false;
     public bool isLoadOpenScene = false;
-    GameMode currentGameMode = GameMode.Conversation;
+    [SerializeField] GameMode currentGameMode = GameMode.Conversation;
 
    
     public struct personalBannedWord
@@ -30,14 +30,17 @@ public class GameManager : MonoSingleton<GameManager>
         You,
     }
 
+    [Serializable]
     public enum GameMode
     {
-        
-        Work,
-        Moyu,
-        Write,
-        //News,
         Conversation,
+        Work,
+        //Moyu,
+        Write,
+        Bus,
+        //News,
+        Dinner,
+        SaySomething,
         Afterwork
     }
 
@@ -79,7 +82,13 @@ public class GameManager : MonoSingleton<GameManager>
                //StartWork();
                break;
             case GameMode.Write:
-                OpenWriteMode();
+                OnWriteModeLoad();
+                break;
+            case GameMode.Bus:
+                OnBusModeLoad();
+                break;
+            case GameMode.Dinner:
+                OnDinnerModeLoad();
                 break;
         }
     }
@@ -155,9 +164,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void StartMoyu()
     {
-        SetCurrentGameMode(GameMode.Moyu);
-        ViewManager.instance.UnloadAllView();
-        ViewManager.instance.LoadMoyuView();
+        //SetCurrentGameMode(GameMode.Moyu);
+        //ViewManager.instance.UnloadAllView();
+        //ViewManager.instance.LoadMoyuView();
     
     }
 
@@ -390,22 +399,44 @@ public class GameManager : MonoSingleton<GameManager>
         eventSystem.SetActive(true);
     }
 
+
+    public void GoToBus()
+    {
+        SetCurrentGameMode(GameMode.Bus);
+        ScenesManager.instance.UnloadScene("paperShredder");
+        Debug.Log("Go To Bus");
+        //FindObjectOfType<EventSystem>().gameObject.SetActive(false);
+        eventSystem.SetActive(false);
+        ViewManager.instance.UnloadAllView();
+    }
+
+    public void GoToDinner()
+    {
+        SetCurrentGameMode(GameMode.Dinner);
+        ScenesManager.instance.UnloadScene("BusScene");
+        Debug.Log("Go To Dinner");
+        FindObjectOfType<EventSystem>().gameObject.SetActive(false);
+        eventSystem.SetActive(false);
+        ViewManager.instance.UnloadAllView();
+    }
+
     public void GoToAfterwork()
     {
         SetCurrentGameMode(GameMode.Afterwork);
-        ScenesManager.instance.UnloadScene("paperShredder");
+        ScenesManager.instance.UnloadScene("DinnerScene");
         Debug.Log("Go To After work Day");
         FindObjectOfType<EventSystem>().gameObject.SetActive(true);
         eventSystem.SetActive(true);
-
         ViewManager.instance.UnloadAllView();
         ViewManager.instance.LoadAfterWorkView();
     }
+
 
     public void GoToNextWorkDay()
     {
         StartCoroutine(GoToNextWorkDayWithFadeToBlack());
     }
+
     IEnumerator GoToNextWorkDayWithFadeToBlack()
     {
         //SceneManager.UnloadSceneAsync("paperShredder");
@@ -525,10 +556,22 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    public void OpenWriteMode()
+    public void OnWriteModeLoad()
     {
         SceneManager.LoadScene("SaySomethingScene", LoadSceneMode.Additive);
 
 
+    }
+
+    public void OnBusModeLoad()
+    {
+        SceneManager.LoadScene("BusScene", LoadSceneMode.Additive);
+
+
+    }
+
+    public void OnDinnerModeLoad()
+    {
+        SceneManager.LoadScene("DinnerScene", LoadSceneMode.Additive);
     }
 }

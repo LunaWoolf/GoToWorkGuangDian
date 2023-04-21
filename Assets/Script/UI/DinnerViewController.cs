@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DinnerViewController : MonoSingleton<DinnerViewController>
+public class DinnerViewController : MonoBehaviour
 {
     [Header("")]
     [SerializeField] Button MomButton;
@@ -13,30 +13,21 @@ public class DinnerViewController : MonoSingleton<DinnerViewController>
     [SerializeField] Button TvButton;
     [SerializeField] Button CatButton;
 
+    [SerializeField] Button SaySomethingButton;
+
 
     // Start is called before the first frame update
     void Start()
-    {
-      
-    }
-
-    private void OnEnable()
     {
         MomButton.onClick.AddListener(OnMomButtonCliked);
         DadButton.onClick.AddListener(OnDadButtonCliked);
         SisButton.onClick.AddListener(OnSisButtonCliked);
         TvButton.onClick.AddListener(OnTvButtonCliked);
         CatButton.onClick.AddListener(OnCatButtonClicked);
+        SaySomethingButton.onClick.AddListener(OnSaySomethingButtonClicked);
     }
 
-    private void OnDisable()
-    {
-        MomButton.onClick.RemoveListener(OnMomButtonCliked);
-        DadButton.onClick.RemoveListener(OnDadButtonCliked);
-        SisButton.onClick.RemoveListener(OnSisButtonCliked);
-        TvButton.onClick.RemoveListener(OnTvButtonCliked);
-        CatButton.onClick.RemoveListener(OnCatButtonClicked);
-    }
+ 
 
     void OnMomButtonCliked()
     {
@@ -61,8 +52,15 @@ public class DinnerViewController : MonoSingleton<DinnerViewController>
 
     void OnCatButtonClicked()
     {
+       
         GameManager.instance.GoBackToWork();
     }
- 
+
+    void OnSaySomethingButtonClicked()
+    {
+        Debug.Log("Clicked");
+        if (GameManager.instance != null)
+            GameManager.instance.GoToAfterwork();
+    }
 
 }

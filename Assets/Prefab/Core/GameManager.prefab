@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4878771606995890559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4878771606995890554}
+  - component: {fileID: 4878771606995890555}
+  - component: {fileID: 4878771606995890553}
+  - component: {fileID: 4878771606995890552}
+  - component: {fileID: 4878771606995890532}
+  - component: {fileID: 4878771606995890533}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4878771606995890554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878771606995890559}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 619.24677, y: 293.10992, z: -3.8536696}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4878771606995890555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878771606995890559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bd2a9e1a88354fc3be5115516743b46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4878771606995890553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878771606995890559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71c327dffe3c0420ea90ef2eb8f0252f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BossSprite: {fileID: 21300000, guid: 98a1d3912b749447eb345063ec8298f5, type: 3}
+  LiSprite: {fileID: 21300000, guid: 27d18e66766634dfb8d92199f49026eb, type: 3}
+  CATSprite: {fileID: 21300000, guid: d1ebbbc7af69c4e4ab903eaea43a5026, type: 3}
+  WorkCanvas: {fileID: 0}
+  PoemCanvas: {fileID: 0}
+  MoyuCanvas: {fileID: 0}
+  DialogueCanvas: {fileID: 0}
+  TutorialCanvas: {fileID: 0}
+  NewsCanvas: {fileID: 0}
+  AfterWorkCanvas: {fileID: 0}
+  WriteCanvas: {fileID: 0}
+  FadeCanvas: {fileID: 0}
+  MessageCanvas: {fileID: 0}
+  CharacterImage: {fileID: 0}
+  TimerText: {fileID: 0}
+  MoneyText: {fileID: 0}
+--- !u!114 &4878771606995890552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878771606995890559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05c72942960a24a73950c714bd744d42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDebug: 1
+  isLoadOpenScene: 0
+  eventSystem: {fileID: 0}
+  dayCounter: 0
+  poemViewedToday: 0
+  PoemViewedToday: 0
+  denyPoemCount: 0
+  passPoemCount: 0
+  WorkActionCountOfDay: 0
+  MaxWorkActionCountOfDay: 0
+  onAction:
+    m_PersistentCalls:
+      m_Calls: []
+  onStartWork:
+    m_PersistentCalls:
+      m_Calls: []
+  WorkDayTimer: 0
+  WorkDayTimeLimit: 10
+  isPauseWorkDayTimer: 0
+  maxDayLimit: 1
+  temp_CircledWordList: []
+--- !u!114 &4878771606995890532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878771606995890559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d53100a2a3914ac29853aeb892529f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScene: 1
+  previousScene: 0
+  executeSceneLoad: 0
+--- !u!114 &4878771606995890533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878771606995890559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e3691463e96c4363a2668d18816e6c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NewsList:
+  - {fileID: 11400000, guid: 731e438ab64f34d66bd4da48ac4064d2, type: 2}
+  - {fileID: 11400000, guid: d4cb3b3fcd0ec4ab299c316851ca6715, type: 2}
+  - {fileID: 11400000, guid: a63a3100c69f5475d8842f41b3d646f2, type: 2}
+  - {fileID: 11400000, guid: 57ac5f9766e214d3a96a9f8b56fee4f4, type: 2}
+  - {fileID: 11400000, guid: d5c7d1efd3c5944808f06547e13f8cec, type: 2}
+  - {fileID: 11400000, guid: c169321c5a7cec949a493fb9e869736e, type: 2}
+  - {fileID: 11400000, guid: ec1e4170c0493be4f88de1c40863ca02, type: 2}
+  - {fileID: 11400000, guid: 1f57154140ab3e14c8ce718483b31e19, type: 2}
+  - {fileID: 11400000, guid: dbb28ab12ed15b247a2ffad7277da562, type: 2}
+  - {fileID: 11400000, guid: ab99f64a85dd66942a09195080fc77c3, type: 2}
+  - {fileID: 11400000, guid: 3d96a5f943a8fe944b0ed5cd2b4e9442, type: 2}
+  - {fileID: 11400000, guid: 5412cb573d4ea734c8fd570bc47a5c20, type: 2}
+  - {fileID: 11400000, guid: fcb9b13bed55497478a07ee457fb097b, type: 2}
+  - {fileID: 11400000, guid: 2a6d8f73b1955f649bb1133b31077239, type: 2}
+  - {fileID: 11400000, guid: b70341f5954110647b10e7406aa2c74d, type: 2}
+  - {fileID: 11400000, guid: fcb9b13bed55497478a07ee457fb097b, type: 2}
+  - {fileID: 11400000, guid: a00d468448519324391a7f7ae8f596c5, type: 2}
+  - {fileID: 11400000, guid: 3a799e31fff64e944aaff23d776326fc, type: 2}
+  - {fileID: 11400000, guid: 7331eab03d47b2f4db7c71251a667285, type: 2}
+  - {fileID: 11400000, guid: 60c65a1b39d06a74c80c019c978c3a0f, type: 2}
+  - {fileID: 11400000, guid: 60c65a1b39d06a74c80c019c978c3a0f, type: 2}
+  - {fileID: 11400000, guid: 72354bd35bd6a4d9c8a1b86a2486e2ce, type: 2}
+  - {fileID: 11400000, guid: a837d6317f1b7e54a9b8f336bfea3133, type: 2}
+  newsCanvasController: {fileID: 0}

@@ -91,10 +91,15 @@ public class NewsManager : MonoSingleton<NewsManager>
                 {
                     r = "";
                     string[] poem = PropertyManager.instance.GetRandomPassedPoem();
-                    foreach (string p_line in poem)
+                    if (poem != null)
                     {
-                        r += p_line + "\n";
+                        foreach (string p_line in poem)
+                        {
+                            r += p_line + "\n";
+                        }
+
                     }
+                   
                 }
               
 

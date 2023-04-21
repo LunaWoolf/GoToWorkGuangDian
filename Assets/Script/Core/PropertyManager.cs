@@ -60,8 +60,15 @@ public class PropertyManager : MonoSingleton<PropertyManager>
 
     public string[] GetRandomPassedPoem()
     {
+        if (PassedPoem.Count <= 0)
+        {
+            Debug.Log("There is no passed poem in Get Random Passed Poem");
+            return null;
+
+        }
         string[] poem;
         int i = UnityEngine.Random.Range(0, PassedPoem.Count);
+      
         poem = PassedPoem[i];
         return poem;
     }
