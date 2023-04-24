@@ -12,6 +12,11 @@ public class MessageCanvasController : MonoBehaviour
     HeadshotManager headshotManager;
     public Camera cam;
 
+    public float xOffset_min;
+    public float xOffset_max;
+    public float yOffset_min;
+    public float yOffset_max;
+
     public bool isOnLeftSide = true;
     
     void Start()
@@ -41,7 +46,7 @@ public class MessageCanvasController : MonoBehaviour
 
         float xOffset = 0;
         float yOffset = 0;
-        if (isOnLeftSide)
+        /*if (isOnLeftSide)
         {
             xOffset = Random.Range(-3f, -3.5f);
             yOffset = Random.Range(-3, 6);
@@ -50,10 +55,10 @@ public class MessageCanvasController : MonoBehaviour
         {
             xOffset = Random.Range(7.5f, 9);
             yOffset = Random.Range(-3, 4);
-        }
+        }*/
 
-        xOffset = Random.Range(-100f,100f);
-        yOffset = Random.Range(-50, 50);
+        xOffset = Random.Range(xOffset_min,xOffset_max);
+        yOffset = Random.Range(yOffset_min, yOffset_max);
 
         m.gameObject.GetComponent<RectTransform>().position += new Vector3(xOffset, yOffset, 0);
 
@@ -63,6 +68,8 @@ public class MessageCanvasController : MonoBehaviour
                                     h.righ_eye_position);
 
         isOnLeftSide = !isOnLeftSide;
+
+
     }
 
     IEnumerator GenerateNewsMessageBlock_Auto()
@@ -92,5 +99,6 @@ public class MessageCanvasController : MonoBehaviour
 
         Vector3 spawnPosition = new Vector3(xPos, yPos, 0f);
         m.GetComponent<RectTransform>().position = cam.ScreenToViewportPoint(spawnPosition);
+
     }
 }

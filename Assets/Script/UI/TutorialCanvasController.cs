@@ -29,7 +29,7 @@ public class TutorialCanvasController : MonoBehaviour
     {
         
         if (instructionText == null) return;
-        UnloadAllTutorial();
+        UnloadAllTutorialInstruction();
         switch (text)
         {
             
@@ -54,9 +54,14 @@ public class TutorialCanvasController : MonoBehaviour
         Tutorial_Default.SetActive(false);
         Tutorial_Work_UI.SetActive(false);
         Tutorial_News_UI.SetActive(false);
+
+        if (GameManager.instance.GetCurrentGameMode() == GameManager.GameMode.Work)
+        {
+            GameManager.instance.isPauseWorkDayTimer = false;
+        }
     }
 
-    public void UnloadAllTutorial()
+    public void UnloadAllTutorialInstruction()
     {
         instructionText.text = "";
         Tutorial_Default.SetActive(false);

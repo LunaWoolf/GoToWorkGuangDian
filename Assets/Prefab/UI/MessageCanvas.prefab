@@ -116,6 +116,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MessageBlock: {fileID: 3814144037234025377, guid: 2ce7cbb284539ac4e8ff62612268bcbc, type: 3}
   cam: {fileID: 0}
+  xOffset_min: -70
+  xOffset_max: 75
+  yOffset_min: -50
+  yOffset_max: 50
   isOnLeftSide: 1
 --- !u!114 &2898520921461515020
 MonoBehaviour:

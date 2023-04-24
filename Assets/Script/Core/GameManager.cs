@@ -28,6 +28,9 @@ public class GameManager : MonoSingleton<GameManager>
         Li,
         CATgpt,
         You,
+        Mom,
+        Dad,
+        Sister,
     }
 
     [Serializable]
@@ -82,18 +85,20 @@ public class GameManager : MonoSingleton<GameManager>
                //StartWork();
                break;
             case GameMode.Write:
-                OnWriteModeLoad();
+                ScenesManager.instance.StartBufferingScene("SaySomethingScene");
                 break;
             case GameMode.Bus:
-                OnBusModeLoad();
+                ScenesManager.instance.StartBufferingScene("BusScene");
                 break;
             case GameMode.Dinner:
-                OnDinnerModeLoad();
+                ScenesManager.instance.StartBufferingScene("DinnerScene");
                 break;
         }
     }
 
     public GameMode GetCurrentGameMode() { return currentGameMode; }
+
+    public string GetGameDate() { return gameDate.Month.ToString("D2") + gameDate.Day.ToString("D2"); }
 
     public void TryStartWork()
     {
@@ -400,37 +405,6 @@ public class GameManager : MonoSingleton<GameManager>
     }
 
 
-    public void GoToBus()
-    {
-        SetCurrentGameMode(GameMode.Bus);
-        ScenesManager.instance.UnloadScene("paperShredder");
-        Debug.Log("Go To Bus");
-        //FindObjectOfType<EventSystem>().gameObject.SetActive(false);
-        eventSystem.SetActive(false);
-        ViewManager.instance.UnloadAllView();
-    }
-
-    public void GoToDinner()
-    {
-        SetCurrentGameMode(GameMode.Dinner);
-        ScenesManager.instance.UnloadScene("BusScene");
-        Debug.Log("Go To Dinner");
-        FindObjectOfType<EventSystem>().gameObject.SetActive(false);
-        eventSystem.SetActive(false);
-        ViewManager.instance.UnloadAllView();
-    }
-
-    public void GoToAfterwork()
-    {
-        SetCurrentGameMode(GameMode.Afterwork);
-        ScenesManager.instance.UnloadScene("DinnerScene");
-        Debug.Log("Go To After work Day");
-        FindObjectOfType<EventSystem>().gameObject.SetActive(true);
-        eventSystem.SetActive(true);
-        ViewManager.instance.UnloadAllView();
-        ViewManager.instance.LoadAfterWorkView();
-    }
-
 
     public void GoToNextWorkDay()
     {
@@ -460,12 +434,13 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if (PropertyManager.instance.bHasWritePoem) return false;
 
-        if (PoemViewedToday == 0) // if yesterday all spend on phone
+        /*if (PoemViewedToday == 0) // if yesterday all spend on phone
         {
             //LocalDialogueManager.instance.LoadDialogue("Ending_LoseJob_Phone");
             return true;
-        }
-        else if (dayCounter > maxDayLimit) // replace by ai
+        }*/
+
+        if (dayCounter > maxDayLimit) // replace by ai
         {
             LocalDialogueManager.instance.LoadDialogue("Ending_LoseJob_AI");
             return true;
@@ -477,7 +452,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void StartPaperShredder()
     {
-        SceneManager.LoadScene("paperShredder", LoadSceneMode.Additive);
+        ScenesManager.instance.StartBufferingScene("paperShredder");
+        //SceneManager.LoadScene("paperShredder", LoadSceneMode.Additive);
         FindObjectOfType<EventSystem>().gameObject.SetActive(false);
 
     }
@@ -556,22 +532,35 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    public void OnWriteModeLoad()
+
+    public void GoToBus()
     {
-        SceneManager.LoadScene("SaySomethingScene", LoadSceneMode.Additive);
-
-
+        SetCurrentGameMode(GameMode.Bus);
+        Debug.Log("Go To Bus");
+        FindObjectOfType<EventSystem>().gameObject.SetActive(false);
+        eventSystem.SetActive(false);
+        ViewManager.instance.UnloadAllView();
     }
 
-    public void OnBusModeLoad()
+    public void GoToDinner()
     {
-        SceneManager.LoadScene("BusScene", LoadSceneMode.Additive);
-
-
+        SetCurrentGameMode(GameMode.Dinner);
+        Debug.Log("Go To Dinner");
+        FindObjectOfType<EventSystem>().gameObject.SetActive(false);
+        eventSystem.SetActive(false);
+        ViewManager.instance.UnloadAllView();
     }
 
-    public void OnDinnerModeLoad()
+    public void GoToAfterwork()
     {
-        SceneManager.LoadScene("DinnerScene", LoadSceneMode.Additive);
+        SetCurrentGameMode(GameMode.Afterwork);
+        Debug.Log("Go To After work Day");
+        FindObjectOfType<EventSystem>().gameObject.SetActive(true);
+        eventSystem.SetActive(true);
+        ViewManager.instance.UnloadAllView();
+        ViewManager.instance.LoadAfterWorkView();
     }
+
+
+  
 }

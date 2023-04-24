@@ -1678,6 +1678,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7978768634819224556, guid: 200d9b6bba4446f459c5ae82868282f8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7978768634819224561, guid: 200d9b6bba4446f459c5ae82868282f8, type: 3}
       propertyPath: m_Name
       value: paperShredder_WordSpawnPoint

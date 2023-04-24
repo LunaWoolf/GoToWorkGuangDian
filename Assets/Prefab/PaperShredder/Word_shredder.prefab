@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1154964461705573619}
   - component: {fileID: 1154964461705573621}
   - component: {fileID: 1154964461705573620}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text (TMP) (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 1154964462049316426}
   - component: {fileID: 1154964462049316428}
   - component: {fileID: 1154964462049316427}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text (TMP) (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -506,7 +506,7 @@ GameObject:
   - component: {fileID: 1154964462079161394}
   - component: {fileID: 1154964462079161393}
   - component: {fileID: 1154964462079161397}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text (TMP) (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -752,7 +752,7 @@ GameObject:
   - component: {fileID: 1154964462259781565}
   - component: {fileID: 1154964462259781564}
   - component: {fileID: 1154964462259781563}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text (TMP) (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -998,7 +998,7 @@ GameObject:
   - component: {fileID: 1154964462345044185}
   - component: {fileID: 1154964462345044189}
   - component: {fileID: 1154964462345044190}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1244,7 +1244,7 @@ GameObject:
   - component: {fileID: 1154964462670242752}
   - component: {fileID: 1154964462670242751}
   - component: {fileID: 1154964462670242755}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text (TMP) (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1490,7 +1490,7 @@ GameObject:
   - component: {fileID: 1154964463128175911}
   - component: {fileID: 1154964463128175910}
   - component: {fileID: 1154964463128175914}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text (TMP) (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1736,7 +1736,7 @@ GameObject:
   - component: {fileID: 1154964463149423429}
   - component: {fileID: 1154964463149423428}
   - component: {fileID: 1154964463149423432}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text (TMP) (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1982,7 +1982,7 @@ GameObject:
   - component: {fileID: 1154964463176231670}
   - component: {fileID: 1154964463176231669}
   - component: {fileID: 1154964463176231673}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text (TMP) (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2228,7 +2228,7 @@ GameObject:
   - component: {fileID: 1154964463261393563}
   - component: {fileID: 1154964463261393562}
   - component: {fileID: 1154964463261393566}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text (TMP) (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2474,7 +2474,7 @@ GameObject:
   - component: {fileID: 1154964463621701166}
   - component: {fileID: 1154964463621701165}
   - component: {fileID: 1154964463621701169}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text (TMP) (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2720,7 +2720,7 @@ GameObject:
   - component: {fileID: 1154964463645000808}
   - component: {fileID: 1154964463645000810}
   - component: {fileID: 1154964463645000809}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text (TMP) (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2964,7 +2964,7 @@ GameObject:
   - component: {fileID: 1154964463676467020}
   - component: {fileID: 64186590428405705}
   - component: {fileID: 6048048923742080991}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Word_shredder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2979,7 +2979,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1154964463676467019}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3000,7 +3000,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 4.972223, y: -1.9444444}
+  m_AnchoredPosition: {x: 3.6721318, y: -0.21311462}
   m_SizeDelta: {x: 8.8274, y: 1.7145}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1154964463676467020

@@ -25,6 +25,7 @@ public class ScenesManager : MonoSingleton<ScenesManager>
     private SceneType GetPreviousScene() { return previousScene; }
     private void SetPreviousScene(SceneType sceneToSet) { previousScene = sceneToSet; }
 
+    private string PreviousAdditiveScene = "none";
 
     //variable
     public bool executeSceneLoad = false;
@@ -74,41 +75,44 @@ public class ScenesManager : MonoSingleton<ScenesManager>
     {
         Debug.Log("Loaded new current scene: " + scene + " while previous scene is " + GetCurrentScene().ToString());
 
-        //ApplicationManager.currentState = ApplicationManager.AppState.sceneLoaded;
-        //Debug.Log(ApplicationManager.currentState);
-      
-        // set previous scene and unload it
+        
         SetPreviousScene(GetCurrentScene());
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(scene));
+        if(SceneManager.GetSceneByName(scene).isLoaded)
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(scene));
         UnloadPreviousScene();
-       
-        // set current scene
         SetCurrentScene(GetSceneTypeFromSceneName(scene));
-        //SceneManager.SetActiveScene(SceneManager.GetSceneByName(scene));
-        //UnloadPreviousScene();
-        //ApplicationManager.onSceneLoaded();
+        PreviousAdditiveScene = scene;
+        ViewManager.instance.FadeBack();
+
 
     }
 
 
     public void UnloadPreviousScene()
     {
-        Debug.Log("Previous Scene is:" + GetPreviousScene());
+        Debug.Log("Previous Scene is:" + PreviousAdditiveScene);
+
+        if (PreviousAdditiveScene == "paperShredder") return;
+
+        Scene prevScene = SceneManager.GetSceneByName(PreviousAdditiveScene);
+        if (prevScene.isLoaded)
+            SceneManager.UnloadSceneAsync(prevScene);
+        
+        /*
         if (GetPreviousScene() != SceneType.None)
         {
             string sceneToUnLoad = GetSceneNameFromSceneType(GetPreviousScene());
             Scene prevScene = SceneManager.GetSceneByName(sceneToUnLoad);
             if (prevScene.isLoaded)
                 SceneManager.UnloadSceneAsync(sceneToUnLoad);
-        }
+        }*/
     }
 
+    
 
     //Parse Scene name for the scene type and match it with the enum
     public SceneType GetSceneTypeFromSceneName(string sceneName)
     {
-        // add leading underscore for enum parsing
-        //sceneName = sceneName.Insert(0, "_");
 
         SceneType currentSceneType;
         if (SceneType.TryParse(sceneName, out currentSceneType))
@@ -130,18 +134,20 @@ public class ScenesManager : MonoSingleton<ScenesManager>
     }
 
     // called to start loading next scene's assets in background thread
-    public void StartBufferingScene(SceneType sceneToBuffer)
+    public void StartBufferingScene(string sceneToBuffer)
     {
-        if (isSceneBuffering) return;
-        string sceneName = GetSceneNameFromSceneType(sceneToBuffer);
-        StartCoroutine(BufferScene(sceneName));
-        UnityEngine.Debug.Log("Started buffering scene: " + sceneName);
+        //if (isSceneBuffering) return;
+        //string sceneName = GetSceneNameFromSceneType(sceneToBuffer);
+
+        StartCoroutine(BufferScene(sceneToBuffer));
+        UnityEngine.Debug.Log("Started buffering scene: " + sceneToBuffer);
     }
 
     IEnumerator BufferScene(string SceneName)
     {
         isSceneBuffering = true;
-
+        ViewManager.instance.FadeToBlack();
+        yield return new WaitForSeconds(1f);
         asyncOperation = SceneManager.LoadSceneAsync(SceneName, LoadSceneMode.Additive);
         asyncOperation.allowSceneActivation = false;
 
@@ -172,6 +178,7 @@ public class ScenesManager : MonoSingleton<ScenesManager>
     {
         if (asyncOperation.progress >= .9f)
         {
+            LoadBufferedScene();
             return true;
         }
         else
@@ -181,17 +188,12 @@ public class ScenesManager : MonoSingleton<ScenesManager>
     }
 
 
-    // called to visually execute the loading of a buffered scene
-    public void ActivateBufferedScene()
-    {
-        // unload current streamed level
-        // allow scene activation for queued level
-    }
-
     public void UnloadScene(string scene)
     {
         SceneManager.UnloadSceneAsync(scene);
     }
+
+
 
     public void ResetGame()
     {

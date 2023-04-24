@@ -12,6 +12,9 @@ public class ViewManager : MonoSingleton<ViewManager>
     [SerializeField]  Sprite BossSprite;
     [SerializeField]  Sprite LiSprite;
     [SerializeField]  Sprite CATSprite;
+    [SerializeField] Sprite MomSprite;
+    [SerializeField] Sprite DadSprite;
+    [SerializeField] Sprite SisSprite;
     //[SerializeField]  Sprite YouSprite;
 
     [Header("Canvas Reference")]
@@ -98,6 +101,16 @@ public class ViewManager : MonoSingleton<ViewManager>
                 case GameManager.Character.You:
                     //GetCharacterImage().sprite = YouSprite;
                     break;
+                case GameManager.Character.Mom:
+                    GetCharacterImage().sprite = MomSprite;
+                    break;
+                case GameManager.Character.Dad:
+                    GetCharacterImage().sprite = DadSprite;
+                    break;
+                case GameManager.Character.Sister:
+                    GetCharacterImage().sprite = SisSprite;
+
+                    break;
             }
         }
        
@@ -144,8 +157,14 @@ public class ViewManager : MonoSingleton<ViewManager>
     public void LoadTutorialView(string s)
     {
         if (TutorialCanvas == null || TutorialCanvas.GetComponent<TutorialCanvasController>() == null) return;
+        if (GameManager.instance.GetCurrentGameMode() == GameManager.GameMode.Work)
+        {
+            GameManager.instance.isPauseWorkDayTimer = true;
+        }
         TutorialCanvas.SetActive(true);
         TutorialCanvas.GetComponent<TutorialCanvasController>().SetInstruction(s);
+
+      
     }
 
 
@@ -166,6 +185,12 @@ public class ViewManager : MonoSingleton<ViewManager>
     { 
         if(FadeCanvas == null) return;
         FadeCanvas.GetComponent<Animator>().SetTrigger("Fade");
+    }
+
+    public void FadeBack()
+    {
+        if (FadeCanvas == null) return;
+        FadeCanvas.GetComponent<Animator>().SetTrigger("UnFade");
     }
 
     public void FadeToBlack_end()
