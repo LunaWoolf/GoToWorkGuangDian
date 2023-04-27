@@ -78,6 +78,13 @@ public class GameManager : MonoSingleton<GameManager>
     public float maxDayLimit;
     [SerializeField] public WorkMode workMode = WorkMode.ActionCount;
 
+
+    [Header("Money")]
+    [SerializeField] public int passPoem_money = 5;
+    [SerializeField] public int passPoem_wrongword_money = 3;
+    [SerializeField] public int denyPoem_money = 2;
+    [SerializeField] public int denyPoem_wrongword_money = 4;
+
     [Header("After Work Day")]
     int AfterWorkActionCountOfDay = 0;
     int MaxAfterWorkActionCountOfDay = 1;
@@ -342,8 +349,8 @@ public class GameManager : MonoSingleton<GameManager>
             FindObjectOfType<PoemPaperController>().OnPoemPass();
             PoemGenerator.instance.OnPoemPass();
 
-            PropertyManager.instance.UpdateMoney(5);
-            PropertyManager.instance.UpdateMoney(-PropertyManager.instance.rebelliousCount * 2);
+            PropertyManager.instance.UpdateMoney(passPoem_money); // Gain money for pass poem
+            PropertyManager.instance.UpdateMoney(-PropertyManager.instance.rebelliousCount * passPoem_wrongword_money); // Lose money for each word that does not suppose to be passed
             PropertyManager.instance.rebelliousCount = 0;
 
            
@@ -375,7 +382,8 @@ public class GameManager : MonoSingleton<GameManager>
             FindObjectOfType<PoemPaperController>().OnPoemDeny(); //Turn on stamp
             PoemGenerator.instance.OnPoemDeny();
             SaveCircledWordForPoem();
-            PropertyManager.instance.UpdateMoney(2);
+            PropertyManager.instance.UpdateMoney(denyPoem_money);
+            PropertyManager.instance.UpdateMoney(-PropertyManager.instance.rebelliousCount * denyPoem_wrongword_money); // didn't circle the word that should circle
             PropertyManager.instance.rebelliousCount = 0;
       
             if (AdjustAndCheckWorkActionCountOfDay(1))
@@ -619,3 +627,7 @@ public class GameManager : MonoSingleton<GameManager>
 
 
 }
+
+//"Circle the words you want to revise, then click the button to request a revision. Some words are crucial and the author will refuse your revision request."
+//"Circle the words you consider should be censored, then reject this piece. You will be penalized if you fail to select words that are supposed to be censored."
+//"Make sure the piece has zero controversial words before you give it a pass. You can always ask for it to be revised. You will be penalized if you pass a piece that contains words that are supposed to be censored."
