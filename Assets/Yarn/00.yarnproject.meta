@@ -16,6 +16,7 @@ ScriptedImporter:
   - {fileID: 6391573757903218779, guid: bb7d93cbbd825442fb4bcd492cbba59e, type: 3}
   - {fileID: 6391573757903218779, guid: e598592d2e66b4af7b39c1f1cd1b8c1d, type: 3}
   - {fileID: 6391573757903218779, guid: 2189ec03a1ad24ff9a9c872ea2cffe11, type: 3}
+  - {fileID: 6391573757903218779, guid: 0f673df27781c4dbeb964add0c507cd9, type: 3}
   compileErrors: []
   serializedDeclarations:
   - name: $bReflection

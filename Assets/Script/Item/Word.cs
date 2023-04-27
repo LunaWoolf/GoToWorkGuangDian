@@ -21,7 +21,7 @@ public class Word : MonoBehaviour
     [Header("Reference")]
     [SerializeField]string _Text;
     [SerializeField] string _Text_clean;
-    [SerializeField] string _UnProcessText;
+    [SerializeField] public string _UnProcessText;
     public Button wordbutton;
     public TextMeshProUGUI tm;
     public Image CircleImage;

@@ -41,24 +41,24 @@ public class DinnerViewController : MonoBehaviour
 
     void OnMomButtonCliked()
     {
-        string date = GameManager.instance.GetGameDate(); 
+        /*string date = GameManager.instance.GetGameDate(); 
 
         if (LocalDialogueManager.instance.IsDialogueExsist("d" + date + "_Dad"))
         {
             LocalDialogueManager.instance.LoadDialogue("d" + date + "_Dad");
-        }
+        }*/
      
         
     }
 
     void OnFamilyButtonCliked()
     {
-        string date = GameManager.instance.GetGameDate();
+        /*string date = GameManager.instance.GetGameDate();
 
         if (LocalDialogueManager.instance.IsDialogueExsist("d" + date + "_Family"))
         {
             LocalDialogueManager.instance.LoadDialogue("d" + date + "_Family");
-        }
+        }*/
       
     }
 
@@ -66,18 +66,18 @@ public class DinnerViewController : MonoBehaviour
 
     void OnDadButtonCliked()
     {
-        LocalDialogueManager.instance.LoadDialogue("I_Phone");
+        //LocalDialogueManager.instance.LoadDialogue("I_Phone");
     }
 
   
     void OnSisButtonCliked()
     {
-        GameManager.instance.GoBackToWork();
+        //GameManager.instance.GoBackToWork();
     }
 
     void OnTvButtonCliked()
     {
-        GameManager.instance.GoBackToWork();
+        FindObjectOfType<TVManager>().TryLoadTVProgarm();
     }
 
     void OnCatButtonClicked()

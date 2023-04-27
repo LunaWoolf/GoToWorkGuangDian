@@ -63,8 +63,11 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] int dayCounter = 0;
     public int poemViewedToday = 0 ;
     [SerializeField] int PoemViewedToday = 0;
-    [SerializeField] public int denyPoemCount = 0;
-    [SerializeField] public int passPoemCount = 0;
+    [SerializeField] public int denyPoemCount_total = 0;
+    [SerializeField] public int passPoemCount_total = 0;
+
+    [SerializeField] public int denyPoemCount_day = 0;
+    [SerializeField] public int passPoemCount_day = 0;
     [SerializeField] public int WorkActionCountOfDay = 0;
     [SerializeField] public int MaxWorkActionCountOfDay = 5;
     [HideInInspector]public UnityEvent onAction;
@@ -122,6 +125,8 @@ public class GameManager : MonoSingleton<GameManager>
         SetCurrentGameMode(GameMode.Work);
         onStartWork.Invoke();
         WorkDayTimer = 0;
+        passPoemCount_day = 0;
+        denyPoemCount_day = 0;
         ViewManager.instance.UnloadAllView();
         if (!PropertyManager.instance.hasShownWorkTutorial)
         {
@@ -331,7 +336,8 @@ public class GameManager : MonoSingleton<GameManager>
 
         if (personalBannedWord_Poem.Count == 0)
         {
-            passPoemCount++;
+            passPoemCount_total++;
+            passPoemCount_day++;
             PoemViewedToday++;
             FindObjectOfType<PoemPaperController>().OnPoemPass();
             PoemGenerator.instance.OnPoemPass();
@@ -363,7 +369,8 @@ public class GameManager : MonoSingleton<GameManager>
 
         if (personalBannedWord_Poem.Count > 0)
         {
-            denyPoemCount++;
+            denyPoemCount_total++;
+            denyPoemCount_day++;
             PoemViewedToday++;
             FindObjectOfType<PoemPaperController>().OnPoemDeny(); //Turn on stamp
             PoemGenerator.instance.OnPoemDeny();
