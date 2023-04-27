@@ -24,9 +24,7 @@ public class BusSceneMouseControl : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            //PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
-            //pointerEventData.position = Input.mousePosition;
-
+           
             Vector2 localPoint = canvas.worldCamera.ScreenToViewportPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, canvas.worldCamera.nearClipPlane));
 
 
@@ -41,55 +39,8 @@ public class BusSceneMouseControl : MonoBehaviour
                 float force = Mathf.Clamp(distrance_threshold / (Vector2.Distance(rectTransform.anchoredPosition, localPoint)), 0.01f, 1);
                 m.gameObject.GetComponent<Rigidbody2D>().AddForce(direction * force * force_scale, ForceMode2D.Impulse);
             }
-            /*List<RaycastResult> results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(pointerEventData, results);
-
-            if (results.Count > 0)
-            {
-                foreach (RaycastResult r in results)
-                {
-                    if (r.gameObject.tag == "Message")
-                    {
-                        selectedObject = r.gameObject;
-                        break;
-                    }
-                }
-
-
-
-                // A UI element was clicked
-                Debug.Log("UI element clicked!");
-            }
-            else
-            {
-                // No UI element was clicked
-                Debug.Log("Mouse clicked, but not on a UI element.");
-            }
-
-            //Destroy(selectedObject);*/
+            
         }
-
-        /*
-        if (selectedObject)
-        {
-            Vector2 localPoint;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, Input.mousePosition, canvas.worldCamera, out localPoint);
-
-            // Set the position of the UI element to the position of the mouse
-            selectedObject.GetComponent<RectTransform>().localPosition = localPoint;
-        }
-
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (selectedObject)
-            {
-                selectedObject = null;
-            }
-
-        }*/
-
-
     }
 
 

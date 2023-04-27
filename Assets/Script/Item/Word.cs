@@ -15,10 +15,12 @@ public class Word : MonoBehaviour
         Noun,
         Adj,
         Empty,
+        Inserted,
     }
 
     [Header("Reference")]
     [SerializeField]string _Text;
+    [SerializeField] string _Text_clean;
     [SerializeField] string _UnProcessText;
     public Button wordbutton;
     public TextMeshProUGUI tm;
@@ -56,7 +58,7 @@ public class Word : MonoBehaviour
         if(tm) tm.text = _Text;
         if (wordbutton == null) wordbutton = this.GetComponentInChildren<Button>();
         if (wordbutton != null) wordbutton.onClick.AddListener(OnWordClicked);
-        PoemGenerator.instance.OnPoemRevise.AddListener(ReviseWord);
+        if(PoemGenerator.instance) PoemGenerator.instance.OnPoemRevise.AddListener(ReviseWord);
     }
 
     public void SetText(string t)
@@ -95,10 +97,20 @@ public class Word : MonoBehaviour
             }*/
           
         }
-        
-        if(this.gameObject.activeSelf)StartCoroutine(SetCircleSize()); 
+
+        _Text_clean = _Text.Replace(".", "");
+        _Text_clean = _Text_clean.Replace("?", "");
+        _Text_clean = _Text_clean.Replace("!", "");
+        _Text_clean = _Text_clean.Replace(",", "");
+        _Text_clean = _Text_clean.Replace(".", "");
+        _Text_clean = _Text_clean.Replace("\"", "");
+        _Text_clean = _Text_clean.Replace(" ", "");
+      
+        if (this.gameObject.activeSelf)StartCoroutine(SetCircleSize()); 
     }
     public string GetText() { return _Text; }
+
+    public string GetCleanText() { return _Text_clean; }
 
     public string GetUnProcessText() { return _UnProcessText; }
 
@@ -125,7 +137,7 @@ public class Word : MonoBehaviour
         {
             PropertyManager.instance.rebelliousCount += 1;
         }
-        GameManager.instance.CircledWordInCurrentPoem(_Text);
+        GameManager.instance.CircledWordInCurrentPoem(_Text_clean);
     }
 
     void CancleCircledWord()
@@ -143,7 +155,7 @@ public class Word : MonoBehaviour
             PropertyManager.instance.rebelliousCount -= 1;
         }
 
-        GameManager.instance.CancleCircledWordInCurrentPoem(_Text);
+        GameManager.instance.CancleCircledWordInCurrentPoem(_Text_clean);
     }
 
     public IEnumerator SetCircleSize()
@@ -161,16 +173,19 @@ public class Word : MonoBehaviour
             switch (currentWordType)
             {
                 case WordType.Noun:
-                    GameManager.instance.CancleCircledWordInCurrentPoem(_Text);
+                    GameManager.instance.CancleCircledWordInCurrentPoem(_Text_clean);
                     SetText(PoemGenerator.instance.GetRandomNoun());
+                    GameManager.instance.CircledWordInCurrentPoem(_Text_clean);
                     break;
                 case WordType.Verb:
-                    GameManager.instance.CancleCircledWordInCurrentPoem(_Text);
+                    GameManager.instance.CancleCircledWordInCurrentPoem(_Text_clean);
                     SetText(PoemGenerator.instance.GetRandomVerb());
+                    GameManager.instance.CircledWordInCurrentPoem(_Text_clean);
                     break;
                 case WordType.Adj:
-                    GameManager.instance.CancleCircledWordInCurrentPoem(_Text);
+                    GameManager.instance.CancleCircledWordInCurrentPoem(_Text_clean);
                     SetText(PoemGenerator.instance.GetRandomAdj());
+                    GameManager.instance.CircledWordInCurrentPoem(_Text_clean);
                     break;
             }
 

@@ -79,7 +79,7 @@ public class ViewManager : MonoSingleton<ViewManager>
             return;
         } 
         string name = c;
-        Debug.Log(name);
+        //Debug.Log(name);
        
         name = name.Replace(" ", "");
 

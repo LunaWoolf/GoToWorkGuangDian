@@ -16,6 +16,12 @@ public class SaySomethingManager : MonoBehaviour
 
     public Button NewLineButton;
     public Button DoneButton;
+    public Button SleepButton;
+
+    public SmokeCanvas SmokeCanvas;
+
+    public List<string> temp_UsedWordForCurrentLine = new List<string>();
+   
 
     string[] lines;
     // Start is called before the first frame update
@@ -27,15 +33,73 @@ public class SaySomethingManager : MonoBehaviour
 
         GenerateLine();
 
-        NewLineButton.onClick.AddListener(GenerateLine);
+        NewLineButton.onClick.AddListener(OnNewLineButtonClicked);
         DoneButton.onClick.AddListener(OnDoneButtonClicked);
+        SleepButton.onClick.AddListener(OnSleepButtonClicked);
+
+        SmokeCanvas = FindObjectOfType<SmokeCanvas>();
+        SmokeCanvas.gameObject.SetActive(false);
+
+        ViewManager.instance.LoadTutorialView("Drag and Drop Words On To  the Paper To Write");
     }
+
+    void OnNewLineButtonClicked()
+    {
+        if (temp_UsedWordForCurrentLine.Count != 0)
+        {
+            FindObjectOfType<PaperShredderManager>().StartPaperShredderWithGivenList(temp_UsedWordForCurrentLine);
+        }
+        GenerateLine();
+        temp_UsedWordForCurrentLine.Clear();
+    }
+
 
     void OnDoneButtonClicked()
     {
-        //Save Poem
-        //PropertyManager.instance.bHasWritePoem = true;
-        GameManager.instance.GoToNextWorkDay();
+        SaveLine();
+        SmokeCanvas.gameObject.SetActive(true);
+        this.GetComponent<Canvas>().enabled = false;
+        temp_UsedWordForCurrentLine.Clear();
+
+    }
+
+    public void ReplaceText(Word word, string text)
+    {
+        if (word.currentWordType == Word.WordType.Empty)
+        {
+            word.SetText(text);
+            word.SetWordType(Word.WordType.Inserted);
+        }
+        else if (word.currentWordType == Word.WordType.Inserted)
+        {
+            List<string> temp = new List<string>();
+            temp.Add(word.GetCleanText());
+            FindObjectOfType<PaperShredderManager>().StartPaperShredderWithGivenList(temp);
+            temp_UsedWordForCurrentLine.Remove(word.GetCleanText());
+            word.SetText(text);
+        }
+       
+        temp_UsedWordForCurrentLine.Add(text);
+
+    }
+
+    void OnSleepButtonClicked()
+    {
+        FinishSaySomething();
+    }
+
+    public void Smoke()
+    {
+        PropertyManager.instance.cigaretteCount -= 1;
+        SmokeCanvas.gameObject.SetActive(false);
+        ViewManager.instance.LoadTutorialView("your mind is clear, you can write more");
+        this.GetComponent<Canvas>().enabled = true;
+        GenerateLine();
+
+    }
+
+    void SaveLine()
+    {
         string line = "";
 
         foreach (Word w in PoemLine.GetComponent<PoemLine>().wordList)
@@ -44,10 +108,12 @@ public class SaySomethingManager : MonoBehaviour
         }
 
         PropertyManager.instance.writeLines.Add(line);
-        //temp fix
-        //Destroy(this.gameObject);
 
-        //Unload Write Scene
+    }
+
+    public void FinishSaySomething()
+    {
+        GameManager.instance.GoToNextWorkDay();
         ScenesManager.instance.UnloadScene("SaySomethingScene");
 
     }
@@ -97,9 +163,5 @@ public class SaySomethingManager : MonoBehaviour
         return result;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   
 }

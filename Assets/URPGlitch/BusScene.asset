@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d536c364ebc24dd6b769ef6affde936a, type: 3}
   m_Name: DigitalGlitchVolume
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.0001
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35,6 +35,7 @@ MonoBehaviour:
   - {fileID: 3589451432312289653}
   - {fileID: -5251537863324853925}
   - {fileID: 5998679159244374107}
+  - {fileID: 2431512980877300591}
 --- !u!114 &2419154020746155039
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -51,6 +52,31 @@ MonoBehaviour:
   mode:
     m_OverrideState: 1
     m_Value: 2
+--- !u!114 &2431512980877300591
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fa0085f50d5e54f8144f766051a691, type: 3}
+  m_Name: FilmGrain
+  m_EditorClassIdentifier: 
+  active: 1
+  type:
+    m_OverrideState: 1
+    m_Value: 0
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.996
+  response:
+    m_OverrideState: 0
+    m_Value: 0.8
+  texture:
+    m_OverrideState: 0
+    m_Value: {fileID: 0}
 --- !u!114 &3589451432312289653
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -63,16 +89,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45fac1424df44990a90443d3cf649a75, type: 3}
   m_Name: AnalogGlitchVolume
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   scanLineJitter:
     m_OverrideState: 1
-    m_Value: 0.086
+    m_Value: 0.001
   verticalJump:
     m_OverrideState: 1
-    m_Value: 0.004
+    m_Value: 0
   horizontalShake:
     m_OverrideState: 1
-    m_Value: 0.035
+    m_Value: 0
   colorDrift:
     m_OverrideState: 1
     m_Value: 0.022
@@ -122,7 +148,7 @@ MonoBehaviour:
     m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 6.07
   scatter:
     m_OverrideState: 0
     m_Value: 0.7
@@ -166,7 +192,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.347
+    m_Value: 0.275
   smoothness:
     m_OverrideState: 1
     m_Value: 0.422

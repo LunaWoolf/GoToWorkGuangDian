@@ -64,4 +64,13 @@ public class ShredderWord : MonoBehaviour
         }
         
     }
+
+    public void SetWordColor(Color color)
+    {
+        for (int i = 0; i < letterRefList.Length; i++)
+        {
+            letterRefList[i].color = color;
+        }
+
+    }
 }

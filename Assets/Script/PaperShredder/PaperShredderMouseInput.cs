@@ -32,22 +32,30 @@ public class PaperShredderMouseInput : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0))
         {
-            if (selectedObject)
+            if (selectedObject) 
             {
                 
                 PoemPaperController ppController = IsPointerOverPoemPaper();
                 if (ppController != null)
                 {
-                    if (selectedObject.GetComponentInParent<ShredderWord>())
+                    if (selectedObject.GetComponentInParent<ShredderWord>()) // write mode
                     {
                         ppController.TryAddWordToPoem(selectedObject.GetComponentInParent<ShredderWord>().word);
                     }
                 }
-                else if (IsPointerOverSingleWord())
+                else if (IsPointerOverSingleWord())//SaySomething
                 {
                     if (selectedObject.GetComponentInParent<ShredderWord>())
                     {
-                        IsPointerOverSingleWord().SetText(selectedObject.GetComponentInParent<ShredderWord>().word);
+                        if (IsPointerOverSingleWord())
+                        {
+                            Word w = IsPointerOverSingleWord();
+                            string word = selectedObject.GetComponentInParent<ShredderWord>().word;
+                            FindObjectOfType<SaySomethingManager>().ReplaceText(w, word);
+                            Destroy(selectedObject.GetComponentInParent<ShredderWord>().gameObject);
+                        }
+                        
+                       
                     }
                 }
 

@@ -12,6 +12,9 @@ public class AfterWorkViewController : MonoBehaviour
     [SerializeField] Button ReadNewsButton;
     [SerializeField] Button WriteButton;
 
+    [SerializeField] string writePrompt = "You only have one thing on your mind";
+
+
     public TextMeshProUGUI AfterWorkPromptText;
 
     // Start is called before the first frame update
@@ -86,7 +89,7 @@ public class AfterWorkViewController : MonoBehaviour
         if (PropertyManager.instance.bCanWrite)
         {
             WriteButton.gameObject.SetActive(true);
-            AfterWorkPromptText.text = "You only have one thing on your mind";
+            AfterWorkPromptText.text = writePrompt;
             return;
         }
 

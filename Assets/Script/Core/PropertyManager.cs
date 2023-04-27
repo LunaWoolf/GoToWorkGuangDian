@@ -37,9 +37,22 @@ public class PropertyManager : MonoSingleton<PropertyManager>
     [Header("Endign")]
     public bool bHasWritePoem = false;
 
-    public int money = 0;
-
+    [Header("SaySomething")]
     public List<string> writeLines = new List<string>();
+    public int cigaretteCount = 0;
+
+    [Header("General")]
+    private int money = 0;
+
+    public int GetMoney() { return money; }
+
+    public void UpdateMoney(int changeValue)
+    {
+        money += changeValue;
+        ViewManager.instance.SetMoneyText(PropertyManager.instance.money);
+
+    }
+
 
     void Awake()
     {

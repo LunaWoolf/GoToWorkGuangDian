@@ -147,7 +147,7 @@ public class ScenesManager : MonoSingleton<ScenesManager>
     {
         isSceneBuffering = true;
         ViewManager.instance.FadeToBlack();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         asyncOperation = SceneManager.LoadSceneAsync(SceneName, LoadSceneMode.Additive);
         asyncOperation.allowSceneActivation = false;
 
@@ -190,10 +190,18 @@ public class ScenesManager : MonoSingleton<ScenesManager>
 
     public void UnloadScene(string scene)
     {
-        SceneManager.UnloadSceneAsync(scene);
+        StartCoroutine(UnloadScene_IE(scene));
+
     }
 
-
+    IEnumerator UnloadScene_IE(string scene)
+    {
+        ViewManager.instance.FadeToBlack();
+        yield return new WaitForSeconds(.2f);
+        SceneManager.UnloadSceneAsync(scene);
+        yield return new WaitForSeconds(.2f);
+        ViewManager.instance.FadeBack();
+    }
 
     public void ResetGame()
     {

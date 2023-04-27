@@ -72,16 +72,16 @@ MonoBehaviour:
   active: 1
   scanLineJitter:
     m_OverrideState: 1
-    m_Value: 0.115
+    m_Value: 0.144
   verticalJump:
     m_OverrideState: 1
-    m_Value: 0.001
+    m_Value: 0
   horizontalShake:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.005
   colorDrift:
     m_OverrideState: 1
-    m_Value: 0.001
+    m_Value: 0.035
 --- !u!114 &-7011558710299706105
 MonoBehaviour:
   m_ObjectHideFlags: 3
