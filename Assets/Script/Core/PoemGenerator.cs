@@ -88,11 +88,11 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     // Update is called once per frame
     void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             TearPoem();
             GeneratorPoem(5);
-        }*/
+        }
     }
 
     public void ParseWorkList()

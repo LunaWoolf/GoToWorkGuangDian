@@ -279,7 +279,7 @@ MonoBehaviour:
   headshotImage: {fileID: 241858811}
   LeftEye: {fileID: 3426778508703784744}
   RightEye: {fileID: 581018332}
-  DisappearTime: 300
+  DisappearTime: 8
   messageType: 0
 --- !u!50 &8652663221640144460
 Rigidbody2D:

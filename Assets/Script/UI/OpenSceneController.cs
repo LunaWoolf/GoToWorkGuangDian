@@ -26,8 +26,7 @@ public class OpenSceneController : MonoBehaviour
         {
             PropertyManager.instance.player_name = NameInputField.text;
             ScenesManager.instance.UnloadScene("OpenScene");
-            this.gameObject.SetActive(false);
-           
+            //this.gameObject.SetActive(false);
         }
 
 

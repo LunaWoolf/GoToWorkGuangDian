@@ -13,7 +13,7 @@ public class TVManager : MonoBehaviour
     [SerializeField] GameObject PoemLine;
     [SerializeField] GameObject PoemParent;
 
-    [SerializeField] string[] tvOpenning = {"A musician stands in the middle of a vacant stage,", "with a spot lght on top, they sings : "};
+    [SerializeField] string[] tvOpenning = { "A musician stands in the middle of a vacant stage", "With a spotlight shining from above", "They sing:" };
 
     //[SerializeField] TextMeshProUGUI TVText;
 

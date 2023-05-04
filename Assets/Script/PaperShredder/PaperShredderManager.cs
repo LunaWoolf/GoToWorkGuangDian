@@ -96,7 +96,8 @@ public class PaperShredderManager : MonoBehaviour
         Debug.Log("Clear Current read to spawn word list");
         readyToSpawnShredderWordList.Clear();
         yield return new WaitForSeconds(1f);
-        if (GameManager.instance.GetCurrentGameMode() == GameManager.GameMode.Work && GoBackButton != null) GoBackButton.SetActive(true);
+
+        if (GameManager.instance.GetCurrentGameMode() == GameManager.GameMode.PaperShredder && GoBackButton != null) GoBackButton.SetActive(true);
 
     }
 

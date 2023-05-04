@@ -23,6 +23,7 @@ public class Word : MonoBehaviour
     [SerializeField] string _Text_clean;
     [SerializeField] public string _UnProcessText;
     public Button wordbutton;
+    public Button revisebutton;
     public TextMeshProUGUI tm;
     public Image CircleImage;
     public GameObject Background;
@@ -46,6 +47,9 @@ public class Word : MonoBehaviour
                 {
                     //wordbutton.GetComponent<Image>().color = new Color(0, 0, 0, 0f);
                 }
+           
+
+
                 isCircledable = false;
                 //tm.fontStyle = FontStyles.Underline;
                 break;
@@ -58,7 +62,12 @@ public class Word : MonoBehaviour
         if(tm) tm.text = _Text;
         if (wordbutton == null) wordbutton = this.GetComponentInChildren<Button>();
         if (wordbutton != null) wordbutton.onClick.AddListener(OnWordClicked);
-        if(PoemGenerator.instance) PoemGenerator.instance.OnPoemRevise.AddListener(ReviseWord);
+        if (revisebutton)
+        {
+            revisebutton.onClick.AddListener(OnReviseButtonClicked);
+            ToggleReviseButton(false, true);
+        }
+        if (PoemGenerator.instance) PoemGenerator.instance.OnPoemRevise.AddListener(ReviseWord);
     }
 
     public void SetText(string t)
@@ -136,8 +145,39 @@ public class Word : MonoBehaviour
         if (banned) // has ai and follow ai instruction
         {
             PropertyManager.instance.rebelliousCount += 1;
+          
         }
+  
         GameManager.instance.CircledWordInCurrentPoem(_Text_clean);
+
+        ToggleReviseButton(true, true);
+    }
+
+    // is reviseable is actually not going to work
+    void ToggleReviseButton(bool isOn, bool isReviseable)
+    {
+        if (revisebutton == null) return;
+
+        if (!isOn)
+        {
+            revisebutton.gameObject.SetActive(false);
+
+        }
+        else
+        {
+            revisebutton.gameObject.SetActive(true);
+            if (isReviseable)
+            {
+                //revisebutton.enabled = true;
+                revisebutton.GetComponentInChildren<TextMeshProUGUI>().text = "Revise";
+            }
+            else
+            {
+                revisebutton.enabled = false;
+                revisebutton.GetComponentInChildren<TextMeshProUGUI>().text = "Can't Revise";
+            }
+        }
+
     }
 
     void CancleCircledWord()
@@ -156,6 +196,7 @@ public class Word : MonoBehaviour
         }
 
         GameManager.instance.CancleCircledWordInCurrentPoem(_Text_clean);
+        ToggleReviseButton(false, true);
     }
 
     public IEnumerator SetCircleSize()
@@ -166,8 +207,16 @@ public class Word : MonoBehaviour
                                                                          Background.GetComponent<RectTransform>().sizeDelta.y * 1.3f);
     }
 
+    public void OnReviseButtonClicked()
+    {
+        if (circled)
+            ReviseWord();
+    }
+
     public void ReviseWord()
     {
+        Debug.Log("Revise word");
+
         if (circled)
         {
             switch (currentWordType)

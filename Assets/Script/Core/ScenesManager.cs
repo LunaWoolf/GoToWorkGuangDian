@@ -16,6 +16,7 @@ public class ScenesManager : MonoSingleton<ScenesManager>
    
     }
 
+    bool hasFadeToBlack = false;
     // Current Scene with a public getter and private setter
     [SerializeField] private SceneType currentScene = SceneType.workScene;
     public SceneType GetCurrentScene() { return currentScene; }
@@ -196,8 +197,9 @@ public class ScenesManager : MonoSingleton<ScenesManager>
 
     IEnumerator UnloadScene_IE(string scene)
     {
+
         ViewManager.instance.FadeToBlack();
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(2f);
         SceneManager.UnloadSceneAsync(scene);
         yield return new WaitForSeconds(.2f);
         ViewManager.instance.FadeBack();

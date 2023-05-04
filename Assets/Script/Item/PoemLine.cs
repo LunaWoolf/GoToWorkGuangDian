@@ -8,6 +8,9 @@ public class PoemLine : MonoBehaviour
     public GameObject wordPrefab;
     public Transform line01;
     public Transform line02;
+    [SerializeField] public LineCheckBox checkBox;
+    public int oneLineMaxLetter = 50;
+    int currentLetterCount = 0;
 
     public int wordCount = 0;
     public List<Word> wordList = new List<Word>();
@@ -35,9 +38,10 @@ public class PoemLine : MonoBehaviour
     {
         
         GameObject w;
-        if (wordCount < 10)
+        if (currentLetterCount < oneLineMaxLetter)
         {
             w = Instantiate(wordPrefab, line01);
+            Debug.Log("LetterCount" + currentLetterCount);
 
         }
         else
@@ -50,6 +54,7 @@ public class PoemLine : MonoBehaviour
 
         }
         wordCount++;
+      
 
         if (word.Contains("<v>"))
         {
@@ -80,9 +85,11 @@ public class PoemLine : MonoBehaviour
 
         w.GetComponent<Word>().SetText(word);
         wordList.Add(w.GetComponent<Word>());
+
+        currentLetterCount += w.GetComponent<Word>().GetCleanText().Length;
     }
 
-
+     
     public void removeLastWord()
     {
         if (wordCount > 0)
@@ -103,5 +110,6 @@ public class PoemLine : MonoBehaviour
             Destroy(w.gameObject);
         }
         wordCount = 0;
+        currentLetterCount = 0;
     }
 }

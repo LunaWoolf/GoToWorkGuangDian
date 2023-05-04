@@ -29,10 +29,12 @@ public class WorkViewController : MonoBehaviour
         if (PassButton != null)
         {
             PassButton.onClick.AddListener(OnPassButtonClicked);
+            PassButton.gameObject.SetActive(false);
         }
         if (DenyButton != null)
         {
             DenyButton.onClick.AddListener(OnDenyButtonClicked);
+            DenyButton.gameObject.SetActive(false);
         }
 
         if (MoyuButton != null)
@@ -49,12 +51,14 @@ public class WorkViewController : MonoBehaviour
         if (ReviseButton != null)
         {
             ReviseButton.onClick.AddListener(OnReviseButtonClicked);
+            DenyButton.gameObject.SetActive(false);
         }
         
-
         //InitalActionCount(GameManager.instance.MaxWorkActionCountOfDay - GameManager.instance.WorkActionCountOfDay);
         GameManager.instance.onAction.AddListener(OnUseOneAction);
     }
+
+
 
     void OnPassButtonClicked()
     {

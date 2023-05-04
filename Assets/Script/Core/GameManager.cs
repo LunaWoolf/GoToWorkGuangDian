@@ -37,6 +37,7 @@ public class GameManager : MonoSingleton<GameManager>
     public enum GameMode
     {
         Conversation,
+        PaperShredder,
         Work,
         //Moyu,
         Write,
@@ -403,7 +404,7 @@ public class GameManager : MonoSingleton<GameManager>
     void EndOfWorkDay()
     {
         SaveTodayWorkBannedWorkToBannedWordDictionary();
-        SetCurrentGameMode(GameMode.Conversation);
+        SetCurrentGameMode(GameMode.PaperShredder);
         PoemGenerator.instance.UnloadPoemPaper();
         ViewManager.instance.UnloadWorkView();
         if (!CheckedReachForEnding())
