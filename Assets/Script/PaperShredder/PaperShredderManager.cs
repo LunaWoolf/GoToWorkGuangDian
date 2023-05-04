@@ -52,7 +52,7 @@ public class PaperShredderManager : MonoBehaviour
 
         if (GameManager.instance != null /*&& !GameManager.instance.isDebug)*/ && GameManager.instance.personalBannedWord_Day.Count != 0)
         {
-            readyToSpawnShredderWordList = new List<string>(GameManager.instance.personalBannedWord_Day);
+            readyToSpawnShredderWordList.AddRange( GameManager.instance.personalBannedWord_Day);
         }
 
         StartCoroutine(InstantiateWord());

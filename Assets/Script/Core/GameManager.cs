@@ -148,18 +148,6 @@ public class GameManager : MonoSingleton<GameManager>
         if (FindObjectOfType<WorkViewController>() != null)
             FindObjectOfType<WorkViewController>().InitalActionCount(GameManager.instance.MaxWorkActionCountOfDay - GameManager.instance.WorkActionCountOfDay);
 
-        //PoemGenerator.instance.GeneratorPoem(5);
-        /*if (PropertyManager.instance.bHasWritePoem)
-        {
-            // PoemGenerator.instance.MoveWritePoemToReadPoem();
-            //PoemGenerator.instance.GeneratorPoem(5);
-            //PoemGenerator.instance.GeneratorPoem(5);
-            PoemGenerator.instance.TearPoemAfterWrite();
-        }
-        else
-        {
-            PoemGenerator.instance.GeneratorPoem(5);
-        }*/
 
         //temp
         if (PropertyManager.instance.bHasWritePoem)
@@ -509,7 +497,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void CancleCircledWordInCurrentPoem(string word)
     {
         if(personalBannedWord_Poem.Contains(word))
-            personalBannedWord_Poem.Remove(word);
+           personalBannedWord_Poem.Remove(word);
 
     }
 

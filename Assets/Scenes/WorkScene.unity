@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 132.4, y: -997}
+  m_AnchoredPosition: {x: 132.4, y: -986.4}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2814437
@@ -1921,13 +1921,15 @@ GameObject:
   m_Component:
   - component: {fileID: 441690194}
   - component: {fileID: 441690195}
+  - component: {fileID: 441690197}
+  - component: {fileID: 441690196}
   m_Layer: 5
   m_Name: Dialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &441690194
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1976,6 +1978,44 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &441690196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441690193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!223 &441690197
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441690193}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3652,10 +3692,10 @@ RectTransform:
   m_Father: {fileID: 2061327928}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 259.095, y: -110}
+  m_SizeDelta: {x: 256.19, y: 40.22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &846475833
 MonoBehaviour:
@@ -5686,7 +5726,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775954111}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61514afb141e1df4eaff319c2c80ba10, type: 3}
   m_Name: 
@@ -5966,6 +6006,7 @@ MonoBehaviour:
   ActionCountParent: {fileID: 519523808}
   ActionCountPrefab: {fileID: 7599251284680593423, guid: 51c5239b6ec530843997400724989111, type: 3}
   PoemCanvas: {fileID: 696184583}
+  CurrentPoemOnCanvas: {fileID: 0}
 --- !u!1001 &1991530104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6007,7 +6048,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7978768634819224562, guid: 200d9b6bba4446f459c5ae82868282f8, type: 3}
       propertyPath: endColor.r
-      value: 0.5660378
+      value: 0.6320754
       objectReference: {fileID: 0}
     - target: {fileID: 7978768634819224562, guid: 200d9b6bba4446f459c5ae82868282f8, type: 3}
       propertyPath: GoBackButton
@@ -6032,6 +6073,10 @@ PrefabInstance:
     - target: {fileID: 7978768634819224562, guid: 200d9b6bba4446f459c5ae82868282f8, type: 3}
       propertyPath: startColor.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7978768634819224562, guid: 200d9b6bba4446f459c5ae82868282f8, type: 3}
+      propertyPath: maxFilledPrecent
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 7978768634819224562, guid: 200d9b6bba4446f459c5ae82868282f8, type: 3}
       propertyPath: shredderWordList.Array.size
@@ -6467,7 +6512,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 6.9}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 850.36896, y: 262.3579}
+  m_AnchoredPosition: {x: 850.36896, y: -10.04}
   m_SizeDelta: {x: 349.862, y: 562.462}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2039106288
@@ -6649,7 +6694,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 488, y: 0}
-  m_SizeDelta: {x: 1529, y: 0}
+  m_SizeDelta: {x: 1529, y: 225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2061327929
 MonoBehaviour:
@@ -7003,7 +7048,7 @@ MonoBehaviour:
   m_Padding:
     m_Left: -41
     m_Right: 0
-    m_Top: -71
+    m_Top: -40
     m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 23.42
@@ -7673,6 +7718,10 @@ PrefabInstance:
     - target: {fileID: 4878771606995890552, guid: c53f1839a241d45ca94d269cf553756b, type: 3}
       propertyPath: MaxWorkActionCountOfDay
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4878771606995890552, guid: c53f1839a241d45ca94d269cf553756b, type: 3}
+      propertyPath: passPoem_wrongword_money
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4878771606995890553, guid: c53f1839a241d45ca94d269cf553756b, type: 3}
       propertyPath: MoneyText

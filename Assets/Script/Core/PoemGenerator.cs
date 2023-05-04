@@ -58,6 +58,8 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
     string[] currentPoem;
 
+   
+
     public UnityEvent OnPoemRevise;
     void Awake()
     {
@@ -127,7 +129,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         string[] poem = new string[line];
         int rand = Random.Range(0, 100);
         bool isValid = (rand < ValidPrecentag) ? true : false;
-
+        Poem _currentPoem = new Poem();
         for (int i = 0; i < line; i++)
         {
             int randLine = Random.Range(0, lines.Length);
@@ -141,8 +143,19 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
             GameObject p = Instantiate(PoemLine, PoemParent_Read.transform, false);
             p.GetComponent<PoemLine>().SetLine(line_tem);
+            _currentPoem.poemLines.Add(p.GetComponent<PoemLine>());
         }
-        currentPoem = poem;
+
+        if (FindObjectOfType<WorkViewController>())
+        {
+            FindObjectOfType<WorkViewController>().SetCurrentPoem(_currentPoem);
+        }
+        else
+        {
+            Debug.Log("Can not find canvas");
+        }
+       
+        currentPoem = poem; // todo: refactor that to poem logic
         return poem;
     }
 

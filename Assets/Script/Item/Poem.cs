@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Poem : MonoBehaviour
 {
-    List<PoemLine> poemLines = new List<PoemLine>();
+    public List<PoemLine> poemLines = new List<PoemLine>();
 
     
 
@@ -24,6 +24,7 @@ public class Poem : MonoBehaviour
 
     public bool CheckifPoemAllChcked()
     {
+      
         foreach (PoemLine line in poemLines)
         {
             if (!line.checkBox.GetIsCheck())

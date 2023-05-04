@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &15617273
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1139,7 +1139,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 425, y: 288}
+  m_AnchoredPosition: {x: 15, y: 288}
   m_SizeDelta: {x: 132.54, y: 54.36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &522597816
@@ -1779,6 +1779,10 @@ MonoBehaviour:
   CloseTVButton: {fileID: 64360964}
   PoemLine: {fileID: 5676340257267858763, guid: cdbe6765c12034f9482076d97ac49e14, type: 3}
   PoemParent: {fileID: 1404568494}
+  tvOpenning:
+  - A musician stands in the middle of a vacant stage
+  - With a spotlight shining from above
+  - 'They sing:'
 --- !u!4 &841331878
 Transform:
   m_ObjectHideFlags: 0
@@ -2289,7 +2293,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1108945532
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2484,7 +2488,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1141893322
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3188,7 +3192,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1335110451
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3470,7 +3474,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1480480617
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4105,7 +4109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -19.124}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 561, y: 6}
+  m_AnchoredPosition: {x: 268, y: -11}
   m_SizeDelta: {x: 132.54, y: 54.36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1793148408
@@ -4671,7 +4675,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2007260840
 RectTransform:
   m_ObjectHideFlags: 0

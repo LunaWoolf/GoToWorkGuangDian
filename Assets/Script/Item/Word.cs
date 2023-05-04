@@ -223,23 +223,29 @@ public class Word : MonoBehaviour
             {
                 case WordType.Noun:
                     GameManager.instance.CancleCircledWordInCurrentPoem(_Text_clean);
+                    FindObjectOfType<PaperShredderManager>().readyToSpawnShredderWordList.Add(_Text_clean);
                     SetText(PoemGenerator.instance.GetRandomNoun());
                     GameManager.instance.CircledWordInCurrentPoem(_Text_clean);
                     break;
                 case WordType.Verb:
                     GameManager.instance.CancleCircledWordInCurrentPoem(_Text_clean);
+                    FindObjectOfType<PaperShredderManager>().readyToSpawnShredderWordList.Add(_Text_clean);
                     SetText(PoemGenerator.instance.GetRandomVerb());
                     GameManager.instance.CircledWordInCurrentPoem(_Text_clean);
                     break;
                 case WordType.Adj:
                     GameManager.instance.CancleCircledWordInCurrentPoem(_Text_clean);
+                    FindObjectOfType<PaperShredderManager>().readyToSpawnShredderWordList.Add(_Text_clean);
+
                     SetText(PoemGenerator.instance.GetRandomAdj());
                     GameManager.instance.CircledWordInCurrentPoem(_Text_clean);
                     break;
+                default:
+                    //displace not reviseable
+                    break;
             }
 
-                
-
+               
         }
     }
 }

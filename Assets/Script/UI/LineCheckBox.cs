@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class LineCheckBox : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class LineCheckBox : MonoBehaviour
     [SerializeField] GameObject checkBox;
     [SerializeField] GameObject checkMark;
     [SerializeField] Button checkButton;
+
+    public UnityEvent OnChecked;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +21,12 @@ public class LineCheckBox : MonoBehaviour
         {
             checkMark.SetActive(false);
         }
+
+        if (FindObjectOfType<WorkViewController>())
+        {
+            OnChecked.AddListener(FindObjectOfType<WorkViewController>().OnLineCheck);
+        } 
+     
     }
 
     public bool GetIsCheck()
@@ -29,7 +38,7 @@ public class LineCheckBox : MonoBehaviour
     {
         
     }
-
+   
     void OnCheckBoxClicked()
     {
         if (isCheck)
@@ -40,7 +49,8 @@ public class LineCheckBox : MonoBehaviour
         {
             onCheck();
         }
-       
+
+        OnChecked.Invoke();
     }
 
     public void onCheck()

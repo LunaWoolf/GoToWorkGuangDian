@@ -21,7 +21,7 @@ public class WorkViewController : MonoBehaviour
 
     [SerializeField] GameObject PoemCanvas;
 
-   
+    public Poem CurrentPoemOnCanvas = new Poem();
 
     // Start is called before the first frame update
     void Start()
@@ -56,14 +56,38 @@ public class WorkViewController : MonoBehaviour
         
         //InitalActionCount(GameManager.instance.MaxWorkActionCountOfDay - GameManager.instance.WorkActionCountOfDay);
         GameManager.instance.onAction.AddListener(OnUseOneAction);
+
     }
 
+    public void OnLineCheck()
+    {
+        /*if (CurrentPoemOnCanvas == null)
+        {
+            Debug.Log("current poem on canvas is null");
+            return;
+        }*/
 
+        if (CurrentPoemOnCanvas.CheckifPoemAllChcked())
+        {
+            PassButton.gameObject.SetActive(true);
+        } else
+        {
+            PassButton.gameObject.SetActive(false);
+          
+        }
+    
+    }
 
+    public void SetCurrentPoem( Poem p)
+    {
+        CurrentPoemOnCanvas = p;
+        PassButton.gameObject.SetActive(false);
+        Debug.Log("Set Current Poem");
+    }
     void OnPassButtonClicked()
     {
         GameManager.instance.OnPoemTryPass();
-     
+        
     }
 
     void OnReviseButtonClicked()
