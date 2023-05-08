@@ -54,6 +54,28 @@ public class ScenesManager : MonoSingleton<ScenesManager>
         {
             ResetGame();
         }
+
+        if (GameManager.instance.isDebug)
+        {
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                //Bus
+                GameManager.instance.GoToBus();
+            }
+
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                //Dinner
+                GameManager.instance.GoToDinner();
+            }
+
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                //Say
+                GameManager.instance.GoToAfterwork();
+            }
+
+        }
     }
 
     public void ChangeSceneByNumber(SceneType sceneToLoad)
