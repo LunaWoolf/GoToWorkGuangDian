@@ -138,7 +138,7 @@ public class GameManager : MonoSingleton<GameManager>
         ViewManager.instance.UnloadAllView();
         if (!PropertyManager.instance.hasShownWorkTutorial)
         {
-            ViewManager.instance.LoadTutorialView("Tutorial_Work");
+            //ViewManager.instance.LoadTutorialView("Tutorial_Work");
             PropertyManager.instance.hasShownWorkTutorial = true;
         }
         ViewManager.instance.LoadWorkView();
