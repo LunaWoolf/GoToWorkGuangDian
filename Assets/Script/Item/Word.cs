@@ -155,7 +155,7 @@ public class Word : MonoBehaviour
     }
 
     // is reviseable is actually not going to work
-    void ToggleReviseButton(bool isOn, bool isReviseable)
+    public void ToggleReviseButton(bool isOn, bool isReviseable)
     {
         if (revisebutton == null) return;
 
