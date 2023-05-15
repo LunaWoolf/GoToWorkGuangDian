@@ -424,8 +424,9 @@ public class Effects : MonoBehaviour
         internal GameObject WordPrefab;
         [SerializeField]
         internal GameObject Line_Parent;
-
-        private void Awake()
+        internal float WordPosX = 0;
+         internal float WordPosY = 0;
+    private void Awake()
         {
             canvasGroup.alpha = 0;
             canvasGroup.blocksRaycasts = false;
@@ -450,13 +451,13 @@ public class Effects : MonoBehaviour
         debug = !debug;
         if (debug)
         {
-            typewriterEffectSpeed = 10000f;
+            //typewriterEffectSpeed = 10000f;
             holdTime = .01f;
             autoAdvance = true;
         }
         else
         {
-            typewriterEffectSpeed = 200f;
+            //typewriterEffectSpeed = 200f;
             autoAdvance = false;
         }
     }
@@ -583,115 +584,12 @@ public class Effects : MonoBehaviour
 
         // Begin running the line as a coroutine.// Run Line In the Regular way
         //StartCoroutine(RunLineInternal(dialogueLine, onDialogueLineFinished));
-        List<GameObject> childObjects = new List<GameObject>();
-
-        foreach (Transform child in Line_Parent.transform)
-        {
-            childObjects.Add(child.gameObject);
-          
-        }
-        foreach (GameObject childObject in childObjects)
-        {
-            childObject.transform.SetParent(null, true);
-            childObject.gameObject.GetComponent<DialogueWord>().FadeAndDestroy();
-        }
+        //CleanUpLine();
 
         StartCoroutine(RunLineInternal_Custom(dialogueLine, onDialogueLineFinished));
        
     }
 
-        private IEnumerator RunLineInternal_Custom(LocalizedLine dialogueLine, Action onDialogueLineFinished)
-        {
-
-          
-
-            IEnumerator PresentLine()
-            {
-                lineText.gameObject.SetActive(false);
-                canvasGroup.gameObject.SetActive(true);
-
-                // Hide the continue button 
-                if (continueButton != null)
-                    continueButton.SetActive(false);
-
-
-            //lineText.text = dialogueLine.Text.Text;
-
-            /*if (useTypewriterEffect)
-            {
-
-                lineText.maxVisibleCharacters = 0;
-            }
-            else
-                lineText.maxVisibleCharacters = int.MaxValue;*/
-
-
-                Debug.Log(dialogueLine.Text.Text);
-
-
-             
-                if (useTypewriterEffect)
-                {
-                    // setting the canvas all back to its defaults because if we didn't also fade we don't have anything visible
-                    canvasGroup.alpha = 1f;
-                    canvasGroup.interactable = true;
-                    canvasGroup.blocksRaycasts = true;
-                
-                    string[] line = dialogueLine.Text.Text.Split(" ");
-                    yield return StartCoroutine(
-                        Typewriter_Custom(Line_Parent, line,typewriterEffectSpeed,() => onCharacterTyped.Invoke(), WordPrefab, currentStopToken)
-                    );
-                    if (currentStopToken.WasInterrupted)
-                    {
-                        // The typewriter effect was interrupted. Stop this
-                        // entire coroutine.
-                        yield break;
-                    }
-                }
-
-
-
-            }
-            currentLine = dialogueLine;
-
-            // Run any presentations as a single coroutine. If this is stopped,
-            // which UserRequestedViewAdvancement can do, then we will stop all
-            // of the animations at once.
-            yield return StartCoroutine(PresentLine());
-
-            currentStopToken.Complete();
-
-            // All of our text should now be visible.
-            lineText.maxVisibleCharacters = int.MaxValue;
-
-            // Our view should at be at full opacity.
-            canvasGroup.alpha = 1f;
-            canvasGroup.blocksRaycasts = true;
-
-            // Show the continue button, if we have one.
-            if (continueButton != null)
-            {
-                continueButton.SetActive(true);
-            }
-
-            // If we have a hold time, wait that amount of time, and then continue.
-            if (holdTime > 0)
-            {
-                yield return new WaitForSeconds(holdTime);
-            }
-
-            if (autoAdvance == false)
-            {
-                // The line is now fully visible, and we've been asked to not
-                // auto-advance to the next line. Stop here, and don't call the
-                // completion handler - we'll wait for a call to
-                // UserRequestedViewAdvancement, which will interrupt this
-                // coroutine.
-                yield break;
-            }
-
-            onDialogueLineFinished();
-    }
 
     private IEnumerator RunLineInternal(LocalizedLine dialogueLine, Action onDialogueLineFinished)
         {
@@ -868,14 +766,115 @@ public class Effects : MonoBehaviour
             // example, if a DialogueAdvanceInput had signalled us.)
             UserRequestedViewAdvancement();
             Debug.Log("Continue");
+
         }
 
-        public static IEnumerator Typewriter_Custom(GameObject text_parent, string[] line, float WordPerSecond, Action onCharacterTyped, GameObject WordPrefab, CoroutineInterruptToken stopToken = null)
+    public void CleanUpLine()
+    {
+        List<GameObject> childObjects = new List<GameObject>();
+
+        foreach (Transform child in Line_Parent.transform)
+        {
+            childObjects.Add(child.gameObject);
+
+        }
+        foreach (GameObject childObject in childObjects)
+        {
+            childObject.transform.SetParent(null, true);
+            childObject.gameObject.GetComponent<DialogueWord>().FadeAndDestroy();
+        }
+        WordPosX = 0;
+        WordPosY = 0;
+}
+
+        private IEnumerator RunLineInternal_Custom(LocalizedLine dialogueLine, Action onDialogueLineFinished)
+        {
+
+
+
+            IEnumerator PresentLine()
+            {
+                lineText.gameObject.SetActive(false);
+                canvasGroup.gameObject.SetActive(true);
+
+                // Hide the continue button 
+                if (continueButton != null)
+                    continueButton.SetActive(false);
+
+
+           
+                Debug.Log(dialogueLine.Text.Text);
+
+                if (dialogueLine.Text.Text == "-")
+                {
+                    CleanUpLine();
+                    UserRequestedViewAdvancement();
+                    yield break;
+                }
+
+                if (useTypewriterEffect)
+                {
+                    // setting the canvas all back to its defaults because if we didn't also fade we don't have anything visible
+                    canvasGroup.alpha = 1f;
+                    canvasGroup.interactable = true;
+                    canvasGroup.blocksRaycasts = true;
+
+                    string[] line = dialogueLine.Text.Text.Split(" ");
+                    
+                    yield return StartCoroutine(
+                        Typewriter_Custom(Line_Parent, line, typewriterEffectSpeed, () => onCharacterTyped.Invoke(), WordPrefab, currentStopToken)
+                    );
+                    if (currentStopToken.WasInterrupted)
+                    {
+                        // The typewriter effect was interrupted. Stop this
+                        // entire coroutine.
+                        yield break;
+                    }
+                }
+
+
+
+            }
+            currentLine = dialogueLine;
+
+            // Run any presentations as a single coroutine. If this is stopped,
+            // which UserRequestedViewAdvancement can do, then we will stop all
+            // of the animations at once.
+            yield return StartCoroutine(PresentLine());
+
+            currentStopToken.Complete();
+
+            // All of our text should now be visible.
+            lineText.maxVisibleCharacters = int.MaxValue;
+
+            // Our view should at be at full opacity.
+            canvasGroup.alpha = 1f;
+            canvasGroup.blocksRaycasts = true;
+
+            // Show the continue button, if we have one.
+            if (continueButton != null)
+            {
+                continueButton.SetActive(true);
+            }
+
+            // If we have a hold time, wait that amount of time, and then continue.
+            if (holdTime > 0)
+            {
+                yield return new WaitForSeconds(holdTime);
+            }
+
+            if (autoAdvance == false)
+            {
+                yield break;
+            }
+
+            onDialogueLineFinished();
+        }
+    public IEnumerator Typewriter_Custom(GameObject text_parent, string[] line, float WordPerSecond, Action onCharacterTyped, GameObject WordPrefab, CoroutineInterruptToken stopToken = null)
         {
             stopToken?.Start();
 
-            float posX = 0;
-            float posY = 0;
+        
 
             // Wait a single frame to let the text component process
             yield return null;
@@ -884,20 +883,12 @@ public class Effects : MonoBehaviour
 
             int characterCount = line.Length;
 
-            // Early out if letter speed is zero, text length is zero
-            if (WordPerSecond <= 0 || characterCount == 0)
-            {
-                // Show everything and return
-                //text.maxVisibleCharacters = characterCount;
-                //stopToken?.Complete();
-                yield break;
-            }
-
+        
             // Convert 'letters per second' into its inverse
-            float secondsPerWord = 1.0f / WordPerSecond;
+            float secondsPerWord = WordPerSecond;
 
         
-            var accumulator = Time.deltaTime;
+            float accumulator = 0;
             int LoadWordCount = 0;
 
             while (LoadWordCount < characterCount)
@@ -909,35 +900,38 @@ public class Effects : MonoBehaviour
 
                 // We need to show as many letters as we have accumulated
                 // time for.
-                while (accumulator >= secondsPerWord)
+                while (accumulator < secondsPerWord)
                 {
 
                     onCharacterTyped?.Invoke();
-                    accumulator -= secondsPerWord;
-                   }
+                    yield return new WaitForSeconds(0.1f);
+                    accumulator += 0.1f;
+                }
 
                 GameObject new_word = Instantiate(WordPrefab, text_parent.transform);
                 new_word.GetComponent<DialogueWord>().SetText(line[LoadWordCount]);
                 yield return null;
-                yield return null;
+                LayoutRebuilder.ForceRebuildLayoutImmediate(new_word.GetComponent<RectTransform>());
                 Vector2 sizeDelta = new_word.GetComponent<RectTransform>().sizeDelta;
                 sizeDelta.x = new_word.GetComponentInChildren<TextMeshProUGUI>().gameObject.GetComponent<RectTransform>().rect.width;
                 new_word.GetComponent<RectTransform>().sizeDelta = sizeDelta;
                 yield return null;
-            //new_word.GetComponent<RectTransform>().anchorMin = new Vector2(posX, posY);
-            //new_word.GetComponent<RectTransform>().anchorMax = new Vector2(posX, posY);
-                new_word.GetComponent<RectTransform>().position += new Vector3(posX, 0, new_word.GetComponent<RectTransform>().position.z);
-                posX += new_word.GetComponent<RectTransform>().rect.width + 10;
 
-               
-                //LayoutRebuilder.ForceRebuildLayoutImmediate(text_parent.GetComponent<RectTransform>());
-                accumulator += Time.deltaTime;
+           
+                 new_word.GetComponent<RectTransform>().anchoredPosition += new Vector2(WordPosX, WordPosY);
+
+
+                WordPosX += sizeDelta.x + 30;
+                
+
+                accumulator = 0;
                 LoadWordCount++;
                 yield return null;
             }
-
-            // We either finished displaying everything, or were interrupted. Either way, display everything now.
-            //text.maxVisibleCharacters = characterCount;
+            WordPosY -= 150;
+            WordPosX = 0;
+        // We either finished displaying everything, or were interrupted. Either way, display everything now.
+        //text.maxVisibleCharacters = characterCount;
 
             stopToken?.Complete();
         }

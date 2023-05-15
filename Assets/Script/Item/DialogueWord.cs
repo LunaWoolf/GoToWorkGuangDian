@@ -14,8 +14,11 @@ public class DialogueWord : Word
     public float minFadeTime = 2f;
     public float maxFadeTime = 3f;
 
+    int[] sizeOption = { 30, 60, 80, 100 };
+
     private RectTransform rectTransform;
     private LayoutElement layoutElement;
+   
 
     void Awake()
     {
@@ -61,10 +64,20 @@ public class DialogueWord : Word
 
     public override void SetText(string t)
     {
+    
+
         _UnProcessText = t;
         _Text = t;
-        //tm.fontSize = Random.Range(80, 100);
+        tm.fontSize = sizeOption[ Random.Range(0, sizeOption.Length)];
         tm.text = _Text;
+        if (t.Contains("`"))
+        {
+
+
+            tm.fontSize = 60;
+            tm.color = new Color(0, 0, 0, 0);
+            return;
+        }
 
         if (this.gameObject.activeSelf) StartCoroutine(SetCircleSize());
         //if (this.gameObject.activeSelf) StartCoroutine(SetSize());
