@@ -51,7 +51,10 @@ public class DialogueWord : Word
         // Set the minimum and preferred height to the current height
         layoutElement.minHeight = rectTransform.rect.height;
         layoutElement.preferredHeight = rectTransform.rect.height;
+        layoutElement.flexibleWidth = 0;
+        layoutElement.flexibleHeight = 0;
         layoutElement.ignoreLayout = false;
+       
         LayoutRebuilder.ForceRebuildLayoutImmediate(this.GetComponentInParent<RectTransform>());
     }
 
@@ -60,11 +63,11 @@ public class DialogueWord : Word
     {
         _UnProcessText = t;
         _Text = t;
-        tm.fontSize = Random.Range(80, 100);
+        //tm.fontSize = Random.Range(80, 100);
         tm.text = _Text;
 
         if (this.gameObject.activeSelf) StartCoroutine(SetCircleSize());
-        if (this.gameObject.activeSelf) StartCoroutine(SetSize());
+        //if (this.gameObject.activeSelf) StartCoroutine(SetSize());
     }
     // Update is called once per frame
     void Update()

@@ -874,7 +874,8 @@ public class Effects : MonoBehaviour
         {
             stopToken?.Start();
 
-
+            float posX = 0;
+            float posY = 0;
 
             // Wait a single frame to let the text component process
             yield return null;
@@ -917,7 +918,19 @@ public class Effects : MonoBehaviour
 
                 GameObject new_word = Instantiate(WordPrefab, text_parent.transform);
                 new_word.GetComponent<DialogueWord>().SetText(line[LoadWordCount]);
-                LayoutRebuilder.ForceRebuildLayoutImmediate(text_parent.GetComponent<RectTransform>());
+                yield return null;
+                yield return null;
+                Vector2 sizeDelta = new_word.GetComponent<RectTransform>().sizeDelta;
+                sizeDelta.x = new_word.GetComponentInChildren<TextMeshProUGUI>().gameObject.GetComponent<RectTransform>().rect.width;
+                new_word.GetComponent<RectTransform>().sizeDelta = sizeDelta;
+                yield return null;
+            //new_word.GetComponent<RectTransform>().anchorMin = new Vector2(posX, posY);
+            //new_word.GetComponent<RectTransform>().anchorMax = new Vector2(posX, posY);
+                new_word.GetComponent<RectTransform>().position += new Vector3(posX, 0, new_word.GetComponent<RectTransform>().position.z);
+                posX += new_word.GetComponent<RectTransform>().rect.width + 10;
+
+               
+                //LayoutRebuilder.ForceRebuildLayoutImmediate(text_parent.GetComponent<RectTransform>());
                 accumulator += Time.deltaTime;
                 LoadWordCount++;
                 yield return null;
