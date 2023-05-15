@@ -16,11 +16,12 @@ public class Word : MonoBehaviour
         Adj,
         Empty,
         Inserted,
+        Dialouge,
     }
 
     [Header("Reference")]
-    [SerializeField]string _Text;
-    [SerializeField] string _Text_clean;
+    [SerializeField] public string _Text;
+    [SerializeField] public string _Text_clean;
     [SerializeField] public string _UnProcessText;
     public Button wordbutton;
     public Button revisebutton;
@@ -70,7 +71,7 @@ public class Word : MonoBehaviour
         if (PoemGenerator.instance) PoemGenerator.instance.OnPoemRevise.AddListener(ReviseWord);
     }
 
-    public void SetText(string t)
+    public virtual void SetText(string t)
     {
         _UnProcessText = t;
 

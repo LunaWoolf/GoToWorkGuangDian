@@ -1,6 +1,7 @@
 ﻿
 title: FirstDay_Morning_Test
 tags:
+position: -52,-270
 ---
 (June 6th, A Regular Day At Work)
 <<set $bReflection to false>>
@@ -10,38 +11,52 @@ The value of reflection is {$bReflection}
 
 title: FirstDay_Morning
 tags:
+position: -53,-118
 ---
-(June 6th, A Regular Day At Work)
-Boss He: Morning.You're 2 min late. (*sips tea with loud noise*)
+The Day is June 6th, early summer
+The noise of AC and the dancing platic string will bother you for the next 2 month.
+Boss He: Morning.(*sips tea with loud noise*)
 You: Morning.
-Li: Morning! Happy Monday! 
-You: Morning.
-Boss He: Okay, let’s repeat our mission one more time and get to work.
-Boss He: our mission is…
-Li: PROTECT THE PUBLIC!!!
+Li: Morning! Happy Monday! How was your weekend?
+You: Morning. Not muc...
+Boss He: The hot water is done, help me fill my cup.
+Li: No problem, will do.
+
+Boss He: Okay, as usual, before we start working,
+Boss He: We must remind ourselves with our responsibility.
+Boss He: Our mission is…
+Li: PROTECT THE STABILITY OF THE PUBLIC!!!
 Boss He: Protect the public from…
-Li:  FROM DANGEROUS MESSAGE!!!
-Boss He: We are…
-Li: THE GUARDIAN OF PEOPLE’S MIND AND SPIRIT!!!
-You: ...
-Boss He: Okay. Go to work (*sips tea with loud noise*).
-(Time To Work)
+Li:  FROM DANGEROUS AND UNNECESSARAY MESSAGE.
+Boss He: We are the...
+Li: THE GUARDIAN OF PEOPLE’S MIND AND HEART!!!
+Boss He: Good job Li. Hey what about you, are you dumb? Say it again, Louder.
+<<WaitForFinishRepeatMission CommandManager 1>>
+===
+title: FirstDay_Morning_afterRepeatMission
+tags:
+position: -53,-118 
+---
+Boss He: That's it. Okay time to work (*sips tea with loud noise*).
+Boss He: You know the rule. we don’t want anything that may provoke social unsuitability to get to the public. When you review those poem, review carefully.
+Boss He: We must protect people from hearing words like rebellion, revolution, protest, or anything realted to those.
 <<StartWork CommandManager>>
 ===
 
 title: d0606_EndWork
 tags:
+position: 198,-116
 ---
-(June 6th, End of a Regular Day At Work)
-You: 5:30pm. Time to go home.
-Li: Don't forget to put all the paper you worked on today into the paper shredder! I will go after you!
-(oh yeah...how can you forget? Your favorite part of the day.)
+The day is June 6th, 5pm, it's time for you to go home.
+Li: Hey, Don't forget to put all the paper you worked with today into the paper shredder before you go.
+Li: Nobody want things that shouldn't go out to go out, right? 
+Li: I've already done with mine, see you tomorrow.
 <<StartPaperShredder CommandManager>>
 ===
 
-
 title: d0607_Morning
 tags:
+position: -49,42
 ---
 (June 7th, A Regular Day At Work)
 Li: Morningggggg!
@@ -51,6 +66,7 @@ Li: Let's Start Working!
 
 title: d0607_EndWork
 Tags:
+position: 198,48
 ---
 (June 7th, End of a Regular Day At Work)
 You: 5:30pm. Time to go home.
@@ -59,6 +75,7 @@ You: 5:30pm. Time to go home.
 
 title: d0608_Morning
 tags:
+position: -41,204
 ---
 (June 8th, A Regular Day At Work)
 Boss He: Morning.
@@ -78,6 +95,7 @@ CATgpt: Yes, I would love to start my productive day.
 
 title: d0608_EndWork
 Tags:
+position: 200,202
 ---
 (June 8th, End of a Regular Day At Work)
 You: 5:30 pm. Time to go home.
@@ -89,6 +107,7 @@ CATgpt: See you tomorrow!
 
 title: default_morning
 tags: 
+position: -37,365
 ---
 (A Regular Day At Work)
 Boss He: Morning.
@@ -98,6 +117,7 @@ CATgpt: Let’s start our productive day.
 
 title: default_EndWork
 tags: 
+position: 193,370
 ---
 (End of a Regular Day At Work))
 You: 5:30 pm. Time to go home.

@@ -5,76 +5,83 @@ using TMPro;
 using UnityEngine.UI;
 
 using Yarn.Unity;
+using static System.Net.Mime.MediaTypeNames;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+
+/// <summary>
+/// Contains coroutine methods that apply visual effects. This class is used
+/// by <see cref="LineView"/> to handle animating the presentation of lines.
+/// </summary>
+///
+public class CoroutineInterruptToken
+{
 
     /// <summary>
-    /// Contains coroutine methods that apply visual effects. This class is used
-    /// by <see cref="LineView"/> to handle animating the presentation of lines.
+    /// The state that the token is in.
     /// </summary>
-    public static class Effects
+    enum State
     {
-        /// <summary>
-        /// An object that can be used to signal to a coroutine that it should
-        /// terminate early.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// While coroutines can be stopped by calling <see
-        /// cref="MonoBehaviour.StopCoroutine"/> or <see
-        /// cref="MonoBehaviour.StopAllCoroutines"/>, this has the side effect
-        /// of also stopping any coroutine that was waiting for the now-stopped
-        /// coroutine to finish.
-        /// </para>
-        /// <para>
-        /// Instances of this class may be passed as a parameter to a coroutine
-        /// that they can periodically poll to see if they should terminate
-        /// earlier than planned.
-        /// </para>
-        /// <para>
-        /// To use this class, create an instance of it, and pass it as a
-        /// parameter to your coroutine. In the coroutine, call <see
-        /// cref="Start"/> to mark that the coroutine is running. During the
-        /// coroutine's execution, periodically check the <see
-        /// cref="WasInterrupted"/> property to determine if the coroutine
-        /// should exit. If it is <see langword="true"/>, the coroutine should
-        /// exit (via the <c>yield break</c> statement.) At the normal exit of
-        /// your coroutine, call the <see cref="Complete"/> method to mark that the
-        /// coroutine is no longer running. To make a coroutine stop, call the
-        /// <see cref="Interrupt"/> method.
-        /// </para>
-        /// <para>
-        /// You can also use the <see cref="CanInterrupt"/> property to
-        /// determine if the token is in a state in which it can stop (that is,
-        /// a coroutine that's using it is currently running.)
-        /// </para>
-        /// </remarks>
-        public class CoroutineInterruptToken
+        NotRunning,
+        Running,
+        Interrupted,
+    }
+    private State state = State.NotRunning;
+
+    public bool CanInterrupt => state == State.Running;
+    public bool WasInterrupted => state == State.Interrupted;
+    public void Start() => state = State.Running;
+    public void Interrupt()
+    {
+        if (CanInterrupt == false)
         {
-
-            /// <summary>
-            /// The state that the token is in.
-            /// </summary>
-            enum State
-            {
-                NotRunning,
-                Running,
-                Interrupted,
-            }
-            private State state = State.NotRunning;
-
-            public bool CanInterrupt => state == State.Running;
-            public bool WasInterrupted => state == State.Interrupted;
-            public void Start() => state = State.Running;
-            public void Interrupt()
-            {
-                if (CanInterrupt == false)
-                {
-                    throw new InvalidOperationException($"Cannot stop {nameof(CoroutineInterruptToken)}; state is {state} (and not {nameof(State.Running)}");
-                }
-                state = State.Interrupted;
-            }
-
-            public void Complete() => state = State.NotRunning;
+            throw new InvalidOperationException($"Cannot stop {nameof(CoroutineInterruptToken)}; state is {state} (and not {nameof(State.Running)}");
         }
+        state = State.Interrupted;
+    }
+
+    public void Complete() => state = State.NotRunning;
+
+}
+
+public class Effects : MonoBehaviour
+{
+    /// <summary>
+    /// An object that can be used to signal to a coroutine that it should
+    /// terminate early.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// While coroutines can be stopped by calling <see
+    /// cref="MonoBehaviour.StopCoroutine"/> or <see
+    /// cref="MonoBehaviour.StopAllCoroutines"/>, this has the side effect
+    /// of also stopping any coroutine that was waiting for the now-stopped
+    /// coroutine to finish.
+    /// </para>
+    /// <para>
+    /// Instances of this class may be passed as a parameter to a coroutine
+    /// that they can periodically poll to see if they should terminate
+    /// earlier than planned.
+    /// </para>
+    /// <para>
+    /// To use this class, create an instance of it, and pass it as a
+    /// parameter to your coroutine. In the coroutine, call <see
+    /// cref="Start"/> to mark that the coroutine is running. During the
+    /// coroutine's execution, periodically check the <see
+    /// cref="WasInterrupted"/> property to determine if the coroutine
+    /// should exit. If it is <see langword="true"/>, the coroutine should
+    /// exit (via the <c>yield break</c> statement.) At the normal exit of
+    /// your coroutine, call the <see cref="Complete"/> method to mark that the
+    /// coroutine is no longer running. To make a coroutine stop, call the
+    /// <see cref="Interrupt"/> method.
+    /// </para>
+    /// <para>
+    /// You can also use the <see cref="CanInterrupt"/> property to
+    /// determine if the token is in a state in which it can stop (that is,
+    /// a coroutine that's using it is currently running.)
+    /// </para>
+    /// </remarks>
+    ///
 
         /// <summary>
         /// A coroutine that fades a <see cref="CanvasGroup"/> object's opacity
@@ -211,7 +218,9 @@ using Yarn.Unity;
 
             stopToken?.Complete();
         }
-    }
+
+      
+}
 
     /// <summary>
     /// A Dialogue View that presents lines of dialogue, using Unity UI
@@ -409,7 +418,12 @@ using Yarn.Unity;
         /// <summary>
         /// A stop token that is used to interrupt the current animation.
         /// </summary>
-        Effects.CoroutineInterruptToken currentStopToken = new Effects.CoroutineInterruptToken();
+        CoroutineInterruptToken currentStopToken = new CoroutineInterruptToken();
+
+        [SerializeField]
+        internal GameObject WordPrefab;
+        [SerializeField]
+        internal GameObject Line_Parent;
 
         private void Awake()
         {
@@ -567,11 +581,119 @@ using Yarn.Unity;
         if (ViewManager.instance)
             ViewManager.instance.SwitchDialogueCharacterArt(dialogueLine.CharacterName);
 
-        // Begin running the line as a coroutine.
-        StartCoroutine(RunLineInternal(dialogueLine, onDialogueLineFinished));
+        // Begin running the line as a coroutine.// Run Line In the Regular way
+        //StartCoroutine(RunLineInternal(dialogueLine, onDialogueLineFinished));
+        List<GameObject> childObjects = new List<GameObject>();
+
+        foreach (Transform child in Line_Parent.transform)
+        {
+            childObjects.Add(child.gameObject);
+          
+        }
+        foreach (GameObject childObject in childObjects)
+        {
+            childObject.transform.SetParent(null, true);
+            childObject.gameObject.GetComponent<DialogueWord>().FadeAndDestroy();
         }
 
-        private IEnumerator RunLineInternal(LocalizedLine dialogueLine, Action onDialogueLineFinished)
+        StartCoroutine(RunLineInternal_Custom(dialogueLine, onDialogueLineFinished));
+       
+    }
+
+        private IEnumerator RunLineInternal_Custom(LocalizedLine dialogueLine, Action onDialogueLineFinished)
+        {
+
+          
+
+            IEnumerator PresentLine()
+            {
+                lineText.gameObject.SetActive(false);
+                canvasGroup.gameObject.SetActive(true);
+
+                // Hide the continue button 
+                if (continueButton != null)
+                    continueButton.SetActive(false);
+
+
+            //lineText.text = dialogueLine.Text.Text;
+
+            /*if (useTypewriterEffect)
+            {
+
+                lineText.maxVisibleCharacters = 0;
+            }
+            else
+                lineText.maxVisibleCharacters = int.MaxValue;*/
+
+
+                Debug.Log(dialogueLine.Text.Text);
+
+
+             
+                if (useTypewriterEffect)
+                {
+                    // setting the canvas all back to its defaults because if we didn't also fade we don't have anything visible
+                    canvasGroup.alpha = 1f;
+                    canvasGroup.interactable = true;
+                    canvasGroup.blocksRaycasts = true;
+                
+                    string[] line = dialogueLine.Text.Text.Split(" ");
+                    yield return StartCoroutine(
+                        Typewriter_Custom(Line_Parent, line,typewriterEffectSpeed,() => onCharacterTyped.Invoke(), WordPrefab, currentStopToken)
+                    );
+                    if (currentStopToken.WasInterrupted)
+                    {
+                        // The typewriter effect was interrupted. Stop this
+                        // entire coroutine.
+                        yield break;
+                    }
+                }
+
+
+
+            }
+            currentLine = dialogueLine;
+
+            // Run any presentations as a single coroutine. If this is stopped,
+            // which UserRequestedViewAdvancement can do, then we will stop all
+            // of the animations at once.
+            yield return StartCoroutine(PresentLine());
+
+            currentStopToken.Complete();
+
+            // All of our text should now be visible.
+            lineText.maxVisibleCharacters = int.MaxValue;
+
+            // Our view should at be at full opacity.
+            canvasGroup.alpha = 1f;
+            canvasGroup.blocksRaycasts = true;
+
+            // Show the continue button, if we have one.
+            if (continueButton != null)
+            {
+                continueButton.SetActive(true);
+            }
+
+            // If we have a hold time, wait that amount of time, and then continue.
+            if (holdTime > 0)
+            {
+                yield return new WaitForSeconds(holdTime);
+            }
+
+            if (autoAdvance == false)
+            {
+                // The line is now fully visible, and we've been asked to not
+                // auto-advance to the next line. Stop here, and don't call the
+                // completion handler - we'll wait for a call to
+                // UserRequestedViewAdvancement, which will interrupt this
+                // coroutine.
+                yield break;
+            }
+
+            onDialogueLineFinished();
+    }
+
+    private IEnumerator RunLineInternal(LocalizedLine dialogueLine, Action onDialogueLineFinished)
         {
             IEnumerator PresentLine()
             {
@@ -716,8 +838,6 @@ using Yarn.Unity;
         // animation, interrupt the line so we can skip to the next one.
 
         // we have no line, so the user just mashed randomly
-
-      
             if (currentLine == null)
             {
                 return;
@@ -749,5 +869,64 @@ using Yarn.Unity;
             UserRequestedViewAdvancement();
             Debug.Log("Continue");
         }
-    }
+
+        public static IEnumerator Typewriter_Custom(GameObject text_parent, string[] line, float WordPerSecond, Action onCharacterTyped, GameObject WordPrefab, CoroutineInterruptToken stopToken = null)
+        {
+            stopToken?.Start();
+
+
+
+            // Wait a single frame to let the text component process
+            yield return null;
+
+            // How many visible characters are present in the text?
+
+            int characterCount = line.Length;
+
+            // Early out if letter speed is zero, text length is zero
+            if (WordPerSecond <= 0 || characterCount == 0)
+            {
+                // Show everything and return
+                //text.maxVisibleCharacters = characterCount;
+                //stopToken?.Complete();
+                yield break;
+            }
+
+            // Convert 'letters per second' into its inverse
+            float secondsPerWord = 1.0f / WordPerSecond;
+
+        
+            var accumulator = Time.deltaTime;
+            int LoadWordCount = 0;
+
+            while (LoadWordCount < characterCount)
+            {
+                if (stopToken?.WasInterrupted ?? false)
+                {
+                    yield break;
+                }
+
+                // We need to show as many letters as we have accumulated
+                // time for.
+                while (accumulator >= secondsPerWord)
+                {
+
+                    onCharacterTyped?.Invoke();
+                    accumulator -= secondsPerWord;
+                   }
+
+                GameObject new_word = Instantiate(WordPrefab, text_parent.transform);
+                new_word.GetComponent<DialogueWord>().SetText(line[LoadWordCount]);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(text_parent.GetComponent<RectTransform>());
+                accumulator += Time.deltaTime;
+                LoadWordCount++;
+                yield return null;
+            }
+
+            // We either finished displaying everything, or were interrupted. Either way, display everything now.
+            //text.maxVisibleCharacters = characterCount;
+
+            stopToken?.Complete();
+        }
+}
 

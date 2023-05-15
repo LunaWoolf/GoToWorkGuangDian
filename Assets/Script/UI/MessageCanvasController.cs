@@ -18,11 +18,15 @@ public class MessageCanvasController : MonoBehaviour
     public float yOffset_max;
 
     public bool isOnLeftSide = true;
+
+    public bool isStartGenerateRamdomMessage = true;
+    
     
     void Start()
     {
         headshotManager = GetComponent<HeadshotManager>();
-        StartAutoGenerateMessage();
+        if(isStartGenerateRamdomMessage)
+            StartAutoGenerateMessage();
     }
 
     

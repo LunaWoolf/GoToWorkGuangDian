@@ -97,6 +97,12 @@ public class CommandManager : MonoSingleton<CommandManager>
         return PropertyManager.instance.rebelliousCount > 3;
     }
 
+    [YarnCommand("WaitForFinishRepeatMission")]
+    public void WaitForFinishRepeatMission(int day)
+    {
+        Debug.Log("start repeat mission");
+        GameManager.instance.WaitForFinishRepeatMission();
+    }
 
 
 }

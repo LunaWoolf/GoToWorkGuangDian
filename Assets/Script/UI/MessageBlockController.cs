@@ -28,11 +28,10 @@ public class MessageBlockController : MonoBehaviour
     {
 
         messageType = t;
-    
     }
 
 
-    public MessageBlockController Init(MessageType type, News news, string review)
+    public MessageBlockController Init(MessageType type, News news, string text)
     {
         SetMessageType(type);
         switch (type)
@@ -43,7 +42,11 @@ public class MessageBlockController : MonoBehaviour
             case MessageType.Review:
                 headShot.SetActive(false);
                 isShowHeadShot = false;
-                SetReviewMessage(review);
+                SetReviewMessage(text);
+                break;
+            case MessageType.Reply:
+                headshotImage.color = new Color(0, 0, 0, 1);
+                SetReplyMessage(text);
                 break;
         }
         return this;
@@ -53,6 +56,7 @@ public class MessageBlockController : MonoBehaviour
     {
         News,
         Review,
+        Reply,
     }
 
     // Start is called before the first frame update
@@ -79,9 +83,13 @@ public class MessageBlockController : MonoBehaviour
     public void SetReviewMessage(string text)
     {
         NewsTitle.text = text;
-        //NewsBody.text = n.content;
     }
 
+    public void SetReplyMessage(string text)
+    {
+        NewsTitle.text = text;
+       
+    }
 
     IEnumerator SelfDestroy()
     {
@@ -98,8 +106,6 @@ public class MessageBlockController : MonoBehaviour
             headshotImage.sprite = image;
             LeftEye.GetComponent<RectTransform>().localPosition = LeftEyePos;
             RightEye.GetComponent<RectTransform>().localPosition = RightEyePos;
-            //LeftEye.transform.localPosition = LeftEyePos;
-            //RightEye.transform.localPosition = RightEyePos;
         }
     }
 

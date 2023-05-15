@@ -1185,6 +1185,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1544517886}
     m_Modifications:
+    - target: {fileID: 1844077057, guid: cdbe6765c12034f9482076d97ac49e14, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5676340257267858763, guid: cdbe6765c12034f9482076d97ac49e14, type: 3}
       propertyPath: m_Name
       value: Line
@@ -1878,6 +1882,7 @@ MonoBehaviour:
   _Text_clean: 
   _UnProcessText: 
   wordbutton: {fileID: 0}
+  revisebutton: {fileID: 0}
   tm: {fileID: 0}
   CircleImage: {fileID: 0}
   Background: {fileID: 0}

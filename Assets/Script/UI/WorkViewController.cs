@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using TMPro;
 
 public class WorkViewController : MonoBehaviour
 {
@@ -21,7 +22,11 @@ public class WorkViewController : MonoBehaviour
 
     [SerializeField] GameObject PoemCanvas;
 
-    public Poem CurrentPoemOnCanvas = new Poem();
+    [SerializeField][TextArea(5,20)] List<string> DailyWorkPrompt;
+
+    [Header("Work Promnt")]
+    [HideInInspector] public Poem CurrentPoemOnCanvas = new Poem();
+    [SerializeField] TextMeshProUGUI PromptText;
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +61,7 @@ public class WorkViewController : MonoBehaviour
         
         //InitalActionCount(GameManager.instance.MaxWorkActionCountOfDay - GameManager.instance.WorkActionCountOfDay);
         GameManager.instance.onAction.AddListener(OnUseOneAction);
+        UpdatePromptText("");
 
     }
 
@@ -132,6 +138,26 @@ public class WorkViewController : MonoBehaviour
             ActionCountList.RemoveAt(0);
             Destroy(g);
         }
+    }
 
+    //If pass "", will set prompt text back to daily prompt
+    public void UpdatePromptText(string t)
+    {
+        StopCoroutine(UpdatePromptTextToDeafult(2f));
+        if (t == "")
+        {
+            PromptText.text = DailyWorkPrompt[GameManager.instance.GetDay()];
+        }
+        else
+        {
+            PromptText.text = t;
+            StartCoroutine(UpdatePromptTextToDeafult(2f));
+        } 
+    }
+
+    IEnumerator UpdatePromptTextToDeafult(float time)
+    {
+        yield return new WaitForSeconds(time);
+        UpdatePromptText("");
     }
 }

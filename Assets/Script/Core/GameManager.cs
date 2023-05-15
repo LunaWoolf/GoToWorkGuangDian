@@ -61,7 +61,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     [Header("Word Day")]
     public DateTime gameDate = new DateTime(2019, 6, 6, 0, 0, 0);
-    [SerializeField] int dayCounter = 0;
+    int dayCounter = 0;
     public int poemViewedToday = 0 ;
     [SerializeField] int PoemViewedToday = 0;
     [SerializeField] public int denyPoemCount_total = 0;
@@ -122,10 +122,13 @@ public class GameManager : MonoSingleton<GameManager>
 
     public string GetGameDate() { return gameDate.Month.ToString("D2") + gameDate.Day.ToString("D2"); }
 
+    public int GetDay() { return dayCounter; }
+
     public void TryStartWork()
     {
         StartWork();
     }
+
 
 
     public void StartWork()
@@ -614,6 +617,11 @@ public class GameManager : MonoSingleton<GameManager>
 
     }
 
+    public void  WaitForFinishRepeatMission()
+    {
+        LocalDialogueManager.instance.LoadDialogue("FirstDay_Morning_afterRepeatMission");
+       
+    }
 
 }
 
