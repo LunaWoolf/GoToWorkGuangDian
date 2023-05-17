@@ -8047,6 +8047,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1373650320}
     - target: {fileID: 5574165825815487391, guid: bda66843c7a8f514283de1e6a9852d85, type: 3}
+      propertyPath: useContinueButton
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5574165825815487391, guid: bda66843c7a8f514283de1e6a9852d85, type: 3}
       propertyPath: typewriterEffectSpeed
       value: 0.2
       objectReference: {fileID: 0}

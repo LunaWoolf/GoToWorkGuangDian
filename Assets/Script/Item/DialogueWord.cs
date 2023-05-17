@@ -14,11 +14,11 @@ public class DialogueWord : Word
     public float minFadeTime = 2f;
     public float maxFadeTime = 3f;
 
-    int[] sizeOption = { 30, 60, 80, 100 };
+    int[] sizeOption = { 60, 80, 100 };
 
     private RectTransform rectTransform;
     private LayoutElement layoutElement;
-   
+
 
     void Awake()
     {
@@ -57,18 +57,18 @@ public class DialogueWord : Word
         layoutElement.flexibleWidth = 0;
         layoutElement.flexibleHeight = 0;
         layoutElement.ignoreLayout = false;
-       
+
         LayoutRebuilder.ForceRebuildLayoutImmediate(this.GetComponentInParent<RectTransform>());
     }
 
 
     public override void SetText(string t)
     {
-    
+
 
         _UnProcessText = t;
         _Text = t;
-        tm.fontSize = sizeOption[ Random.Range(0, sizeOption.Length)];
+        tm.fontSize = sizeOption[Random.Range(0, sizeOption.Length)];
         tm.text = _Text;
         if (t.Contains("`"))
         {
@@ -85,7 +85,17 @@ public class DialogueWord : Word
     // Update is called once per frame
     void Update()
     {
-        
+      
+    }
+
+    public void SetTextColor()
+    {
+      
+        if (tm.text.Contains("`"))
+        {
+            return;
+        }
+        tm.color = new Color(tm.color.r, tm.color.g, tm.color.b, 1);
     }
 
     public void FadeAndDestroy()

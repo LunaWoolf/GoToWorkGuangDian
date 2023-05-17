@@ -376,6 +376,12 @@ public class Effects : MonoBehaviour
         internal GameObject continueButton = null;
 
         [SerializeField]
+        bool useContinueButton = true;
+
+        
+        bool canContinue = false;
+
+    [SerializeField]
         internal Button skilAllButton = null;
 
     /// <summary>
@@ -435,14 +441,22 @@ public class Effects : MonoBehaviour
 
         private void Start()
         {
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         if (GameManager.instance && GameManager.instance.isDebug)
         {
             skilAllButton.gameObject.SetActive(true);
             skilAllButton.onClick.AddListener(DebugSpeedRun);
         }
-#endif
+        #endif
 
+        }
+
+    private void Update()
+    {
+        if (Input.GetMouseButton(0) && canContinue && !useContinueButton)
+        {
+            OnContinueClicked();
+        }
     }
 
     private bool debug = false;
@@ -597,7 +611,7 @@ public class Effects : MonoBehaviour
             {
                 lineText.gameObject.SetActive(true);
                 canvasGroup.gameObject.SetActive(true);
-
+                canContinue = false;
                 // Hide the continue button until presentation is complete (if
                 // we have one).
                 if (continueButton != null)
@@ -701,9 +715,11 @@ public class Effects : MonoBehaviour
             canvasGroup.alpha = 1f;
             canvasGroup.blocksRaycasts = true;
 
+            canContinue = true;
             // Show the continue button, if we have one.
-            if (continueButton != null)
+            if (continueButton != null && useContinueButton)
             {
+
                 continueButton.SetActive(true);
             }
 
@@ -780,12 +796,19 @@ public class Effects : MonoBehaviour
         }
         foreach (GameObject childObject in childObjects)
         {
-            childObject.transform.SetParent(null, true);
+            childObject.transform.SetParent(Line_Parent.transform.parent, true);
+
+            RectTransform rectTransform = childObject.GetComponent<RectTransform>();
+
+            // Set the local position and rotation of the child UI object to zero
+            //rectTransform.anchoredPosition = Vector2.zero;
+            //rectTransform.localRotation = Quaternion.identity;
+
             childObject.gameObject.GetComponent<DialogueWord>().FadeAndDestroy();
         }
         WordPosX = 0;
         WordPosY = 0;
-}
+    }
 
         private IEnumerator RunLineInternal_Custom(LocalizedLine dialogueLine, Action onDialogueLineFinished)
         {
@@ -796,7 +819,7 @@ public class Effects : MonoBehaviour
             {
                 lineText.gameObject.SetActive(false);
                 canvasGroup.gameObject.SetActive(true);
-
+                canContinue = false;
                 // Hide the continue button 
                 if (continueButton != null)
                     continueButton.SetActive(false);
@@ -851,8 +874,9 @@ public class Effects : MonoBehaviour
             canvasGroup.alpha = 1f;
             canvasGroup.blocksRaycasts = true;
 
+            canContinue = true;
             // Show the continue button, if we have one.
-            if (continueButton != null)
+            if (continueButton != null && useContinueButton)
             {
                 continueButton.SetActive(true);
             }
@@ -915,10 +939,11 @@ public class Effects : MonoBehaviour
                 Vector2 sizeDelta = new_word.GetComponent<RectTransform>().sizeDelta;
                 sizeDelta.x = new_word.GetComponentInChildren<TextMeshProUGUI>().gameObject.GetComponent<RectTransform>().rect.width;
                 new_word.GetComponent<RectTransform>().sizeDelta = sizeDelta;
-
+                yield return null;
+                
            
-                 new_word.GetComponent<RectTransform>().anchoredPosition += new Vector2(WordPosX, WordPosY);
-
+                new_word.GetComponent<RectTransform>().anchoredPosition += new Vector2(WordPosX, WordPosY);
+                new_word.GetComponent<DialogueWord>().SetTextColor();
 
                 WordPosX += sizeDelta.x + 30;
                 
