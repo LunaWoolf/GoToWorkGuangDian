@@ -28,6 +28,20 @@ public class WorkViewController : MonoBehaviour
     [HideInInspector] public Poem CurrentPoemOnCanvas = new Poem();
     [SerializeField] TextMeshProUGUI PromptText;
 
+    [SerializeField]
+    [TextArea(5, 10)]
+    List<string> Boss_Confirmations = new List<string>();
+
+
+    [SerializeField]
+    [TextArea(5, 10)]
+    List<string> Boss_Deny = new List<string>();
+
+
+    private void LateUpdate()
+    {
+
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -82,6 +96,18 @@ public class WorkViewController : MonoBehaviour
           
         }
     
+    }
+
+    public void OnPoemPass()
+    {
+        int index = Random.Range(0, Boss_Confirmations.Count);
+        UpdatePromptText(Boss_Confirmations[index]);
+    }
+
+    public void OnPoemNeedRevise()
+    {
+        int index = Random.Range(0, Boss_Deny.Count);
+        UpdatePromptText(Boss_Deny[index]);
     }
 
     public void SetCurrentPoem( Poem p)
@@ -151,7 +177,7 @@ public class WorkViewController : MonoBehaviour
         else
         {
             PromptText.text = t;
-            StartCoroutine(UpdatePromptTextToDeafult(2f));
+            StartCoroutine(UpdatePromptTextToDeafult(4f));
         } 
     }
 

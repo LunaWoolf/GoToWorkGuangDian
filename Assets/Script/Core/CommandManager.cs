@@ -5,7 +5,7 @@ using Yarn.Unity;
 
 public class CommandManager : MonoSingleton<CommandManager>
 {
-
+    TimelineManager timelineManager;
     void Awake()
     {
         var objs = FindObjectsOfType<CommandManager>();
@@ -21,6 +21,11 @@ public class CommandManager : MonoSingleton<CommandManager>
 
         DontDestroyOnLoad(this.gameObject);
 
+    }
+
+    private void Start()
+    {
+        timelineManager = FindObjectOfType<TimelineManager>();
     }
 
     [YarnCommand("StartWork")]
@@ -104,5 +109,12 @@ public class CommandManager : MonoSingleton<CommandManager>
         GameManager.instance.WaitForFinishRepeatMission();
     }
 
+    [YarnCommand("PlayTimeline")]
+    public void PlayTimeline(int index)
+    {
+        if (timelineManager == null) timelineManager = FindObjectOfType<TimelineManager>();
+        timelineManager.PlayTimeLine(index);
+     
+    }
 
 }

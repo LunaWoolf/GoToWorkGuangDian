@@ -12,11 +12,11 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     public TextAsset adjRef;
     public TextAsset lineRef;
 
-    public TextAsset nounRef_controversial;
-    public TextAsset verbRef_controversial;
-    public TextAsset adjRef_controversial;
- 
-    
+    public List<TextAsset> nounRef_controversial = new List<TextAsset>();
+    public List<TextAsset> verbRef_controversial = new List<TextAsset>();
+    public List<TextAsset> adjRef_controversial = new List<TextAsset>();
+
+
 
     [Header("WordList")]
     List<string> nounsList = new List<string>();
@@ -49,9 +49,10 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     string[] adjs;
     string[] lines;
 
-    string[] nouns_controversial;
-    string[] verbs_controversial;
-    string[] adjs_controversial;
+    string[][] nouns_controversial = new string[6][];
+    string[][] verbs_controversial = new string[6][];
+    string[][] adjs_controversial = new string[6][];
+
 
 
     bool waitForNextPoem = false;
@@ -108,11 +109,11 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         if (lineRef != null)
             lines = lineRef.text.Split("\n");
         if (nounRef_controversial != null)
-            nouns_controversial = nounRef_controversial.text.Split("\n");
+            nouns_controversial[0] = nounRef_controversial[0].text.Split("\n");
         if (verbRef_controversial != null)
-            verbs_controversial = verbRef_controversial.text.Split("\n");
+            verbs_controversial[0] = verbRef_controversial[0].text.Split("\n");
         if (adjRef_controversial != null)
-            adjs_controversial = adjRef_controversial.text.Split("\n");
+            adjs_controversial[0] = adjRef_controversial[0].text.Split("\n");
       
     }
 
@@ -179,8 +180,8 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
                     if (!isvalid && controversial)
                     {
-                        rand = Random.Range(0, verbs_controversial.Length);
-                        w = "?" + verbs_controversial[rand];
+                        rand = Random.Range(0, verbs_controversial[0].Length);
+                        w = "?" + verbs_controversial[0][rand];
 
                     }
                     else
@@ -225,8 +226,8 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
                     if (!isvalid && controversial)
                     {
-                        rand = Random.Range(1, nouns_controversial.Length);
-                        w = "?" + nouns_controversial[rand];
+                        rand = Random.Range(1, nouns_controversial[0].Length);
+                        w = "?" + nouns_controversial[0][rand];
 
                     }
                     else
@@ -270,8 +271,8 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
                     if (!isvalid && controversial)
                     {
-                        rand = Random.Range(1, adjs_controversial.Length);
-                        w = "?" + adjs_controversial[rand];
+                        rand = Random.Range(1, adjs_controversial[0].Length);
+                        w = "?" + adjs_controversial[0][rand];
 
                     }
                     else
@@ -413,8 +414,8 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
         if (controversial)
         {
-            rand = Random.Range(1, nouns_controversial.Length);
-            w = "?" + nouns_controversial[rand];
+            rand = Random.Range(1, nouns_controversial[0].Length);
+            w = "?" + nouns_controversial[0][rand];
 
         }
         else
@@ -434,8 +435,8 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
         if (controversial)
         {
-            rand = Random.Range(1, verbs_controversial.Length);
-            w = "?" + verbs_controversial[rand];
+            rand = Random.Range(1, verbs_controversial[0].Length);
+            w = "?" + verbs_controversial[0][rand];
 
         }
         else
@@ -455,8 +456,8 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
         if (controversial)
         {
-            rand = Random.Range(1, adjs_controversial.Length);
-            w = "?" + adjs_controversial[rand];
+            rand = Random.Range(1, adjs_controversial[0].Length);
+            w = "?" + adjs_controversial[0][rand];
 
         }
         else

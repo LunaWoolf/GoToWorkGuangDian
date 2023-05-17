@@ -13,17 +13,38 @@ title: FirstDay_Morning
 tags:
 position: -53,-118
 ---
+<<PlayTimeline CommandManager 0>>
 The Day 
 is June 6th
 ````` early summer
 -
-The noise of AC and the dancing platic string will bother you for the next 2 month.
-Boss He: Morning.(*sips tea with loud noise*)
-You: Morning.
-Li: Morning! Happy Monday! How was your weekend?
-You: Morning. Not muc...
+<<PlayTimeline CommandManager 1>>
+The noise of the AC 
+and the dancing platic string,
+they will bother you for the next 2 month.
+
+-
+<<PlayTimeline CommandManager 2>>
+Boss He: 
+Morning.
+He sips tea with loud noise
+
+-
+
+You: 
+Morning.
+
+-
+
+Li:
+Morning! Happy Monday! How was your weekend?
+-
+You: 
+Morning. Not muc...
+-
 Boss He: The hot water is done, help me fill my cup.
 Li: No problem, will do.
+-
 
 Boss He: Okay, as usual, before we start working,
 Boss He: We must remind ourselves with our responsibility.

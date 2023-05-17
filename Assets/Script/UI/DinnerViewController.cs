@@ -35,9 +35,43 @@ public class DinnerViewController : MonoBehaviour
         TvButton.onClick.AddListener(OnTvButtonCliked);
         CatButton.onClick.AddListener(OnCatButtonClicked);
         SaySomethingButton.onClick.AddListener(OnSaySomethingButtonClicked);
+
+        SetSceneBaseOnDate();
     }
 
- 
+    public void SetSceneBaseOnDate()
+    {
+        day1Scene.SetActive(false);
+        day2Scene.SetActive(false);
+        day3Scene.SetActive(false);
+        day4Scene.SetActive(false);
+        day5Scene.SetActive(false);
+        day6Scene.SetActive(false);
+
+        switch (GameManager.instance.GetDay())
+        {
+            case 0:
+                day1Scene.SetActive(true);
+                break;
+            case 1:
+                day2Scene.SetActive(true);
+                break;
+            case 2:
+                day3Scene.SetActive(true);
+                break;
+            case 3:
+                day4Scene.SetActive(true);
+                break;
+            case 4:
+                day5Scene.SetActive(true);
+                break;
+            case 5:
+                day6Scene.SetActive(true);
+                break;
+
+        }
+    }
+
 
     void OnMomButtonCliked()
     {

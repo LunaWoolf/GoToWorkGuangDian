@@ -910,12 +910,11 @@ public class Effects : MonoBehaviour
 
                 GameObject new_word = Instantiate(WordPrefab, text_parent.transform);
                 new_word.GetComponent<DialogueWord>().SetText(line[LoadWordCount]);
-                yield return null;
+                
                 LayoutRebuilder.ForceRebuildLayoutImmediate(new_word.GetComponent<RectTransform>());
                 Vector2 sizeDelta = new_word.GetComponent<RectTransform>().sizeDelta;
                 sizeDelta.x = new_word.GetComponentInChildren<TextMeshProUGUI>().gameObject.GetComponent<RectTransform>().rect.width;
                 new_word.GetComponent<RectTransform>().sizeDelta = sizeDelta;
-                yield return null;
 
            
                  new_word.GetComponent<RectTransform>().anchoredPosition += new Vector2(WordPosX, WordPosY);

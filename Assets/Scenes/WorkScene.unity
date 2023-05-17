@@ -820,9 +820,12 @@ MonoBehaviour:
   verbRef: {fileID: 4900000, guid: aadc7ed98209e4fab8595c4d0353c6c3, type: 3}
   adjRef: {fileID: 4900000, guid: 59bc3b244aa8b43938f3e48726f9c3ff, type: 3}
   lineRef: {fileID: 4900000, guid: 4888d73f5c3fc4d1d91973cbc9cff2c6, type: 3}
-  nounRef_controversial: {fileID: 4900000, guid: e990b041ca2e84874a82d70c3f0f8c00, type: 3}
-  verbRef_controversial: {fileID: 4900000, guid: b4d17e66182ad46eeb1bdb5423feca63, type: 3}
-  adjRef_controversial: {fileID: 4900000, guid: 59bc3b244aa8b43938f3e48726f9c3ff, type: 3}
+  nounRef_controversial:
+  - {fileID: 4900000, guid: e990b041ca2e84874a82d70c3f0f8c00, type: 3}
+  verbRef_controversial:
+  - {fileID: 4900000, guid: b4d17e66182ad46eeb1bdb5423feca63, type: 3}
+  adjRef_controversial:
+  - {fileID: 4900000, guid: 31043cc50083f46c78a299dcd2a1a4ed, type: 3}
   PoemParent_Read: {fileID: 2074514969}
   PoemPaper_Read: {fileID: 1935772806}
   poemPaperController_Read: {fileID: 1935772811}
@@ -1208,6 +1211,7 @@ GameObject:
   - component: {fileID: 278401228}
   - component: {fileID: 278401227}
   - component: {fileID: 278401226}
+  - component: {fileID: 278401229}
   m_Layer: 0
   m_Name: 'workCamera '
   m_TagString: Untagged
@@ -1306,6 +1310,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &278401229
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278401225}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!224 &333902947 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5574165825815487383, guid: bda66843c7a8f514283de1e6a9852d85, type: 3}
@@ -4819,6 +4844,7 @@ GameObject:
   - component: {fileID: 1373650321}
   - component: {fileID: 1373650323}
   - component: {fileID: 1373650325}
+  - component: {fileID: 1373650326}
   m_Layer: 0
   m_Name: LineParent_old
   m_TagString: Untagged
@@ -4874,6 +4900,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1373650320}
   m_CullTransparentMesh: 1
+--- !u!95 &1373650326
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373650320}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2d68b072cf91444a69823498ff22dccd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1380996129
 GameObject:
   m_ObjectHideFlags: 0
@@ -6168,6 +6215,8 @@ MonoBehaviour:
     words into positive word
   CurrentPoemOnCanvas: {fileID: 0}
   PromptText: {fileID: 846475833}
+  Boss_Confirmations: []
+  Boss_Deny: []
 --- !u!1001 &1991530104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6826,6 +6875,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2044605528}
   - component: {fileID: 2044605527}
+  - component: {fileID: 2044605529}
   m_Layer: 0
   m_Name: TimelineManager
   m_TagString: Untagged
@@ -6842,12 +6892,16 @@ PlayableDirector:
   m_GameObject: {fileID: 2044605526}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: e90e245dbb79b4befa58ebaf070dadbf, type: 2}
-  m_InitialState: 1
-  m_WrapMode: 2
+  m_PlayableAsset: {fileID: 11400000, guid: 35a5fd52f03274009ad021f80031c8d2, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 1
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
-  m_SceneBindings: []
+  m_SceneBindings:
+  - key: {fileID: -8942380509762745603, guid: e90e245dbb79b4befa58ebaf070dadbf, type: 2}
+    value: {fileID: 1373650326}
+  - key: {fileID: 3958300503310315312, guid: 35a5fd52f03274009ad021f80031c8d2, type: 2}
+    value: {fileID: 1373650326}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &2044605528
@@ -6865,6 +6919,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2044605529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044605526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41316f9a391964ab58d2ac99a2dea37d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timelineShotList:
+  - name: TheDay
+    timelineAsset: {fileID: 11400000, guid: 35a5fd52f03274009ad021f80031c8d2, type: 2}
+  - name: AC
+    timelineAsset: {fileID: 11400000, guid: 35a5fd52f03274009ad021f80031c8d2, type: 2}
+  - name: Boss
+    timelineAsset: {fileID: 11400000, guid: 35a5fd52f03274009ad021f80031c8d2, type: 2}
 --- !u!1 &2061327927
 GameObject:
   m_ObjectHideFlags: 0
@@ -7843,7 +7916,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1658453464869050310, guid: bda66843c7a8f514283de1e6a9852d85, type: 3}
       propertyPath: startNode
-      value: FirstDay_Morning
+      value: FirstDay_Morning_Test
       objectReference: {fileID: 0}
     - target: {fileID: 2785924859910380814, guid: bda66843c7a8f514283de1e6a9852d85, type: 3}
       propertyPath: m_AnchoredPosition.y
