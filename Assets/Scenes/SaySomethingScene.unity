@@ -687,7 +687,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &368320426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -858,7 +858,7 @@ MonoBehaviour:
   PoemLine: {fileID: 498469532}
   NewLineButton: {fileID: 684960311}
   DoneButton: {fileID: 1122263889}
-  SleepButton: {fileID: 0}
+  SleepButton: {fileID: 1270209936}
   SmokeCanvas: {fileID: 314044250}
   temp_UsedWordForCurrentLine: []
 --- !u!1 &498469532 stripped

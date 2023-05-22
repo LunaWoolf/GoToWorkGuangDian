@@ -75,6 +75,7 @@ public class PoemPaperController : MonoBehaviour
         }
        
         poemGenerator = FindObjectOfType<PoemGenerator>();
+        GameManager.instance.OnPoemPass.AddListener(OnPoemPass);
     }
 
     public void SwitchOnAnimationStart(string name)

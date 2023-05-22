@@ -120,6 +120,7 @@ public class PaperShredderMouseInput : MonoBehaviour
     ///Gets all event systen raycast results of current mouse or touch position.
     static List<RaycastResult> GetEventSystemRaycastResults()
     {
+        if (EventSystem.current == null) return null;
         PointerEventData eventData = new PointerEventData(EventSystem.current);
         if (eventData == null) return null;
         eventData.position = Input.mousePosition;

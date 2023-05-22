@@ -18,6 +18,7 @@ public class SmokeCanvas : MonoBehaviour
         BuyButton.onClick.AddListener(OnBuyButtonClicked);
         SmokeButton.onClick.AddListener(OnSmokeButtonClicked);
         SleepButton.onClick.AddListener(OnSleepButtonClicked);
+        SleepButton.interactable = true;
         UpdateCigratteCount();
 
     }
@@ -60,6 +61,7 @@ public class SmokeCanvas : MonoBehaviour
     {
       
         FindObjectOfType<SaySomethingManager>().FinishSaySomething();
+        SleepButton.interactable = false;
     }
 
     // Update is called once per frame

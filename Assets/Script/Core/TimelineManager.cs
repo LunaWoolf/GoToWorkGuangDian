@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,18 +15,29 @@ public class TimelineManager : MonoBehaviour
     }
 
     [SerializeField] List<timelineShot> timelineShotList = new List<timelineShot>();
+    [SerializeField] public TimelineAsset doorOpenTimeline;
+    [SerializeField] public TimelineAsset familyDoorOpenTimeline;
 
+    PlayableDirector playableDirector;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        playableDirector = GetComponent<PlayableDirector>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void PlayTimeline(TimelineAsset tl)
+    {
+        Debug.Log("Play timeline : " + tl.name);
+        if (tl == null) { Debug.Log("time line is null"); return; }
+        playableDirector.playableAsset = tl;
+        playableDirector.Play();
     }
 
     public void PlayTimeLine(int index)
@@ -38,7 +50,7 @@ public class TimelineManager : MonoBehaviour
         }
         Debug.Log("Play timeline : " + index + " " + timelineShotList[index].name);
         TimelineAsset timelineAsset = timelineShotList[index].timelineAsset;
-        PlayableDirector playableDirector = GetComponent<PlayableDirector>();
+      
         playableDirector.playableAsset = timelineAsset;
         playableDirector.Play();
 

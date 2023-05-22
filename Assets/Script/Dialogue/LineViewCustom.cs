@@ -453,7 +453,7 @@ public class Effects : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0) && canContinue && !useContinueButton)
+        if (Input.GetMouseButton(0) && ((canContinue && !useContinueButton) || debug))
         {
             OnContinueClicked();
         }
@@ -466,7 +466,7 @@ public class Effects : MonoBehaviour
         if (debug)
         {
             //typewriterEffectSpeed = 10000f;
-            holdTime = .01f;
+            holdTime = .001f;
             autoAdvance = true;
         }
         else
@@ -475,6 +475,9 @@ public class Effects : MonoBehaviour
             autoAdvance = false;
         }
     }
+
+   
+
 
     public void ResetDebug()
     {

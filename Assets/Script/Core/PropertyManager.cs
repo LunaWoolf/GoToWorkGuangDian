@@ -17,7 +17,8 @@ public class PropertyManager : MonoSingleton<PropertyManager>
 
     [Header("Work Change")]
     public bool hasCATgpt = false;
-    public int rebelliousCount = 0;
+    //public int rebelliousCount = 0;
+    public int currentPoemBannedWord = 0;
 
     [Header("Saved Process")]
     public bool hasShownWorkTutorial = false;

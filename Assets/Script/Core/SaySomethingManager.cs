@@ -33,11 +33,16 @@ public class SaySomethingManager : MonoBehaviour
 
         GenerateLine();
 
-        NewLineButton.onClick.AddListener(OnNewLineButtonClicked);
-        DoneButton.onClick.AddListener(OnDoneButtonClicked);
-        SleepButton.onClick.AddListener(OnSleepButtonClicked);
+        if(NewLineButton) NewLineButton.onClick.AddListener(OnNewLineButtonClicked);
+        if (DoneButton) DoneButton.onClick.AddListener(OnDoneButtonClicked);
+        /*if (SleepButton)
+        {
+            //SleepButton.onClick.AddListener(OnSleepButtonClicked);
+            SleepButton.interactable = true;
 
-        SmokeCanvas = FindObjectOfType<SmokeCanvas>();
+        } */
+
+        if(SmokeCanvas == null) SmokeCanvas = FindObjectOfType<SmokeCanvas>();
         SmokeCanvas.gameObject.SetActive(false);
 
         ViewManager.instance.LoadTutorialView("Drag and Drop Words On To  the Paper To Write");
@@ -57,7 +62,7 @@ public class SaySomethingManager : MonoBehaviour
     void OnDoneButtonClicked()
     {
         SaveLine();
-        SmokeCanvas.gameObject.SetActive(true);
+        if(SmokeCanvas) SmokeCanvas.gameObject.SetActive(true);
         this.GetComponent<Canvas>().enabled = false;
         temp_UsedWordForCurrentLine.Clear();
 
@@ -81,11 +86,6 @@ public class SaySomethingManager : MonoBehaviour
        
         temp_UsedWordForCurrentLine.Add(text);
 
-    }
-
-    void OnSleepButtonClicked()
-    {
-        FinishSaySomething();
     }
 
     public void Smoke()

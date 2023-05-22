@@ -1,5 +1,5 @@
 ﻿
-title: FirstDay_Morning_Test
+title: d01_Morning_Test
 tags:
 position: -52,-270
 ---
@@ -9,7 +9,7 @@ The value of reflection is {$bReflection}
 <<StartWork CommandManager>>
 ===
 
-title: FirstDay_Morning
+title: d01_Morning
 tags:
 position: -53,-118
 ---
@@ -54,10 +54,10 @@ Boss He: Protect the public from…
 Li:  FROM DANGEROUS AND UNNECESSARAY MESSAGE.
 Boss He: We are the...
 Li: THE GUARDIAN OF PEOPLE’S MIND AND HEART!!!
-Boss He: Good job Li. Hey what about you, are you dumb? Say it again, Louder.
+Boss He: Good job Li. Hey what about you, are you dumb? 
 <<WaitForFinishRepeatMission CommandManager 1>>
 ===
-title: FirstDay_Morning_afterRepeatMission
+title: d1_Morning_afterRepeatMission
 tags:
 position: -53,-118 
 ---
@@ -67,66 +67,111 @@ Boss He: We must protect people from hearing words like rebellion, revolution, p
 <<StartWork CommandManager>>
 ===
 
-title: d0606_EndWork
+title: d01_EndWork
 tags:
 position: 198,-116
 ---
-The day is June 6th, 5pm, it's time for you to go home.
-Li: Hey, Don't forget to put all the paper you worked with today into the paper shredder before you go.
-Li: Nobody want things that shouldn't go out to go out, right? 
+The day is June 6th, 5pm
+It's time for you to go home.
+-
+
+Li: 
+Hey, Don't forget to put all the paper you worked with today 
+into the 
+paper shredder 
+before you go.
+-
+
+Li: Nobody want things that shouldn't go out to go out, right?
+
 Li: I've already done with mine, see you tomorrow.
 <<StartPaperShredder CommandManager>>
 ===
 
-title: d0607_Morning
+title: d02_Morning
 tags:
 position: -49,42
 ---
-(June 7th, A Regular Day At Work)
-Li: Morningggggg!
-Li: Let's Start Working!
+Day 2 Test Morning
+June 7th, A Regular Day At Work
 <<StartWork CommandManager>>
 ===
 
-title: d0607_EndWork
+title: d02_EndWork
 Tags:
 position: 198,48
 ---
-(June 7th, End of a Regular Day At Work)
-You: 5:30pm. Time to go home.
+Day 2 Test End Work
+June 7th, End of a Regular Day At Work
 <<StartPaperShredder CommandManager>>
 ===
 
-title: d0608_Morning
+title: d03_Morning
 tags:
 position: -41,204
 ---
-(June 8th, A Regular Day At Work)
-Boss He: Morning.
-Boss He: Introducing your new colleague.
-Boss He: AI CATgpt!
-CATgpt: Nice to meet you. I hope we can build a better future for the younger generation of the nation.
-(...)
-Boss He:To be able to afford hiring CATgpt, we had to make some necessary budget cuts.
-(You notice that Li’s table has been cleared out)
-Boss He: CATgpt will be a really good assistance for you. They will highlight are the potentially inappropriate words for you.
-Boss He: It will make your job way easier.
-Boss He: Go to work now!
-CATgpt: Yes, I would love to start my productive day.
-<<SetProperty CommandManager hasCATgpt 1>>
+Day 3 Test Morning
 <<StartWork CommandManager>>
 ===
 
-title: d0608_EndWork
+title: d03_EndWork
 Tags:
 position: 200,202
 ---
-(June 8th, End of a Regular Day At Work)
-You: 5:30 pm. Time to go home.
-CATgpt: I don't need to rest or go home. I run 24 hr. 
-CATgpt: See you tomorrow!
+Day 3 Test End Work
 <<StartPaperShredder CommandManager>>
 ===
+
+
+title: d04_Morning
+tags:
+position: -41,204
+---
+Day 4 Test Morning
+<<StartWork CommandManager>>
+===
+
+title: d04_EndWork
+Tags:
+position: 200,202
+---
+Day 4 Test End Work
+<<StartPaperShredder CommandManager>>
+===
+
+title: d05_Morning
+tags:
+position: -41,204
+---
+Day 5 Test Morning
+<<StartWork CommandManager>>
+===
+
+title: d05_EndWork
+Tags:
+position: 200,202
+---
+Day 5 Test End Work
+<<StartPaperShredder CommandManager>>
+===
+
+
+title: d06_Morning
+tags:
+position: -41,204
+---
+Day 6 Test Morning
+<<StartWork CommandManager>>
+===
+
+title: d06_EndWork
+Tags:
+position: 200,202
+---
+Day 6 Test End Work
+<<StartPaperShredder CommandManager>>
+===
+
 
 
 title: default_morning
@@ -148,3 +193,4 @@ You: 5:30 pm. Time to go home.
 CATgpt: See you tomorrow!
 <<StartPaperShredder CommandManager>>
 ===
+

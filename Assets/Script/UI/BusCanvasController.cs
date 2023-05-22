@@ -12,7 +12,8 @@ public class BusCanvasController : MonoBehaviour
 
     void Start()
     {
-        GoHomeButton.onClick.AddListener(GameManager.instance.GoToDinner);
+        GoHomeButton.interactable = true;
+        GoHomeButton.onClick.AddListener(GameManager.instance.EndBus);
         GoHomeButton.gameObject.SetActive(false);
         if (GameManager.instance.isDebug)
             GoHomeButton.gameObject.SetActive(true);

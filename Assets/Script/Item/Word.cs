@@ -86,8 +86,8 @@ public class Word : MonoBehaviour
                 tm.color = new Color(0.83f, 0, 0, 1);
                
             }
-            PropertyManager.instance.rebelliousCount++;
-
+            //PropertyManager.instance.rebelliousCount++;
+            PropertyManager.instance.currentPoemBannedWord++;
         }
         else
         {
@@ -95,7 +95,7 @@ public class Word : MonoBehaviour
             _Text = t;
             _Text = _Text.Replace("_", " ");
             tm.text = _Text;
-
+            tm.color = new Color(0, 0, 0, 1);
             /*if (PropertyManager.instance.hasCATgpt)
             {
                 int i = Random.Range(0, 4);
@@ -106,7 +106,7 @@ public class Word : MonoBehaviour
                     PropertyManager.instance.rebelliousCount++;
                 }
             }*/
-          
+
         }
 
         _Text_clean = _Text.Replace(".", "");
@@ -144,11 +144,11 @@ public class Word : MonoBehaviour
             CircleImage.fillAmount = val;
         });
 
-        if (banned) // has ai and follow ai instruction
+        /*if (banned) // has ai and follow ai instruction
         {
-            PropertyManager.instance.rebelliousCount += 1;
+            PropertyManager.instance.currentPoemBannedWord += 1;
           
-        }
+        }*/
   
         GameManager.instance.CircledWordInCurrentPoem(_Text_clean);
 
@@ -192,10 +192,10 @@ public class Word : MonoBehaviour
             CircleImage.fillAmount = val;
         });
 
-        if (banned) // has ai and follow ai instruction
+        /*if (banned) // has ai and follow ai instruction
         {
-            PropertyManager.instance.rebelliousCount -= 1;
-        }
+            PropertyManager.instance.currentPoemBannedWord -= 1;
+        }*/
 
         GameManager.instance.CancleCircledWordInCurrentPoem(_Text_clean);
         ToggleReviseButton(false, true);
@@ -218,28 +218,33 @@ public class Word : MonoBehaviour
     public void ReviseWord()
     {
         Debug.Log("Revise word");
-
+        int day = 0;
+        day = GameManager.instance.GetDay();
         if (circled)
         {
+            if (banned)
+            {
+                PropertyManager.instance.currentPoemBannedWord--;
+            }
             switch (currentWordType)
             {
                 case WordType.Noun:
                     GameManager.instance.CancleCircledWordInCurrentPoem(_Text_clean);
                     FindObjectOfType<PaperShredderManager>().readyToSpawnShredderWordList.Add(_Text_clean);
-                    SetText(PoemGenerator.instance.GetRandomNoun());
+                    SetText(PoemGenerator.instance.GetRandomNoun(day));
                     GameManager.instance.CircledWordInCurrentPoem(_Text_clean);
                     break;
                 case WordType.Verb:
                     GameManager.instance.CancleCircledWordInCurrentPoem(_Text_clean);
                     FindObjectOfType<PaperShredderManager>().readyToSpawnShredderWordList.Add(_Text_clean);
-                    SetText(PoemGenerator.instance.GetRandomVerb());
+                    SetText(PoemGenerator.instance.GetRandomVerb(day));
                     GameManager.instance.CircledWordInCurrentPoem(_Text_clean);
                     break;
                 case WordType.Adj:
                     GameManager.instance.CancleCircledWordInCurrentPoem(_Text_clean);
                     FindObjectOfType<PaperShredderManager>().readyToSpawnShredderWordList.Add(_Text_clean);
 
-                    SetText(PoemGenerator.instance.GetRandomAdj());
+                    SetText(PoemGenerator.instance.GetRandomAdj(day));
                     GameManager.instance.CircledWordInCurrentPoem(_Text_clean);
                     break;
                 default:
@@ -247,6 +252,7 @@ public class Word : MonoBehaviour
                     break;
             }
 
+           
                
         }
     }

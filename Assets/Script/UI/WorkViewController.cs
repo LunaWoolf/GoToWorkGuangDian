@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using Yarn;
 
 public class WorkViewController : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public class WorkViewController : MonoBehaviour
     [HideInInspector] public Poem CurrentPoemOnCanvas = new Poem();
     [SerializeField] TextMeshProUGUI PromptText;
 
+   
+
     [SerializeField]
     [TextArea(5, 10)]
     List<string> Boss_Confirmations = new List<string>();
@@ -38,10 +41,6 @@ public class WorkViewController : MonoBehaviour
     List<string> Boss_Deny = new List<string>();
 
 
-    private void LateUpdate()
-    {
-
-    }
     // Start is called before the first frame update
     void Start()
     {
@@ -72,20 +71,17 @@ public class WorkViewController : MonoBehaviour
             ReviseButton.onClick.AddListener(OnReviseButtonClicked);
             DenyButton.gameObject.SetActive(false);
         }
-        
+      
         //InitalActionCount(GameManager.instance.MaxWorkActionCountOfDay - GameManager.instance.WorkActionCountOfDay);
         GameManager.instance.onAction.AddListener(OnUseOneAction);
         UpdatePromptText("");
 
+        GameManager.instance.OnPoemPass.AddListener(OnPoemPass);
+        GameManager.instance.OnPoemPassFailed.AddListener(OnPoemPassFailed);
     }
 
     public void OnLineCheck()
     {
-        /*if (CurrentPoemOnCanvas == null)
-        {
-            Debug.Log("current poem on canvas is null");
-            return;
-        }*/
 
         if (CurrentPoemOnCanvas.CheckifPoemAllChcked())
         {
@@ -104,8 +100,9 @@ public class WorkViewController : MonoBehaviour
         UpdatePromptText(Boss_Confirmations[index]);
     }
 
-    public void OnPoemNeedRevise()
+    public void OnPoemPassFailed()
     {
+        //Add camera shake
         int index = Random.Range(0, Boss_Deny.Count);
         UpdatePromptText(Boss_Deny[index]);
     }
@@ -132,6 +129,10 @@ public class WorkViewController : MonoBehaviour
         GameManager.instance.OnPoemTryDeny();
      
     }
+
+  
+
+
     public void SetPassButtonActive(bool isOn)
     {
         PassButton.enabled = isOn;
@@ -172,12 +173,12 @@ public class WorkViewController : MonoBehaviour
         StopCoroutine(UpdatePromptTextToDeafult(2f));
         if (t == "")
         {
-            PromptText.text = DailyWorkPrompt[GameManager.instance.GetDay()];
+            StartTypewriterEffect(PromptText, DailyWorkPrompt[GameManager.instance.GetDay()], 0.01f);
         }
         else
         {
-            PromptText.text = t;
-            StartCoroutine(UpdatePromptTextToDeafult(4f));
+            StartTypewriterEffect(PromptText, t, 0.01f);
+            StartCoroutine(UpdatePromptTextToDeafult(20f));
         } 
     }
 
@@ -185,5 +186,24 @@ public class WorkViewController : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         UpdatePromptText("");
+    }
+
+
+    public void StartTypewriterEffect(TextMeshProUGUI tm, string line, float letterDuration)
+    {
+        StopCoroutine(TypeText(null,null,0));
+        tm.text = "";
+        StartCoroutine(TypeText(PromptText,line, letterDuration));
+    }
+
+    private IEnumerator TypeText(TextMeshProUGUI tm, string line, float letterDuration)
+    {
+        tm.text = "";
+
+        foreach (char letter in line)
+        {
+            tm.text += letter;
+            yield return new WaitForSeconds(letterDuration);
+        }
     }
 }

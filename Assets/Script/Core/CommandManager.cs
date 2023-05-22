@@ -37,7 +37,7 @@ public class CommandManager : MonoSingleton<CommandManager>
     [YarnCommand("GoToNextDay")]
     public void GoToNextWorkDay()
     {
-        GameManager.instance.GoToNextWorkDay();
+        //GameManager.instance.GoToNextWorkDay();
     }
 
     [YarnCommand("StartPaperShredder")]
@@ -99,7 +99,8 @@ public class CommandManager : MonoSingleton<CommandManager>
     [YarnFunction("CheckRebellious")]
     public static bool CheckRebellious()
     {
-        return PropertyManager.instance.rebelliousCount > 3;
+        //return PropertyManager.instance.rebelliousCount > 3;\
+        return PropertyManager.instance.currentPoemBannedWord > 3;
     }
 
     [YarnCommand("WaitForFinishRepeatMission")]
@@ -114,7 +115,6 @@ public class CommandManager : MonoSingleton<CommandManager>
     {
         if (timelineManager == null) timelineManager = FindObjectOfType<TimelineManager>();
         timelineManager.PlayTimeLine(index);
-     
     }
 
 }

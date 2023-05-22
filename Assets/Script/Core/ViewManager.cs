@@ -36,6 +36,12 @@ public class ViewManager : MonoSingleton<ViewManager>
 
     [SerializeField] public TextMeshProUGUI MoneyText;
 
+
+    [Header("Door")]
+    [SerializeField] Button WorkDoorButton;
+    [SerializeField] Button FamilyDoorButton;
+    [SerializeField] Canvas DoorCanvas;
+
     void Awake()
     {
         var objs = FindObjectsOfType<ViewManager>();
@@ -53,6 +59,21 @@ public class ViewManager : MonoSingleton<ViewManager>
 
     }
 
+    private void Start()
+    {
+        if (WorkDoorButton)
+        {
+            WorkDoorButton.onClick.AddListener(OnDoorButtonClicked);
+
+        }
+        if (FamilyDoorButton)
+        {
+            FamilyDoorButton.onClick.AddListener(OnFamilyDoorButtonClicked);
+
+        }
+
+        ToggleDoorButton(true, true, false);
+    }
     public void SetTimerText(float time)
     {
         TimeSpan timeSpan = TimeSpan.FromSeconds(time);
@@ -197,5 +218,59 @@ public class ViewManager : MonoSingleton<ViewManager>
     {
         if (FadeCanvas == null) return;
         FadeCanvas.GetComponent<Animator>().SetTrigger("FadeEnd");
+    }
+
+    public void ToggleDoorButton(bool CanvasIsOn, bool WorkDoorIsOn, bool FamilyDoorIsOn)
+    {
+        DoorCanvas.gameObject.SetActive(CanvasIsOn);
+        WorkDoorButton.gameObject.SetActive(WorkDoorIsOn);
+        FamilyDoorButton.gameObject.SetActive(FamilyDoorIsOn);
+    }
+
+    void OnDoorButtonClicked()
+    {
+        Debug.Log("Try Click on Door");
+        if (GameManager.instance.GetDay() >= 6) // Last Day
+        {
+            //Enter Last Day Mode 
+        }
+        else
+        {
+            FindObjectOfType<TimelineManager>().PlayTimeline(FindObjectOfType<TimelineManager>().doorOpenTimeline);
+            WorkDoorButton.interactable = false;
+        
+            //Play Open Door Time line
+            //Start Dialogue
+        }
+    }
+
+    void OnFamilyDoorButtonClicked()
+    {
+        Debug.Log("Try Click on Door");
+       
+        if(GameManager.instance.GetDay() < 6)
+        {
+            FindObjectOfType<TimelineManager>().PlayTimeline(FindObjectOfType<TimelineManager>().familyDoorOpenTimeline);
+            FamilyDoorButton.interactable = false;
+
+        }
+    }
+
+    public void OnWorkDoorOpenFinish()
+    {
+        Debug.Log("Door open finished");
+        GameManager.instance.LoadMorningWorkDayDialogue();
+        WorkDoorButton.interactable = true;
+        ToggleDoorButton(false,false,false);
+        WorkDoorButton.gameObject.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+    }
+
+    public void OnFamilyDoorOpenFinish()
+    {
+        Debug.Log("Family Door open finished");
+        GameManager.instance.GoToDinner();
+        FamilyDoorButton.interactable = true;
+        ToggleDoorButton(false, false, false);
+        FamilyDoorButton.gameObject.GetComponent<Image>().color = new Color(1, 1, 1, 1);
     }
 }

@@ -26,7 +26,6 @@ public class WriteCanvasContoller : MonoBehaviour
         //Save Poem
         PropertyManager.instance.bHasWritePoem = true;
         poemGenerator.MoveWritePoemToReadPoem();
-        GameManager.instance.GoToNextWorkDay();
         //temp fix
         //Destroy(this.gameObject);
 
