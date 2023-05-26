@@ -6,7 +6,8 @@ position: -52,-270
 (June 6th, A Regular Day At Work)
 <<set $bReflection to false>>
 The value of reflection is {$bReflection}
-<<StartWork CommandManager>>
+-
+<<WaitForFinishRepeatMission CommandManager 1>>
 ===
 
 title: d01_Morning

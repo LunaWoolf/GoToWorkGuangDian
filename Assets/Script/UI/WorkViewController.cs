@@ -80,6 +80,22 @@ public class WorkViewController : MonoBehaviour
         GameManager.instance.OnPoemPassFailed.AddListener(OnPoemPassFailed);
     }
 
+    public void OnWordConfirmed()
+    {
+        CurrentPoemOnCanvas.wordConfirmed++;
+        Debug.Log("Confirm: " + CurrentPoemOnCanvas.wordConfirmed);
+        if (CurrentPoemOnCanvas.CheckifPoemAllConfirmed())
+        {
+            PassButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            PassButton.gameObject.SetActive(false);
+
+        }
+    }
+
+
     public void OnLineCheck()
     {
 

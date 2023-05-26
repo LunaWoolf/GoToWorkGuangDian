@@ -18,9 +18,10 @@ public class MessageBlockController : MonoBehaviour
     [SerializeField] GameObject LeftEye;
     [SerializeField] GameObject RightEye;
 
-
-
-    [SerializeField] float DisappearTime = 3f;
+    float DisappearTime = 3f;
+ 
+    [SerializeField] float DisappearTime_news = 3f;
+    [SerializeField] float DisappearTime_reply = 3f;
 
     [SerializeField] MessageType messageType = MessageType.News;
 
@@ -38,15 +39,18 @@ public class MessageBlockController : MonoBehaviour
         {
             case MessageType.News:
                 SetNewsMessage(news);
+                DisappearTime = DisappearTime_news;
                 break;
             case MessageType.Review:
                 headShot.SetActive(false);
                 isShowHeadShot = false;
                 SetReviewMessage(text);
+                DisappearTime = DisappearTime_news;
                 break;
             case MessageType.Reply:
                 headshotImage.color = new Color(0, 0, 0, 1);
                 SetReplyMessage(text);
+                DisappearTime = DisappearTime_reply;
                 break;
         }
         return this;
@@ -109,5 +113,4 @@ public class MessageBlockController : MonoBehaviour
         }
     }
 
-   
 }

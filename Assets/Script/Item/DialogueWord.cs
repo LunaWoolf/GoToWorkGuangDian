@@ -11,8 +11,8 @@ public class DialogueWord : Word
     //[SerializeField] public new string _Text_clean;
     //[SerializeField] public new string _UnProcessText;
 
-    public float minFadeTime = 2f;
-    public float maxFadeTime = 3f;
+    //public override float minFadeTime = 2f;
+    //public override float maxFadeTime = 3f;
 
     int[] sizeOption = { 60, 80, 100 };
 
@@ -98,27 +98,5 @@ public class DialogueWord : Word
         tm.color = new Color(tm.color.r, tm.color.g, tm.color.b, 1);
     }
 
-    public void FadeAndDestroy()
-    {
-       
-
-        // Set the initial color to the current color
-        Color initialColor = tm.color;
-
-        // Generate a random duration between minFadeTime and maxFadeTime
-        float fadeTime = Random.Range(minFadeTime, maxFadeTime);
-
-        // Use LeanTween to fade the color from the initial color to transparent over fadeTime seconds
-        LeanTween.value(gameObject, initialColor, new Color(initialColor.r, initialColor.g, initialColor.b, 0.0f), fadeTime)
-            .setOnUpdateColor((Color color) =>
-            {
-                tm.color = color;
-            })
-            .setOnComplete(() =>
-            {
-                // Destroy the game object when the fade is complete
-                Destroy(gameObject);
-            });
-
-    }
+ 
 }

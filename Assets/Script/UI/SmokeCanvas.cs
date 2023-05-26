@@ -31,9 +31,6 @@ public class SmokeCanvas : MonoBehaviour
             SmokeButton.gameObject.SetActive(false);
 
     }
-
-
-
     void OnBuyButtonClicked()
     {
         if (!GameManager.instance.BuyCigarette())

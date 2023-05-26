@@ -51,7 +51,6 @@ public class PropertyManager : MonoSingleton<PropertyManager>
     {
         money += changeValue;
         ViewManager.instance.SetMoneyText(PropertyManager.instance.money);
-
     }
 
 

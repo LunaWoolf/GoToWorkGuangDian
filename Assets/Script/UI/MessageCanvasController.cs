@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.EventSystems;
+using Yarn;
 
 public class MessageCanvasController : MonoBehaviour
 {
@@ -103,6 +104,37 @@ public class MessageCanvasController : MonoBehaviour
 
         Vector3 spawnPosition = new Vector3(xPos, yPos, 0f);
         m.GetComponent<RectTransform>().position = cam.ScreenToViewportPoint(spawnPosition);
+
+    }
+
+
+    public void GenerateReplyMessageBlock(bool isRevice, string orginalWord, string revicedWord)
+    {
+        string ReplyText = "";
+
+        if (isRevice)
+        {
+            ReplyText = "No I don't want to change it.";
+        }
+        else
+        {
+            ReplyText = "Okay okay okay, what about " + revicedWord + "instead of " + orginalWord;
+        }
+
+
+        MessageBlockController m = Instantiate(MessageBlock, this.transform).
+                                    GetComponent<MessageBlockController>().Init(MessageBlockController.MessageType.Reply, null, ReplyText);
+
+
+        float xOffset = Random.Range(xOffset_min, xOffset_max);
+        float yOffset = Random.Range(yOffset_min, yOffset_max);
+
+        m.gameObject.GetComponent<RectTransform>().position += new Vector3(xOffset, yOffset, 0);
+
+        var h = headshotManager.GetRandomHeadShot();
+        m.ToogleAndSetHeadShot(true, h.head_sprite,
+                                    h.left_eye_position,
+                                    h.righ_eye_position);
 
     }
 }

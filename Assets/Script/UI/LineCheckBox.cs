@@ -25,6 +25,8 @@ public class LineCheckBox : MonoBehaviour
         if (FindObjectOfType<WorkViewController>())
         {
             OnChecked.AddListener(FindObjectOfType<WorkViewController>().OnLineCheck);
+
+           
         } 
      
     }

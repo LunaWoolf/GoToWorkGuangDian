@@ -1,0 +1,17 @@
+﻿title: d02_Dream
+tags:
+position: -49,42
+---
+Day 2 Dream
+-
+<<GoToNextDay CommandManager>>
+===
+
+title: end_Dream
+tags:
+position: -49,42
+---
+End dream
+-
+<<GoToNextDay CommandManager>>
+===

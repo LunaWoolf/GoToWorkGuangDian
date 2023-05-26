@@ -244,7 +244,15 @@ MonoBehaviour:
   tm: {fileID: 7957285137935027757}
   CircleImage: {fileID: 1220661368681710101}
   Background: {fileID: 3454838105891766351}
+  unconfirmColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  confirmColor: {r: 0, g: 0, b: 0, a: 1}
+  minFadeTime: 2
+  maxFadeTime: 3
   isCircledable: 1
+  _isConfirm: 0
+  OnWordConfirm:
+    m_PersistentCalls:
+      m_Calls: []
   circled: 0
   banned: 0
   isInserable: 0
@@ -482,6 +490,7 @@ GameObject:
   - component: {fileID: 8125814144181449402}
   - component: {fileID: 5533271010312835081}
   - component: {fileID: 1795577974}
+  - component: {fileID: 7838320908577870920}
   m_Layer: 5
   m_Name: background
   m_TagString: Untagged
@@ -586,7 +595,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 1, g: 0.5896226, b: 0.5896226, a: 1}
+    m_HighlightedColor: {r: 0.9622642, g: 0.9622642, b: 0.9622642, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -638,6 +647,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7838320908577870920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3454838105891766351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2486da06edfb34721828e516e09988c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonLeftClick:
+    m_PersistentCalls:
+      m_Calls: []
+  ButtonRightClick:
+    m_PersistentCalls:
+      m_Calls: []
+  ButtonMiddleClick:
+    m_PersistentCalls:
+      m_Calls: []
+  CanUseHoveAsLeftClick: 1
 --- !u!1 &7815224486781023130
 GameObject:
   m_ObjectHideFlags: 0

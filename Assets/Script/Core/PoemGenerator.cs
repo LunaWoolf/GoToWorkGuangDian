@@ -131,6 +131,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     {
         int randLine = Random.Range(0, lines.Length);
         string line_tem = lines[randLine];
+        line_tem = CapFirstLetter(line_tem);
         return line_tem;
     }
 
@@ -149,9 +150,10 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
             line_tem = ReplaceVerb(line_tem, isValid);
             line_tem = ReplaceNoun(line_tem, isValid);
             line_tem = ReplaceAdj(line_tem,  isValid);
+            line_tem = CapFirstLetter(line_tem);
             poem[i] = line_tem;
             Debug.Log(line_tem);
-
+            
             GameObject p = Instantiate(PoemLine, PoemParent_Read.transform, false);
             p.GetComponent<PoemLine>().SetLine(line_tem);
             _currentPoem.poemLines.Add(p.GetComponent<PoemLine>());
@@ -159,6 +161,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
         if (FindObjectOfType<WorkViewController>())
         {
+            _currentPoem.SetTotalWordCount();
             FindObjectOfType<WorkViewController>().SetCurrentPoem(_currentPoem);
         }
         else
@@ -168,6 +171,27 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
        
         currentPoem = poem; // todo: refactor that to poem logic
         return poem;
+    }
+
+    public string CapFirstLetter(string line)
+    {
+        char[] charArray = line.ToCharArray();
+        if (charArray[0] == '?' || charArray[0] == '\'')
+        {
+            
+            charArray[1] = char.ToUpper(charArray[1]);
+            string result = new string(charArray);
+            return result;
+        }
+        else if (!char.IsUpper(charArray[0]))
+        {
+            charArray[0] = char.ToUpper(charArray[0]);
+            string result = new string(charArray);
+            return result;
+
+        }
+        return line;
+           
     }
 
     public string ReplaceVerb(string line, bool isvalid)

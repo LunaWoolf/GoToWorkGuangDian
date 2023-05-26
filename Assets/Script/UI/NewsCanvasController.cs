@@ -52,7 +52,7 @@ public class NewsCanvasController : MonoBehaviour
             GameManager.instance.AdjustAndCheckWorkActionCountOfDay(1);
             GameManager.instance.GoBackToWork();
         }
-        if (GameManager.instance.GetCurrentGameMode() == GameManager.GameMode.Afterwork)
+        if (GameManager.instance.GetCurrentGameMode() == GameManager.GameMode.SaySomething)
         {
             LocalDialogueManager.instance.LoadDialogue("GoToSleepAfterReadNews");
             ViewManager.instance.UnloadNewsView();

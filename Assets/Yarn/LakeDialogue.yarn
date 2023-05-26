@@ -1,0 +1,36 @@
+﻿
+title: d02_Lake
+tags:
+position: -49,42
+---
+Day 2 Lake Test
+
+<<GoToSaySomething CommandManager>>
+===
+
+title: d03_Lake
+tags:
+position: -49,42
+---
+Day 3 Lake Test
+
+<<GoToSaySomething CommandManager>>
+===
+
+title: d04_Lake
+tags:
+position: -49,42
+---
+Day 4 Lake Test
+-
+<<GoToSaySomething CommandManager>>
+===
+
+title: d05_Lake
+tags:
+position: -49,42
+---
+Day 5 Lake Test
+
+<<GoToSaySomething CommandManager>>
+===

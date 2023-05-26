@@ -51,7 +51,6 @@ public class PoemLine : MonoBehaviour
 
             w = Instantiate(wordPrefab, line02);
             
-
         }
         wordCount++;
       

@@ -37,7 +37,7 @@ public class CommandManager : MonoSingleton<CommandManager>
     [YarnCommand("GoToNextDay")]
     public void GoToNextWorkDay()
     {
-        //GameManager.instance.GoToNextWorkDay();
+        GameManager.instance.GoToNextWorkDay();
     }
 
     [YarnCommand("StartPaperShredder")]
@@ -93,7 +93,7 @@ public class CommandManager : MonoSingleton<CommandManager>
     [YarnCommand("EndGame")]
     public void EndGame()
     {
-        GameManager.instance.LoadEndGameScene();
+        //GameManager.instance.LoadEndGameScene();
     }
 
     [YarnFunction("CheckRebellious")]
@@ -117,4 +117,11 @@ public class CommandManager : MonoSingleton<CommandManager>
         timelineManager.PlayTimeLine(index);
     }
 
+    [YarnCommand("GoToSaySomething")]
+    public void GoToSaySomething()
+    {
+        GameManager.instance.GoToSaySomething();
+    }
+
+  
 }

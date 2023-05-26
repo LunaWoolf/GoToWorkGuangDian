@@ -15,7 +15,7 @@ public class GameManager : MonoSingleton<GameManager>
     public bool isLoadOpenScene = false;
     [SerializeField] GameMode currentGameMode = GameMode.Conversation;
 
-   
+
     public struct personalBannedWord
     {
         public string word;
@@ -45,7 +45,7 @@ public class GameManager : MonoSingleton<GameManager>
         //News,
         Dinner,
         SaySomething,
-        Afterwork,
+        //Afterwork,
         Lake,
         Dream,
     }
@@ -53,8 +53,8 @@ public class GameManager : MonoSingleton<GameManager>
     [Serializable]
     public enum WorkMode
     {
-       Timer,
-       ActionCount,
+        Timer,
+        ActionCount,
     }
 
 
@@ -64,7 +64,7 @@ public class GameManager : MonoSingleton<GameManager>
     [Header("Word Day")]
     public DateTime gameDate = new DateTime(2019, 6, 6, 0, 0, 0);
     int dayCounter = 0;
-    public int poemViewedToday = 0 ;
+    public int poemViewedToday = 0;
     [SerializeField] int PoemViewedToday = 0;
     [SerializeField] public int denyPoemCount_total = 0;
     [SerializeField] public int passPoemCount_total = 0;
@@ -73,14 +73,16 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] public int passPoemCount_day = 0;
     [SerializeField] public int WorkActionCountOfDay = 0;
     [SerializeField] public int MaxWorkActionCountOfDay = 5;
-    [HideInInspector]public UnityEvent onAction;
+    [HideInInspector] public UnityEvent onAction;
     [HideInInspector] public UnityEvent onStartWork;
     [HideInInspector] public float WorkDayTimer;
     public float WorkDayTimeLimit;
-    public bool  isPauseWorkDayTimer = false;
+    public bool isPauseWorkDayTimer = false;
     public float maxDayLimit;
     [SerializeField] public WorkMode workMode = WorkMode.ActionCount;
 
+    [Header("Word Day")]
+    [SerializeField] GameObject Mission_Day1;
 
     [Header("Money")]
     [SerializeField] public int passPoem_money = 5;
@@ -94,7 +96,7 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] int cigarettePrice = 5;
 
     [Header("Work Related")]
-   
+
     public List<string> personalBannedWord_Poem = new List<string>();
     public Dictionary<string, personalBannedWord> personalBannedWordMap = new Dictionary<string, personalBannedWord>();
     public List<string> personalBannedWord_Day = new List<string>();
@@ -107,13 +109,14 @@ public class GameManager : MonoSingleton<GameManager>
     public bool LoadTestDialogue = false;
 
     public void SetCurrentGameMode(GameMode mode)
-    {  currentGameMode = mode;
+    {
+        currentGameMode = mode;
 
         switch (currentGameMode)
         {
             case GameMode.Work:
-               //StartWork();
-               break;
+                //StartWork();
+                break;
             case GameMode.Write:
                 ScenesManager.instance.StartBufferingScene("SaySomethingScene");
                 break;
@@ -131,6 +134,8 @@ public class GameManager : MonoSingleton<GameManager>
     public string GetGameDate() { return gameDate.Month.ToString("D2") + gameDate.Day.ToString("D2"); }
 
     public int GetDay() { return dayCounter; }
+
+    public void SetDay(int day) { dayCounter = day; }
 
     public void TryStartWork()
     {
@@ -165,12 +170,12 @@ public class GameManager : MonoSingleton<GameManager>
         {
             // PoemGenerator.instance.MoveWritePoemToReadPoem();
             //PoemGenerator.instance.GeneratorPoem(5);
-           PropertyManager.instance.bHasWritePoem = false;
-           PoemGenerator.instance.TearPoemAfterWrite();
+            PropertyManager.instance.bHasWritePoem = false;
+            PoemGenerator.instance.TearPoemAfterWrite();
         }
         else
         {
-           PoemGenerator.instance.GeneratorPoem(5);
+            PoemGenerator.instance.GeneratorPoem(5);
         }
 
         personalBannedWord_Day.Clear();
@@ -180,7 +185,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         SetCurrentGameMode(GameMode.Write);
         ViewManager.instance.UnloadAllView();
-  
+
         /*if (!PropertyManager.instance.hasShownWorkTutorial)
         {
             ViewManager.instance.LoadTutorialView("Tutorial_Write");
@@ -194,14 +199,14 @@ public class GameManager : MonoSingleton<GameManager>
         //SetCurrentGameMode(GameMode.Moyu);
         //ViewManager.instance.UnloadAllView();
         //ViewManager.instance.LoadMoyuView();
-    
+
     }
 
     public void StartNews()
     {
         //SetCurrentGameMode(GameMode.News);
         ViewManager.instance.UnloadAllView();
-       
+
         if (!PropertyManager.instance.hasShownNewsTutorial)
         {
             //ViewManager.instance.LoadTutorialView("News");
@@ -235,7 +240,7 @@ public class GameManager : MonoSingleton<GameManager>
         }
 
         DontDestroyOnLoad(this.gameObject);*/
-        
+
     }
 
     void Start()
@@ -248,7 +253,7 @@ public class GameManager : MonoSingleton<GameManager>
 
         Debug.Log("starttt");
 
-        if(!isDebug || isLoadOpenScene)
+        if (!isDebug || isLoadOpenScene)
             SceneManager.LoadScene("OpenScene", LoadSceneMode.Additive);
 
         Debug.Log(gameDate.Month.ToString("D2") + gameDate.Day.ToString("D2"));
@@ -260,27 +265,18 @@ public class GameManager : MonoSingleton<GameManager>
         personalBannedWord_Day.Add("Default");
         personalBannedWordMap.Add("Default", bannedWord);
 
-        if(ViewManager.instance != null)
+        if (ViewManager.instance != null)
             ViewManager.instance.UnloadWorkView();
 
-     
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        if (isDebug && Input.GetKeyDown(KeyCode.H))
-        {
-            StartPaperShredder();
-        }
 
-        if (isDebug && Input.GetKeyDown(KeyCode.N))
-        {
-            NewsManager.instance.RefreshCureentValidNews();
-            NewsManager.instance.GeneratreNews();
-        }
-
+      
+        /*
         //increase Timer
         if (!isPauseWorkDayTimer && currentGameMode == GameMode.Work)
         {
@@ -297,10 +293,10 @@ public class GameManager : MonoSingleton<GameManager>
             {
                 //turn off timer text
             }
-            
-        }
 
-     
+        }*/
+
+
     }
 
 
@@ -351,7 +347,7 @@ public class GameManager : MonoSingleton<GameManager>
             {
                 PoemPass();
             }
-                   
+
         }
         else
         {
@@ -399,13 +395,13 @@ public class GameManager : MonoSingleton<GameManager>
             PropertyManager.instance.UpdateMoney(-PropertyManager.instance.currentPoemBannedWord * denyPoem_wrongword_money); // didn't circle the word that should circle
             //PropertyManager.instance.rebelliousCount = 0;
             PropertyManager.instance.currentPoemBannedWord = 0;
-            
+
             if (AdjustAndCheckWorkActionCountOfDay(1))
                 TryGoToNextPoem();
         }
         else
         {
-              ViewManager.instance.LoadTutorialView("You must present your reason for denying a piece. \n Clicked on inappropriate or controversial words to circle them, or let this piece pass ");
+            ViewManager.instance.LoadTutorialView("You must present your reason for denying a piece. \n Clicked on inappropriate or controversial words to circle them, or let this piece pass ");
         }
     }
 
@@ -441,18 +437,18 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    
+
     public void LoadMorningWorkDayDialogue()
     {
         //string date = gameDate.Month.ToString("D2") + gameDate.Day.ToString("D2");
         Debug.Log("d" + "0" + (GetDay() + 1) + "_Morning");
         if (GetDay() == 0 && LoadTestDialogue)
         {
-            LocalDialogueManager.instance.LoadDialogue("d" + "0" +(GetDay() + 1) + "_Morning_Test");
+            LocalDialogueManager.instance.LoadDialogue("d" + "0" + (GetDay() + 1) + "_Morning_Test");
         }
-        else if (LocalDialogueManager.instance.IsDialogueExsist("d" + "0"+ (GetDay() + 1) + "_Morning"))
+        else if (LocalDialogueManager.instance.IsDialogueExsist("d" + "0" + (GetDay() + 1) + "_Morning"))
         {
-            LocalDialogueManager.instance.LoadDialogue("d" + "0"+ (GetDay() + 1) + "_Morning");
+            LocalDialogueManager.instance.LoadDialogue("d" + "0" + (GetDay() + 1) + "_Morning");
         }
         else
         {
@@ -462,6 +458,9 @@ public class GameManager : MonoSingleton<GameManager>
         FindObjectOfType<EventSystem>().gameObject.SetActive(true);
         eventSystem.SetActive(true);
     }
+
+    public bool CanEnterLakeMode() { return LocalDialogueManager.instance.IsDialogueExsist("d" + "0" + (GetDay() + 1) + "_Lake"); }
+    public bool CanEnterDreamMode() { return LocalDialogueManager.instance.IsDialogueExsist("d" + "0" + (GetDay() + 1) + "_Dream"); }
 
 
 
@@ -476,7 +475,7 @@ public class GameManager : MonoSingleton<GameManager>
         yield return new WaitForSeconds(.2f);
         Debug.Log("Go To Next Day");
         gameDate = gameDate.AddDays(1);
-        dayCounter++;
+        SetDay(GetDay() + 1);
         WorkActionCountOfDay = 0;
         PoemViewedToday = 0;
         FindObjectOfType<EventSystem>().gameObject.SetActive(true);
@@ -484,7 +483,7 @@ public class GameManager : MonoSingleton<GameManager>
         ViewManager.instance.ToggleDoorButton(true, true, false);
     }
 
-    
+
     bool CheckedReachForEnding()
     {
         if (PropertyManager.instance.bHasWritePoem) return false;
@@ -522,12 +521,12 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void CancleCircledWordInCurrentPoem(string word)
     {
-        if(personalBannedWord_Poem.Contains(word))
-           personalBannedWord_Poem.Remove(word);
+        if (personalBannedWord_Poem.Contains(word))
+            personalBannedWord_Poem.Remove(word);
 
     }
 
-  
+
     public void SaveCircledWordForPoem()
     {
         foreach (string s in personalBannedWord_Poem)
@@ -557,11 +556,11 @@ public class GameManager : MonoSingleton<GameManager>
                 personalBannedWordMap.Add(s, bannedWord);
             }
         }
-      
+
 
     }
 
-    
+
     public string GetRandomBannedWord()
     {
 
@@ -578,7 +577,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void LoadEndGameScene()
     {
         StartCoroutine(IE_LoadEndGameScene());
-       
+
     }
 
     IEnumerator IE_LoadEndGameScene()
@@ -606,7 +605,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         SetCurrentGameMode(GameMode.Bus);
         Debug.Log("Go To Bus");
-        if(FindObjectOfType<EventSystem>()) FindObjectOfType<EventSystem>().gameObject.SetActive(false);
+        if (FindObjectOfType<EventSystem>()) FindObjectOfType<EventSystem>().gameObject.SetActive(false);
         eventSystem.SetActive(false);
         ViewManager.instance.UnloadAllView();
     }
@@ -629,15 +628,45 @@ public class GameManager : MonoSingleton<GameManager>
         ViewManager.instance.ToggleDoorButton(true, false, true);
     }
 
-    public void GoToAfterwork()
+    public void GoToSaySomething()
     {
-        SetCurrentGameMode(GameMode.Afterwork);
+        SetCurrentGameMode(GameMode.SaySomething);
         Debug.Log("Go To After work Day");
         if (FindObjectOfType<EventSystem>()) FindObjectOfType<EventSystem>().gameObject.SetActive(true);
         eventSystem.SetActive(true);
         ViewManager.instance.UnloadAllView();
         ViewManager.instance.LoadAfterWorkView();
     }
+
+    public void GoToLake()
+    {
+        SetCurrentGameMode(GameMode.Lake);
+        ViewManager.instance.FadeToBlack();
+        ScenesManager.instance.UnloadScene("DinnerScene");
+        Debug.Log("Go To Lake Mode");
+        ViewManager.instance.UnloadAllView();
+        StartCoroutine(LoadLakeDialogueWithDelay());
+    }
+
+    IEnumerator LoadLakeDialogueWithDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        LocalDialogueManager.instance.LoadDialogue("d" + "0" + (GetDay() + 1) + "_Lake");
+    }
+
+
+
+
+    public void GoToDream()
+    {
+        SetCurrentGameMode(GameMode.Dream);
+        Debug.Log("Go To Dream");
+        //if (FindObjectOfType<EventSystem>()) FindObjectOfType<EventSystem>().gameObject.SetActive(true);
+        //eventSystem.SetActive(true);
+        ViewManager.instance.UnloadAllView();
+        LocalDialogueManager.instance.LoadDialogue("d" + "0" + (GetDay() + 1) + "_Dream");
+    }
+
 
     public bool BuyCigarette()
     {
@@ -649,12 +678,22 @@ public class GameManager : MonoSingleton<GameManager>
 
     }
 
-    public void  WaitForFinishRepeatMission()
+  
+
+    public void WaitForFinishRepeatMission()
     {
-        LocalDialogueManager.instance.LoadDialogue("d1_Morning_afterRepeatMission");
-       
+        switch (GetDay())
+        {
+            case 0:
+                Mission_Day1.SetActive(true);
+                break;
+        }
     }
 
+    public void OnCompleteRepeatMission()
+    {
+        LocalDialogueManager.instance.LoadDialogue("d1_Morning_afterRepeatMission");
+    }
 }
 
 //"Circle the words you want to revise, then click the button to request a revision. Some words are crucial and the author will refuse your revision request."

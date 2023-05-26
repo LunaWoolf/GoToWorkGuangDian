@@ -4,32 +4,58 @@ using UnityEngine;
 
 public class FamilyWordButton : Word
 {
+    bool isReviseable = false;
 
+    ClickableObject _clickableObject;
+    DinnerViewController dinnerViewController;
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-       
-        wordbutton.onClick.AddListener(OnWordClicked);
+        base.Start();
+        dinnerViewController = FindObjectOfType<DinnerViewController>();
+        _clickableObject = this.GetComponentInChildren<ClickableObject>();
+        if (_clickableObject != null)
+        {
+            _clickableObject.ButtonRightClick.RemoveAllListeners();
+            _clickableObject.ButtonLeftClick.RemoveAllListeners();
+            _clickableObject.ButtonRightClick.AddListener(dinnerViewController.OnTvButtonCliked);
+            _clickableObject.ButtonLeftClick.AddListener(OnWordRightClicked);
+        }
+      
         ToggleReviseButton(false, true);
     }
 
+    public void SetIsBroken(bool b)
+    {
+        isReviseable = b;
    
+    }
+
     // Update is called once per frame
     void Update()
     {
+
         
     }
 
-    void OnWordClicked()
+    void OnWordRightClicked()
     {
-        if (!circled)
+        if (!circled && isReviseable)
             CircledWord();
-        else
+        else if(circled && isReviseable)
             CancleCircledWord();
 
     }
 
-    void CircledWord()
+
+    public override void ReviseWord()
+    {
+       
+
+    }
+
+
+    /*public override void CircledWord()
     {
         if (!isCircledable) return;
         circled = true;
@@ -45,7 +71,7 @@ public class FamilyWordButton : Word
     }
 
 
-    void CancleCircledWord()
+    public override void CancleCircledWord()
     {
         if (!isCircledable) return;
         circled = false;
@@ -57,6 +83,6 @@ public class FamilyWordButton : Word
 
         ToggleReviseButton(false, true);
     }
-
+    */
 
 }

@@ -28,6 +28,7 @@ public class ViewManager : MonoSingleton<ViewManager>
     [SerializeField] GameObject WriteCanvas;
     [SerializeField] GameObject FadeCanvas;
     [SerializeField] GameObject MessageCanvas;
+    [SerializeField] GameObject PropertyCanvas;
 
     [Header("Dialogue Canvas")]
     [SerializeField] Image CharacterImage;
@@ -41,6 +42,8 @@ public class ViewManager : MonoSingleton<ViewManager>
     [SerializeField] Button WorkDoorButton;
     [SerializeField] Button FamilyDoorButton;
     [SerializeField] Canvas DoorCanvas;
+
+    MessageCanvasController messageCanvasController_main;
 
     void Awake()
     {
@@ -72,6 +75,8 @@ public class ViewManager : MonoSingleton<ViewManager>
 
         }
 
+        messageCanvasController_main = FindObjectOfType<MessageCanvasController>();
+
         ToggleDoorButton(true, true, false);
     }
     public void SetTimerText(float time)
@@ -89,6 +94,11 @@ public class ViewManager : MonoSingleton<ViewManager>
             MoneyText.text = money.ToString();
     }
 
+    public void TogglePropertyCanvas(bool isOn)
+    {
+        if (PropertyCanvas != null)
+            PropertyCanvas.SetActive(isOn);
+    }
 
     public Image GetCharacterImage() { if (CharacterImage == null) CharacterImage = GameObject.Find("CharacterImage").GetComponent<Image>(); return CharacterImage; }
     public MessageCanvasController GetMessageCanvas() { return FindObjectOfType<MessageCanvasController>(); }
@@ -158,6 +168,8 @@ public class ViewManager : MonoSingleton<ViewManager>
             AfterWorkCanvas.SetActive(false);
         if (WriteCanvas != null)
             WriteCanvas.SetActive(false);
+        if (DoorCanvas != null)
+            DoorCanvas.gameObject.SetActive(false);
 
 
     }
@@ -184,8 +196,6 @@ public class ViewManager : MonoSingleton<ViewManager>
         }
         TutorialCanvas.SetActive(true);
         TutorialCanvas.GetComponent<TutorialCanvasController>().SetInstruction(s);
-
-      
     }
 
 
@@ -272,5 +282,16 @@ public class ViewManager : MonoSingleton<ViewManager>
         FamilyDoorButton.interactable = true;
         ToggleDoorButton(false, false, false);
         FamilyDoorButton.gameObject.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+    }
+
+    public void OnWordReviced(bool isRevice, string orginalWord, string revicedWord)
+    {
+        if(messageCanvasController_main == null) messageCanvasController_main = FindObjectOfType<MessageCanvasController>();
+        if (messageCanvasController_main == null)
+        {
+            Debug.Log("No Message Canvas Controller exsist");
+            return;
+        }
+        messageCanvasController_main.GenerateReplyMessageBlock(isRevice, orginalWord, revicedWord);
     }
 }

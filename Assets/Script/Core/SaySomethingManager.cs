@@ -113,9 +113,13 @@ public class SaySomethingManager : MonoBehaviour
 
     public void FinishSaySomething()
     {
-        GameManager.instance.GoToNextWorkDay();
         ScenesManager.instance.UnloadScene("SaySomethingScene");
 
+        if (GameManager.instance.CanEnterDreamMode())
+            GameManager.instance.GoToDream();
+        else
+           GameManager.instance.GoToNextWorkDay();
+      
     }
 
     void GenerateLine()
