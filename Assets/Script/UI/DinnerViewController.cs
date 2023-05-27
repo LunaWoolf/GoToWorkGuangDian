@@ -23,7 +23,7 @@ public class DinnerViewController : MonoBehaviour
     [SerializeField] GameObject day3Scene;
     [SerializeField] GameObject day4Scene;
     [SerializeField] GameObject day5Scene;
-    [SerializeField] GameObject day6Scene;
+    //[SerializeField] GameObject day6Scene;
 
     [SerializeField] Button SaySomethingButton;
 
@@ -86,7 +86,8 @@ public class DinnerViewController : MonoBehaviour
 
         if (GameManager.instance.CanEnterLakeMode())
         {
-            LakeButton.gameObject.SetActive(true);
+            if (LakeButton)
+                LakeButton.gameObject.SetActive(true);
         }
         else
         {
@@ -101,7 +102,7 @@ public class DinnerViewController : MonoBehaviour
         day3Scene.SetActive(false);
         day4Scene.SetActive(false);
         day5Scene.SetActive(false);
-        day6Scene.SetActive(false);
+        //day6Scene.SetActive(false);
 
         switch (GameManager.instance.GetDay())
         {
@@ -143,7 +144,7 @@ public class DinnerViewController : MonoBehaviour
                 TvButton.SetIsBroken(false);
                 break;
             case 5:
-                day6Scene.SetActive(true);
+                //day6Scene.SetActive(true);
                 break;
 
         }

@@ -50,6 +50,8 @@ public class PaperShredderMouseInput : MonoBehaviour
                         if (IsPointerOverSingleWord())
                         {
                             Word w = IsPointerOverSingleWord();
+                            if (w.currentWordType != Word.WordType.Empty)
+                                return;
                             string word = selectedObject.GetComponentInParent<ShredderWord>().word;
                             FindObjectOfType<SaySomethingManager>().ReplaceText(w, word);
                             Destroy(selectedObject.GetComponentInParent<ShredderWord>().gameObject);

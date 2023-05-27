@@ -58,6 +58,7 @@ Li: THE GUARDIAN OF PEOPLE’S MIND AND HEART!!!
 Boss He: Good job Li. Hey what about you, are you dumb? 
 <<WaitForFinishRepeatMission CommandManager 1>>
 ===
+
 title: d1_Morning_afterRepeatMission
 tags:
 position: -53,-118 
@@ -93,8 +94,19 @@ title: d02_Morning
 tags:
 position: -49,42
 ---
-Day 2 Test Morning
 June 7th, A Regular Day At Work
+Boss He: Morning.
+li: Hi, Morning.
+Boss He: Okay there's a lot of work waiting for us. Let's state our mission again and go straight to work.
+<<WaitForFinishRepeatMission CommandManager 2>>
+===
+
+title: d2_Morning_afterRepeatMission
+tags:
+position: -53,-118 
+---
+Boss He: That's it. Okay time to work (*sips tea with loud noise*).
+Boss He: Recently there are increase level of violence case, the government want to limit any words that related to violence : blood, kill, murder ,,,,, and sex crime
 <<StartWork CommandManager>>
 ===
 
@@ -102,8 +114,23 @@ title: d02_EndWork
 Tags:
 position: 198,48
 ---
-Day 2 Test End Work
+ “你说你干这工作，是不是说你说咱们花钱研发一个AI也能干，搞不好还能比你调错调的准” “别紧张，别紧张，没说要开除你，你家庭条件领导知道，父亲下岗，姐姐没个工作，单位照顾你” “小李那傻蛋有你一半努力就好了”
 June 7th, End of a Regular Day At Work
+Li: Great Day everyone, see you tomorrow.
+You are ready to leave work too.
+Boss He:
+Wait a second.
+-
+"How is work recently?"
+You think for a bit, before you can answered, he continued
+"I heard your has a bachlor degree in computer science"
+You Nod.
+"Neat, neat, then why don't you get a job in those big corp."
+"You tell me, aren't you gonna make more if you make AI stuffs? That's tide right now."
+You somehow feels like you heard that a million times
+You thnink for a bit, no, this is actually the first time someone say that to you
+"Anyway, just chatting. Go home now. See you tomorrow." 
+
 <<StartPaperShredder CommandManager>>
 ===
 
@@ -111,7 +138,23 @@ title: d03_Morning
 tags:
 position: -41,204
 ---
-Day 3 Test Morning
+June 8th
+Boss He: How could you make that simple mistake?
+Don't you know what time it is right now in  the year?
+Li: I'm sorry...I should take a closer look.
+Boss He: A closer look? What are you? A scanner? Use your brain, think!
+Li: I will, I'm sorry.
+Boss He: Anyway, let restate the mission and get to work. Don't make that mistake again.
+<<WaitForFinishRepeatMission CommandManager 3>>
+===
+
+
+title: d3_Morning_afterRepeatMission
+tags:
+position: -53,-118 
+---
+Boss He: That's it. Okay time to work (*sips tea with loud noise*).
+Boss He:Recently more and more artist start to use metaphor and the writing style become more and more irrelevent
 <<StartWork CommandManager>>
 ===
 
@@ -119,7 +162,28 @@ title: d03_EndWork
 Tags:
 position: 200,202
 ---
-Day 3 Test End Work
+Li: Bye.
+Li left the room.
+Boss He: Ah....
+That's a long sigh and somehow you are familiar with that sign
+that's the 号角 of a talk you don't want to have
+Boss He: You know what you guys do everyday, we can easily find an AI to replace you, you know?
+You know.
+Boss He: And honestly, an AI will do a better work.
+I don't know about deep learning or network, those big words I don't know.
+But I know it won't make simple stupid mistake.
+The noise of the AC never feels so loud.
+Boss He: Okay, opkay, don't be nervous. I'm just saying, not implying anything.
+You work hard. I know, I see everything, that's my job, I see things.
+And I know your family, the office knows your family situation. It's tough.
+Your dad was liad off with old injured.
+Your sister not having job.
+Must be hard being the only income in the family.
+No worries, the office know and the office will take care of you.
+Only if that Li could be half hard working as you.
+You forget how you leave the room that day
+or maybe you didn't
+maybe part of you never left that room
 <<StartPaperShredder CommandManager>>
 ===
 
@@ -128,7 +192,33 @@ title: d04_Morning
 tags:
 position: -41,204
 ---
-Day 4 Test Morning
+Boss He: Morning.
+Boss He: There are some HR changes made to the office.
+You notice Li's table is emptyed now.
+Boss He: I don't want to see that too,
+It's a collective decision,
+If you have any doubt, feel free to talk to me.
+You are clearly not listening 
+But it took you a second to realize you are counting the flys outside of the window
+Boss He: Anyway let's state our mission before we go to work
+<<WaitForFinishRepeatMission CommandManager 4>>
+===
+
+title: d4_Morning_afterRepeatMission
+tags:
+position: -53,-118 
+---
+Boss He: That's it. Okay time to work.
+He lift the tea up to his mouth and making drink noise, 
+but then realize the cup is empty
+You stand there still 
+when he left his upper eyelid and rest his stare on you
+A fly laned next to your hand,
+You lift your hand up,
+and took the cup on his table.
+His voice sounded on your back as you walk towards the kettle
+Boss He:I don’t think we need to talk with the people to revise stuff anymore, you can just revise pretty much anything to whatever you want
+I trust you.
 <<StartWork CommandManager>>
 ===
 
@@ -136,7 +226,7 @@ title: d04_EndWork
 Tags:
 position: 200,202
 ---
-Day 4 Test End Work
+Boss He: Nice work today, see you tomorrow.
 <<StartPaperShredder CommandManager>>
 ===
 
@@ -144,7 +234,16 @@ title: d05_Morning
 tags:
 position: -41,204
 ---
-Day 5 Test Morning
+Boss He: Morning.
+Boss He: Recently there has been a increase rate of suicided, lets just change most negative words into positive word.
+Boss He: Okay get to work now.
+<<WaitForFinishRepeatMission CommandManager 4>>
+===
+
+title: d5_Morning_afterRepeatMission
+tags:
+position: -53,-118 
+---
 <<StartWork CommandManager>>
 ===
 
@@ -152,7 +251,7 @@ title: d05_EndWork
 Tags:
 position: 200,202
 ---
-Day 5 Test End Work
+Boss He: See you tomorrow.
 <<StartPaperShredder CommandManager>>
 ===
 
@@ -161,18 +260,31 @@ title: d06_Morning
 tags:
 position: -41,204
 ---
-Day 6 Test Morning
-<<StartWork CommandManager>>
+The door is locked.
+You tried it again, it still locked.
+A person from the office next door came out.
+"Why you are here?"
+"Didn't they not tell you your deparentment's work has been passed"
+"I mean, yeah paused, temportilialy."
+"You boss was yelling something earlier this morning"
+"something like he gonna talk to people high up"
+"something like he gonna protect the public?"
+"Isn't that funny. No offends but who the fuck listen to music now? It's a total waste of tax money on your office"
+"That damn ass was trying to telling me some shit wit AI even. "
+"But anyway, what were you guys doning exactly"
+<<WaitForFinishRepeatMission CommandManager 4>>
 ===
 
-title: d06_EndWork
-Tags:
-position: 200,202
+title: d6_Morning_afterRepeatMission
+tags:
+position: -53,-118 
 ---
-Day 6 Test End Work
+You don't really know where to go
+the other person went back behind the door
+You stand in the hallway
+Till 5pm
 <<StartPaperShredder CommandManager>>
 ===
-
 
 
 title: default_morning

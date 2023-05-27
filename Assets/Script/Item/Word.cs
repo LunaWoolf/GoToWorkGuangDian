@@ -50,8 +50,9 @@ public class Word : MonoBehaviour
                 if (isConfirm)
                 {
                     OnWordConfirm.Invoke();
+                    if (FindObjectOfType<WorkViewController>()) FindObjectOfType<WorkViewController>().OnWordConfirmed();
                     LeanTween.value(this.gameObject, unconfirmColor, confirmColor, 1f).setOnUpdate((Color val) => { if(tm) tm.color = val; });
-                    if(FindObjectOfType<WorkViewController>()) FindObjectOfType<WorkViewController>().OnWordConfirmed();
+                    
                 }
                 else
                 {
@@ -128,12 +129,19 @@ public class Word : MonoBehaviour
     {
         _UnProcessText = t;
 
+        if (tm.fontStyle == FontStyles.Underline)
+        {
+            // Remove the underline style
+            tm.fontStyle &= ~FontStyles.Underline;
+        }
+
         if (t.Length > 2 && t[0] == '?')
         {
             banned = true;
             _Text = t.Substring(1, t.Length - 1);
             _Text = _Text.Replace("_", " ");
             tm.text = _Text;
+           
 
             //hightlight for debug
             if (PropertyManager.instance.hasCATgpt || GameManager.instance.isDebug)
@@ -141,6 +149,7 @@ public class Word : MonoBehaviour
                 tm.fontStyle = FontStyles.Underline;
 
             }
+            
             //PropertyManager.instance.rebelliousCount++;
             PropertyManager.instance.currentPoemBannedWord++;
         }
@@ -151,16 +160,7 @@ public class Word : MonoBehaviour
             _Text = _Text.Replace("_", " ");
             tm.text = _Text;
             tm.color = new Color(0, 0, 0, 1);
-            /*if (PropertyManager.instance.hasCATgpt)
-            {
-                int i = Random.Range(0, 4);
-                if (i < 1) // ramdomly picked as banned word
-                {
-                    banned = true;
-                    tm.color = new Color(0.83f, 0, 0, 1);
-                    PropertyManager.instance.rebelliousCount++;
-                }
-            }*/
+         
 
         }
 
@@ -173,6 +173,9 @@ public class Word : MonoBehaviour
         _Text_clean = _Text_clean.Replace(" ", "");
 
         if (this.gameObject.activeSelf) StartCoroutine(SetCircleSize());
+
+        if (_Text == "" || _Text == " ")
+            isConfirm = true;
     }
     public string GetText() { return _Text; }
 

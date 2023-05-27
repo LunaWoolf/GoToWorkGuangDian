@@ -91,6 +91,7 @@ public class TVManager : MonoBehaviour
                     Debug.Log("ReadyToStream");
 
                 }
+                return;
                 break;
 
             case 1:
@@ -117,11 +118,18 @@ public class TVManager : MonoBehaviour
                 {
                     StartCoroutine(StreamShow(Day2TVNews));
                 }
+                return;
                 //Load Day 2 TV Progarm
                 break;
 
+            default:
+                StartCoroutine(StreamShow(tvNoShow));
+                return;
+                break;
+
+
         }
-        
+        CloseTVButton.gameObject.SetActive(true);
     }
 
     IEnumerator StreamShow(string[] show)
@@ -172,7 +180,8 @@ public class TVManager : MonoBehaviour
             for (int i = 0; i < words.Length; i++)
             {
                 Word w = words[i];
-                if (w._UnProcessText[0] == '?')
+                
+                if (w._UnProcessText.Length > 0 && w._UnProcessText[0] == '?')
                 {
                     w.SetText("————————");
                 }

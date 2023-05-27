@@ -1,18 +1,9 @@
 ﻿
-title: d02_Lake
-tags:
-position: -49,42
----
-Day 2 Lake Test
-
-<<GoToSaySomething CommandManager>>
-===
-
 title: d03_Lake
 tags:
 position: -49,42
 ---
-Day 3 Lake Test
+Meet 
 
 <<GoToSaySomething CommandManager>>
 ===
@@ -21,8 +12,20 @@ title: d04_Lake
 tags:
 position: -49,42
 ---
-Day 4 Lake Test
--
+Do you Listen to music
+I rarely watch moives
+Am I too quiet
+I can see that.
+Where is tower on the horizon?
+That's a chimney.
+The factory closed 10 years ago.
+Still live in the old apartment assigned by the factory.
+I think my sister is gay.
+You have a sister?
+I never been to a dive bar.
+I wrote music.
+This year is tough
+It's just the summer.
 <<GoToSaySomething CommandManager>>
 ===
 
@@ -30,7 +33,35 @@ title: d05_Lake
 tags:
 position: -49,42
 ---
-Day 5 Lake Test
-
+You saw him again
+but he is all the way on the other side of the lake
+He sees you too, he waves, arms dnaces like willow branch in the wind
+You see him bend over, and throw something in the water, then look back at you
+the tide push that thing to your feet, you fick it up,
+it's an air pod.
+You put it in your ear,
+inside there are musics
+the lyrics are too blurry, it's hard to tell what that is.
+"Do you want a cigratte?" You yell. 
+"I'm fine, I quit" 
+Your voice bounce on the edge of the wave, push by the tide and echoing through the lake.
+-
 <<GoToSaySomething CommandManager>>
+===
+
+title: d06_Lake
+tags:
+position: -49,42
+---
+You went to the lake again,
+there are old people taking a walk
+kids running right pass you, chasing each other
+He's not there.
+You lean on the fence, stare at the lake.
+You reach to your pocket and find that one air pod,
+it's not playing music anymore.
+You stare at the lake,
+and you realize what's wrong, it's too quiet.
+Then you suddenly realize,
+Lake has no tide. 
 ===

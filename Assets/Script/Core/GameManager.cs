@@ -78,7 +78,7 @@ public class GameManager : MonoSingleton<GameManager>
     [HideInInspector] public float WorkDayTimer;
     public float WorkDayTimeLimit;
     public bool isPauseWorkDayTimer = false;
-    public float maxDayLimit;
+    //public float maxDayLimit;
     [SerializeField] public WorkMode workMode = WorkMode.ActionCount;
 
     [Header("Word Day")]
@@ -494,11 +494,11 @@ public class GameManager : MonoSingleton<GameManager>
             return true;
         }*/
 
-        if (dayCounter > maxDayLimit) // replace by ai
+        /*if (dayCounter > maxDayLimit) // replace by ai
         {
             LocalDialogueManager.instance.LoadDialogue("Ending_LoseJob_AI");
             return true;
-        }
+        }*/
 
         return false;
     }

@@ -83,8 +83,8 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     void Start()
     {
         if (PoemPaper_Read != null) PoemPaperAnimator_Read = PoemPaper_Read.GetComponent<Animator>();
-        poemPaperController_Read.OnPaperExitFinish.AddListener(TearPoem);
-        poemPaperController_Read.OnPaperExitFinish.AddListener(TryGoToNextPoem);
+        if (poemPaperController_Read != null) poemPaperController_Read.OnPaperExitFinish.AddListener(TearPoem);
+        if (poemPaperController_Read != null) poemPaperController_Read.OnPaperExitFinish.AddListener(TryGoToNextPoem);
         GameManager.instance.OnPoemPass.AddListener(OnPoemPass);
         //GeneratorPoem(5);
     }

@@ -51,7 +51,7 @@ public class Poem : MonoBehaviour
 
     public bool CheckifPoemAllConfirmed()
     {
-        if (wordConfirmed >= totalWord)
+        if (wordConfirmed >= totalWord -2)
             return true;
 
         return false;

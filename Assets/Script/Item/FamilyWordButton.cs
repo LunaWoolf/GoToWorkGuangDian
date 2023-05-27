@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class FamilyWordButton : Word
 {
@@ -8,22 +10,41 @@ public class FamilyWordButton : Word
 
     ClickableObject _clickableObject;
     DinnerViewController dinnerViewController;
+
+    [SerializeField] GameObject[] PossibleReviseList;
+    int currentReviseIndex = 0;
+
     // Start is called before the first frame update
     protected override void Start()
     {
-        base.Start();
+        //base.Start();
         dinnerViewController = FindObjectOfType<DinnerViewController>();
         _clickableObject = this.GetComponentInChildren<ClickableObject>();
         if (_clickableObject != null)
         {
             _clickableObject.ButtonRightClick.RemoveAllListeners();
             _clickableObject.ButtonLeftClick.RemoveAllListeners();
-            _clickableObject.ButtonRightClick.AddListener(dinnerViewController.OnTvButtonCliked);
-            _clickableObject.ButtonLeftClick.AddListener(OnWordRightClicked);
+            _clickableObject.ButtonRightClick.AddListener(OnWordRightClicked);
+            _clickableObject.ButtonLeftClick.AddListener(OnWordLeftClicked);
         }
       
         ToggleReviseButton(false, true);
+
+        if (revisebutton)
+        {
+            revisebutton.onClick.AddListener(OnReviseButtonClicked);
+            ToggleReviseButton(false, true);
+        }
+
+        foreach (GameObject g in PossibleReviseList)
+            g.SetActive(false);
     }
+
+    public override void SetText(string t)
+    {
+
+    }
+
 
     public void SetIsBroken(bool b)
     {
@@ -47,42 +68,44 @@ public class FamilyWordButton : Word
 
     }
 
+    void OnWordLeftClicked()
+    {
+        
+
+    }
+
+   
 
     public override void ReviseWord()
     {
-       
+        tm.text = "";
+        CancleCircledWord();
+        wordbutton.enabled = false;
+        this.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+        PossibleReviseList[currentReviseIndex].SetActive(false);
+        currentReviseIndex ++;
+        if (currentReviseIndex == PossibleReviseList.Length)
+            currentReviseIndex = 0;
 
+        PossibleReviseList[currentReviseIndex].SetActive(true);
+        PossibleReviseList[currentReviseIndex].SetActive(true);
+        dinnerViewController.OnReviseFamily();
     }
 
 
-    /*public override void CircledWord()
-    {
-        if (!isCircledable) return;
-        circled = true;
-        Hashtable options = new Hashtable();
-        LeanTween.value(gameObject, 0f, 1f, .5f).setOnUpdate((float val) =>
-        {
-            CircleImage.fillAmount = val;
-        });
-
-     
-
-       ToggleReviseButton(true, true);
-    }
-
-
+ 
     public override void CancleCircledWord()
     {
         if (!isCircledable) return;
-        circled = false;
-
-        LeanTween.value(gameObject, 1f, 0f, .5f).setOnUpdate((float val) =>
+        //circled = false;
+        CircleImage.fillAmount = 0;
+        /*LeanTween.value(gameObject, 1f, 0f, .5f).setOnUpdate((float val) =>
         {
             CircleImage.fillAmount = val;
-        });
+        });*/
 
-        ToggleReviseButton(false, true);
+        //ToggleReviseButton(false, true);
     }
-    */
+    
 
 }

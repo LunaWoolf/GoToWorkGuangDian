@@ -232,6 +232,7 @@ public class ViewManager : MonoSingleton<ViewManager>
 
     public void ToggleDoorButton(bool CanvasIsOn, bool WorkDoorIsOn, bool FamilyDoorIsOn)
     {
+        if (DoorCanvas == null) return;
         DoorCanvas.gameObject.SetActive(CanvasIsOn);
         WorkDoorButton.gameObject.SetActive(WorkDoorIsOn);
         FamilyDoorButton.gameObject.SetActive(FamilyDoorIsOn);
