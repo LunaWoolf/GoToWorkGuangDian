@@ -140,7 +140,7 @@ public class ViewManager : MonoSingleton<ViewManager>
         if (c == string.Empty || c == null)
         {
             GetCharacterImage().gameObject.SetActive(false);
-            UnloadAllCharacterArt();
+           
             return;
         } 
         string name = c;
@@ -214,8 +214,7 @@ public class ViewManager : MonoSingleton<ViewManager>
             DoorCanvas.gameObject.SetActive(false);
         if (LakeCanvas != null)
             LakeCanvas.gameObject.SetActive(false);
-        if (TipCanvas != null)
-            TipCanvas.gameObject.SetActive(false);
+   
 
     }
 
@@ -275,10 +274,10 @@ public class ViewManager : MonoSingleton<ViewManager>
 
     public void UnloadTipView()
     {
-        if (TipCanvas == null) return;
+        //if (TipCanvas == null) return;
         if (tipViewController == null)
             tipViewController = TipCanvas.GetComponent<TipViewController>();
-        tipViewController.UnloadAllTip(); 
+        if (tipViewController != null) tipViewController.UnloadAllTip(); 
     }
 
     public void FadeToBlack()

@@ -791,7 +791,7 @@ public class Effects : MonoBehaviour
     public void CleanUpLine()
     {
         List<GameObject> childObjects = new List<GameObject>();
-
+        ViewManager.instance.UnloadAllCharacterArt();
         foreach (Transform child in Line_Parent.transform)
         {
             childObjects.Add(child.gameObject);

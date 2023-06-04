@@ -13,7 +13,7 @@ public class Mission : MonoBehaviour
     string[][] missionLines = new string[4][];
     [SerializeField][TextArea(2, 10)] string[] startMissionLine;
     [SerializeField] List<string> GivenWordList = new List<string>();
-
+    [SerializeField] int waitForShwoingTipTime = 20;
     
 
     // Start is called before the first frame update
@@ -22,8 +22,28 @@ public class Mission : MonoBehaviour
         ParseAndSetMissionLine();
         currentDay = GameManager.instance.GetDay();
         FindObjectOfType<PaperShredderManager>().StartPaperShredderWithGivenList(GivenWordList);
+        ViewManager.instance.UnloadTipView();
+        ViewManager.instance.LoadTipView(TipViewController.TipType.Basic);
+        StartCoroutine(WaitToLoadTip());
+
+        
     }
 
+    IEnumerator WaitToLoadTip()
+    {
+        yield return new WaitForSeconds(waitForShwoingTipTime);
+        ViewManager.instance.LoadTipView(TipViewController.TipType.Mission_One);
+    }
+
+    public void LoadMissionTip()
+    {
+        int day = GameManager.instance.GetDay() + 1;
+        if (day == 1)
+        {
+            ViewManager.instance.LoadTipView(TipViewController.TipType.Mission_One);
+        }
+
+    }
 
     public void ReplaceText(Word word, string text)
     {

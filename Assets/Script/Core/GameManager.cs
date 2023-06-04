@@ -154,12 +154,15 @@ public class GameManager : MonoSingleton<GameManager>
         denyPoemCount_day = 0;
         ViewManager.instance.UnloadAllView();
         ViewManager.instance.TogglePropertyCanvas(true);
+
         if (!PropertyManager.instance.hasShownWorkTutorial)
         {
             //ViewManager.instance.LoadTutorialView("Tutorial_Work");
             PropertyManager.instance.hasShownWorkTutorial = true;
         }
         ViewManager.instance.LoadWorkView();
+        ViewManager.instance.UnloadTipView();
+        ViewManager.instance.LoadTipView(TipViewController.TipType.WorkTip);
         PoemGenerator.instance.TearPoem();
         PoemGenerator.instance.TryGoToNextPoem();
         //temp
@@ -624,6 +627,8 @@ public class GameManager : MonoSingleton<GameManager>
         if (FindObjectOfType<EventSystem>()) FindObjectOfType<EventSystem>().gameObject.SetActive(false);
         eventSystem.SetActive(false);
         ViewManager.instance.UnloadAllView();
+        ViewManager.instance.UnloadTipView();
+        ViewManager.instance.LoadTipView(TipViewController.TipType.InteractTip);
         ViewManager.instance.TogglePropertyCanvas(false);
     }
 
@@ -644,6 +649,8 @@ public class GameManager : MonoSingleton<GameManager>
         eventSystem.SetActive(true);
         ViewManager.instance.UnloadAllView();
         ViewManager.instance.LoadAfterWorkView();
+        ViewManager.instance.UnloadTipView();
+        ViewManager.instance.LoadTipView(TipViewController.TipType.InteractTip);
         ViewManager.instance.TogglePropertyCanvas(true);
     }
 
@@ -656,6 +663,8 @@ public class GameManager : MonoSingleton<GameManager>
         ViewManager.instance.UnloadAllView();
         ViewManager.instance.LoadLakeView();
         StartCoroutine(LoadLakeDialogueWithDelay());
+        ViewManager.instance.UnloadTipView();
+        ViewManager.instance.LoadTipView(TipViewController.TipType.DialogueTip);
         ViewManager.instance.TogglePropertyCanvas(false);
     }
 

@@ -35,6 +35,7 @@ public class MissionWord : Word
     public override void CancleCircledWord()
     {
         if (!isCircledable) return;
+        circled = false;
         //circled = false;
         CircleImage.fillAmount = 0;
         ToggleReviseButton(false, true);

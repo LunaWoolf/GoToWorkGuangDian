@@ -47,8 +47,13 @@ public class LocalDialogueManager : MonoSingleton<LocalDialogueManager>
 
     public void LoadDialogue(string startNode)
     {
-        if(ViewManager.instance)
+        if (ViewManager.instance)
+        {
             ViewManager.instance.LoadConversationView();
+            ViewManager.instance.UnloadTipView();
+            ViewManager.instance.LoadTipView(TipViewController.TipType.DialogueTip);
+        }
+           
         if (dialogueRunner == null) return;
         
         if (dialogueRunner.IsDialogueRunning)
