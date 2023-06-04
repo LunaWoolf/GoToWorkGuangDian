@@ -226,13 +226,19 @@ MonoBehaviour:
   tm: {fileID: 7957285137935027757}
   CircleImage: {fileID: 1220661368681710101}
   Background: {fileID: 3454838105891766351}
+  unconfirmColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  confirmColor: {r: 0, g: 0, b: 0, a: 1}
+  minFadeTime: 0.5
+  maxFadeTime: 2
   isCircledable: 0
+  _isConfirm: 0
+  OnWordConfirm:
+    m_PersistentCalls:
+      m_Calls: []
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 0
-  minFadeTime: 2
-  maxFadeTime: 3
 --- !u!114 &-2842889049959052728
 MonoBehaviour:
   m_ObjectHideFlags: 0

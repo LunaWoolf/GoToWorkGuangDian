@@ -26,6 +26,8 @@ public class PaperShredderManager : MonoBehaviour
     [SerializeField] Color startColor;
     [SerializeField] Color endColor;
 
+    public float negativeGravity = -0.5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,11 +46,11 @@ public class PaperShredderManager : MonoBehaviour
 
     public void StartPaperShredder()
     {
-
-        if (GameManager.instance != null && GameManager.instance.isDebug)
+        if (GoBackButton != null) GoBackButton.SetActive(true);
+        /*if (GameManager.instance != null && GameManager.instance.isDebug)
         {
             if (GoBackButton != null) GoBackButton.SetActive(true);
-        }
+        }*/
 
         if (GameManager.instance != null /*&& !GameManager.instance.isDebug)*/ && GameManager.instance.personalBannedWord_Day.Count != 0)
         {
@@ -151,5 +153,17 @@ public class PaperShredderManager : MonoBehaviour
     {
         // Your function to fire when objects have filled up the whole screen goes here
         Debug.Log("Screen filled!");
+    }
+
+    public void ChangeGravity()
+    {
+        Debug.Log("ChangeGravity");
+        Physics2D.gravity = new Vector3(0f, negativeGravity, 0f);
+        foreach (ShredderWord s in FindObjectsOfType<ShredderWord>())
+        {
+            s.TurnToWhite();
+        }
+
+     
     }
 }

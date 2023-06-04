@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
+using System.Drawing;
 
 public class ShredderWord : MonoBehaviour
 {
@@ -65,7 +67,7 @@ public class ShredderWord : MonoBehaviour
         
     }
 
-    public void SetWordColor(Color color)
+    public void SetWordColor(UnityEngine.Color color)
     {
         for (int i = 0; i < letterRefList.Length; i++)
         {
@@ -73,4 +75,42 @@ public class ShredderWord : MonoBehaviour
         }
 
     }
+
+    public void TurnToWhite()
+    {
+
+
+
+        
+        if (LeanTween.tweensRunning < 100)
+        {
+            UnityEngine.Color a = letterRefList[0].color;
+            UnityEngine.Color b = new UnityEngine.Color(1,1,1,0.2f);
+            LeanTween.value(gameObject, a, b, 15f)
+            .setOnUpdateColor((UnityEngine.Color color) =>
+                {
+                    for (int i = 0; i < letterRefList.Length; i++)
+                    {
+                        letterRefList[i].color = color;
+
+                    }
+                   
+             });
+
+           
+        }
+        else
+        {
+            for (int i = 0; i < letterRefList.Length; i++)
+            {
+               
+                    letterRefList[i].color = UnityEngine.Color.white;
+               
+            }
+
+        }
+       
+    }
+
+
 }

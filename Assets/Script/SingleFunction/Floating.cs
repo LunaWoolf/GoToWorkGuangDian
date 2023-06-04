@@ -10,6 +10,8 @@ public class Floating : MonoBehaviour
     [SerializeField] private float floatSpeed = 1f;
     [SerializeField] private float floatRange = 10f;
     [SerializeField] private float xSpeedMultiplier = 0.5f;
+    [SerializeField] private float ySpeedMultiplier = 0.5f;
+    [SerializeField] private float zSpeedMultiplier = 5f;
     private Vector2 startPos2;
     private Vector3 startPos3;
     private void Start()
@@ -26,9 +28,9 @@ public class Floating : MonoBehaviour
     {
         if (!isFloating) return;
         // Calculate the floating effect using a sine wave
-        float yOffset = Mathf.Sin(Time.time * floatSpeed) * floatRange;
+        float yOffset = Mathf.Sin(Time.time * floatSpeed * ySpeedMultiplier) * floatRange;
         float xOffset = Mathf.Sin(Time.time * floatSpeed * xSpeedMultiplier) * floatRange;
-        float  zOffset = Mathf.Sin(Time.time * floatSpeed * xSpeedMultiplier) * floatRange;
+        float  zOffset = Mathf.Sin(Time.time * floatSpeed * zSpeedMultiplier) * floatRange;
       
       
         if (targetRectTransform != null)
@@ -43,6 +45,16 @@ public class Floating : MonoBehaviour
             targetTransform.position = newPos3;
 
         }
-        
+    }
+
+    public void SetStartPosition2D(Vector2 position)
+    {
+        if (targetRectTransform != null)
+        {
+            isFloating = false;
+            startPos2 = position;
+            isFloating = true;
+        }
+          
     }
 }

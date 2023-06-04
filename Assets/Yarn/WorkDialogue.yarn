@@ -1,8 +1,8 @@
-﻿
-title: d01_Morning_Test
+﻿title: d01_Morning_Test
 tags:
-position: -52,-270
+position: -57,-270
 ---
+<<PlayTimeline CommandManager 0>>
 (June 6th, A Regular Day At Work)
 <<set $bReflection to false>>
 The value of reflection is {$bReflection}
@@ -10,300 +10,552 @@ The value of reflection is {$bReflection}
 <<WaitForFinishRepeatMission CommandManager 1>>
 ===
 
+
 title: d01_Morning
 tags:
-position: -53,-118
+position: -61,-114
 ---
-<<PlayTimeline CommandManager 0>>
-The Day 
+<<PlayAudioCue CommandManager DoorOpen false>>
+The Day
 is June 6th
-````` early summer
+It’s early summer
 -
-<<PlayTimeline CommandManager 1>>
-The noise of the AC 
-and the dancing platic string,
-they will bother you for the next 2 month.
-
+<<PlayAudioCue CommandManager AC true>>
+The noise of the AC
+and the dancing, plastic string,
+They will bother you 
+for the next 2 months.
 -
-<<PlayTimeline CommandManager 2>>
-Boss He: 
-Morning.
-He sips tea with loud noise
-
+<<MoveLineView CommandManager 4>>
+Boss He: Morning.
+<<PlayAudioCue CommandManager SipTea false>>
+He sips tea from the steel cup 
+making a loud noise.
 -
-
-You: 
-Morning.
-
+Morning. You Replied
 -
-
+<<MoveLineView CommandManager 0>>
 Li:
-Morning! Happy Monday! How was your weekend?
+Morning!
 -
-You: 
-Morning. Not muc...
+Li is 2 years younger than you
+With a baby face 
+And a concerning amount of hair 
+on his scalp
 -
-Boss He: The hot water is done, help me fill my cup.
-Li: No problem, will do.
+<<MoveLineView CommandManager 0>>
+Boss He: 
+The hot water is ready.
+Fill up my cup, please.
 -
-
-Boss He: Okay, as usual, before we start working,
-Boss He: We must remind ourselves with our responsibility.
+<<MoveLineView CommandManager 3>>
+Li: 
+No problem, I'll do it.
+-
+<<MoveLineView CommandManager 4>>
+Boss He: 
+Okay, 
+as usual, 
+before we start working
+-
+We must remind ourselves 
+of our responsibility.
+-
 Boss He: Our mission is…
-Li: PROTECT THE STABILITY OF THE PUBLIC!!!
-Boss He: Protect the public from…
-Li:  FROM DANGEROUS AND UNNECESSARAY MESSAGE.
-Boss He: We are the...
-Li: THE GUARDIAN OF PEOPLE’S MIND AND HEART!!!
-Boss He: Good job Li. Hey what about you, are you dumb? 
+-
+<<MoveLineView CommandManager 0>>
+Li: 
+We are the keepers of societal harmony's tune,
+Guiding lyrics to ensure they're in line and attune.
+Lighting the path toward the retarded public's ear,
+Shape creations and creators with meticulous care.
+-
+<<MoveLineView CommandManager 4>>
+Boss He:
+Nic...
+-
+<<MoveLineView CommandManager 6>>
+Boss He:
+Wait a second.
+What did you just said 
+in the third line?
+<<PlayAudioCue CommandManager SlamTable false>>
+Li, how long will it take you
+to memorize our mission correctly?
+-
+<<MoveLineView CommandManager 5>>
+"You! Tell him what's wrong!"
+-
 <<WaitForFinishRepeatMission CommandManager 1>>
 ===
 
-title: d1_Morning_afterRepeatMission
+
+title: d01_Morning_afterRepeatMission
 tags:
-position: -53,-118 
+position: 173,-109
 ---
-Boss He: That's it. Okay time to work (*sips tea with loud noise*).
-Boss He: You know the rule. we don’t want anything that may provoke social unsuitability to get to the public. When you review those poem, review carefully.
-Boss He: We must protect people from hearing words like rebellion, revolution, protest, or anything realted to those.
+<<MoveLineView CommandManager 4>>
+Boss He: 
+That's it. "Righteous Public's Ear"
+Remember that!
+<<PlayAudioCue CommandManager SipTea false>>
+He sips tea with a loud noise again.
+-
+//Day1 Prompt
+<<PlayAudioCue CommandManager Bell false>>
+<<MoveLineView CommandManager 0>>
+Boss He: Today, pay extra attention to the poems 
+and make sure they don't contain words 
+like Rebellion, Revolution, Protest, 
+or anything that incites social instability. 
+Our job is to protect people from hearing stuff 
+that might get them all fired up.
+-
+<<MoveLineView CommandManager 4>>
+"Review each one with utmost care."
+He sips tea with a loud noise again.
+-
 <<StartWork CommandManager>>
 ===
 
 title: d01_EndWork
 tags:
-position: 198,-116
+position: 671,-95
 ---
-The day is June 6th, 5pm
+June 6th, 5 pm.
 It's time for you to go home.
 -
-
-Li: 
-Hey, Don't forget to put all the paper you worked with today 
-into the 
-paper shredder 
+Li:
+Hey,
+Don't forget to put all
+the papers you worked on today
+into the Paper Shredder
 before you go.
 -
-
-Li: Nobody want things that shouldn't go out to go out, right?
-
-Li: I've already done with mine, see you tomorrow.
+Li:
+Nobody wants things
+that shouldn't go out
+to actually go out, right?
+-
+Li:
+I've already finished mine;
+See you tomorrow!
+-
 <<StartPaperShredder CommandManager>>
 ===
 
 title: d02_Morning
 tags:
-position: -49,42
+position: -63,44
 ---
-June 7th, A Regular Day At Work
+<<PlayAudioCue CommandManager DoorOpen false>>
+June 7th, 36 degrees Celsius.
 Boss He: Morning.
-li: Hi, Morning.
-Boss He: Okay there's a lot of work waiting for us. Let's state our mission again and go straight to work.
+Li: Hi, morning.
+-
+Boss He: Okay,
+A lot of work is waiting for us.
+Let's state our mission once again
+and then go straight to work.
+-
 <<WaitForFinishRepeatMission CommandManager 2>>
 ===
 
-title: d2_Morning_afterRepeatMission
+title: d02_Morning_afterRepeatMission
 tags:
-position: -53,-118 
+position: 172,49
 ---
-Boss He: That's it. Okay time to work (*sips tea with loud noise*).
-Boss He: Recently there are increase level of violence case, the government want to limit any words that related to violence : blood, kill, murder ,,,,, and sex crime
+Boss He:
+That's it.
+Okay, it's time to work.
+-
+
+Boss He:
+// Day 2 Prompt:
+Due to the recent rise in violence and sex crime incidents, 
+we must be mindful of the impact of the words we use. 
+-
+<<PlayAudioCue CommandManager Bell false>>
+<<MoveLineView CommandManager 0>>
+Today, let's restrict the use of violence-related terms
+ such as blood, kill, murder, rape, and others. 
+ Our responsibility is to create a safer environment 
+ by considering the consequences of the language we choose. 
+ Pay close attention to the poems and ensure they align 
+ with the government's efforts to address these concerns.
+-
 <<StartWork CommandManager>>
 ===
 
-title: d02_EndWork
-Tags:
-position: 198,48
----
- “你说你干这工作，是不是说你说咱们花钱研发一个AI也能干，搞不好还能比你调错调的准” “别紧张，别紧张，没说要开除你，你家庭条件领导知道，父亲下岗，姐姐没个工作，单位照顾你” “小李那傻蛋有你一半努力就好了”
-June 7th, End of a Regular Day At Work
-Li: Great Day everyone, see you tomorrow.
-You are ready to leave work too.
-Boss He:
-Wait a second.
--
-"How is work recently?"
-You think for a bit, before you can answered, he continued
-"I heard your has a bachlor degree in computer science"
-You Nod.
-"Neat, neat, then why don't you get a job in those big corp."
-"You tell me, aren't you gonna make more if you make AI stuffs? That's tide right now."
-You somehow feels like you heard that a million times
-You thnink for a bit, no, this is actually the first time someone say that to you
-"Anyway, just chatting. Go home now. See you tomorrow." 
 
+title: d02_EndWork
+tags:
+position: 400,48
+---
+June 7th, 5 pm.
+Li: Great day, everyone.
+See you tomorrow.
+-
+You are ready to leave work too.
+-
+Boss He: Wait a second.
+-
+"How's work been recently?"
+You think for a bit
+before you could answer,
+he continues:
+-
+"I heard that
+you
+have a bachelor's degree in
+`Computer Science`?"
+-
+You nod.
+-
+"Neat, neat,
+then why don't you get a job 
+in those big corporations?"
+-
+"You tell me,
+won't you make a lot more 
+if you work on AI stuff?
+That's the trend right now."
+-
+You somehow feel like you've heard that
+a million times.
+You think for a bit.
+No,
+this is actually the first time
+someone says that to you.
+-
+"Anyway, just chatting.
+Go home now. See you tomorrow."
+-
 <<StartPaperShredder CommandManager>>
 ===
 
+
 title: d03_Morning
 tags:
-position: -41,204
+position: -57,194
 ---
-June 8th
-Boss He: How could you make that simple mistake?
-Don't you know what time it is right now in  the year?
-Li: I'm sorry...I should take a closer look.
-Boss He: A closer look? What are you? A scanner? Use your brain, think!
+<<PlayAudioCue CommandManager DoorOpen false>>
+June 8th, Raining.
+Boss He: How could you make such a simple mistake?
+Don't you know what time of year it is?
+-
+Li: I'm sorry... 
+I should have paid closer attention.
+-
+Boss He: Closer attention?
+What are you, a scanner?
+Use your brain, think!
+-
 Li: I will, I'm sorry.
-Boss He: Anyway, let restate the mission and get to work. Don't make that mistake again.
+-
+Boss He:
+No second chances! Remember that?
+Okay, let's restate the mission
+and get to work.
+-
 <<WaitForFinishRepeatMission CommandManager 3>>
+
+
 ===
 
 
-title: d3_Morning_afterRepeatMission
+title: d03_Morning_afterRepeatMission
 tags:
-position: -53,-118 
+position: 173,194
 ---
-Boss He: That's it. Okay time to work (*sips tea with loud noise*).
-Boss He:Recently more and more artist start to use metaphor and the writing style become more and more irrelevent
+Boss He:
+That's it.
+Okay, time to work.
+He puts down his cup,
+Li picks it up and walks toward the kettle.
+-
+//Day3 Prompt
+<<PlayAudioCue CommandManager Bell false>>
+<<MoveLineView CommandManager 0>>
+Boss He:
+We all know art should reflect daily life. 
+Today, watch out for vague metaphors and unrealistic topics 
+such as dreams, fantasies, illusions, or abstract concepts. 
+Let's ensure our art serves the public's purpose.
+-
 <<StartWork CommandManager>>
 ===
 
 title: d03_EndWork
 Tags:
-position: 200,202
+position: 398,195
 ---
-Li: Bye.
-Li left the room.
-Boss He: Ah....
-That's a long sigh and somehow you are familiar with that sign
-that's the 号角 of a talk you don't want to have
-Boss He: You know what you guys do everyday, we can easily find an AI to replace you, you know?
+Li: Goodbye.
+Li exits the room.
+-
+Boss He: Ah..............
+That's a long sigh,
+and somehow
+are you familiar with that sign?
+It's the bugle of a conversation
+that you don't want to have.
+-
+Boss He:
+You know what you guys do every day,
+we can easily replace you with an AI,
+do you know?
+-
 You know.
-Boss He: And honestly, an AI will do a better work.
-I don't know about deep learning or network, those big words I don't know.
-But I know it won't make simple stupid mistake.
-The noise of the AC never feels so loud.
-Boss He: Okay, opkay, don't be nervous. I'm just saying, not implying anything.
-You work hard. I know, I see everything, that's my job, I see things.
-And I know your family, the office knows your family situation. It's tough.
-Your dad was liad off with old injured.
-Your sister not having job.
-Must be hard being the only income in the family.
-No worries, the office know and the office will take care of you.
-Only if that Li could be half hard working as you.
-You forget how you leave the room that day
-or maybe you didn't
-maybe part of you never left that room
+-
+Boss He: And honestly,
+an AI
+would do a better job.
+-
+Boss He: 
+I don't know about deep learning or networks,
+those big words I don't know.
+But I do know
+it won't make a simple stupid mistake.
+-
+The face of Mr. Zhang from 2nd grade
+suddenly jumps into your head.
+The skin around her cheek is so tight,
+it looks like it could crack anytime.
+-
+Boss He:
+Okay, okay,
+don't be nervous.
+I'm just saying,
+not implying anything.
+-
+Boss He:
+You work hard.
+I know,
+I see everything.
+That's my job,
+I see things.
+And I know about your family.
+The office knows your family situation.
+It's tough.
+Your dad was laid off with old injuries.
+Your sister doesn't have a job.
+It must be hard being the only income in the family.
+No worries,
+the office knows,
+and the office will take care of you.
+-
+The noise of the AC has never felt so loud.
+-
+Boss He:
+If only Li could be half as hard-working as you.
+-
+You forget
+how you left the room that day,
+or maybe
+you didn't;
+maybe part of you never left that room that day.
+-
 <<StartPaperShredder CommandManager>>
 ===
-
-
 title: d04_Morning
 tags:
-position: -41,204
+position: -54,352
 ---
-Boss He: Morning.
-Boss He: There are some HR changes made to the office.
-You notice Li's table is emptyed now.
-Boss He: I don't want to see that too,
-It's a collective decision,
-If you have any doubt, feel free to talk to me.
-You are clearly not listening 
-But it took you a second to realize you are counting the flys outside of the window
-Boss He: Anyway let's state our mission before we go to work
+<<PlayAudioCue CommandManager DoorOpen false>>
+Boss He: Good morning.
+-
+Boss He: 
+There have been some HR changes made to the office.
+-
+You notice Li's desk is now empty.
+-
+Boss He: I don't want to see that either.
+It's a collective decision.
+If you have any doubts,
+feel free to talk to me.
+-
+He sounds distant,
+farther than the mosquito
+right in front of your eye.
+It takes you a second to realize
+you're counting the times you've cried in public.
+-
+Boss He:
+Anyway,
+let's state our mission before we start working.
+-
 <<WaitForFinishRepeatMission CommandManager 4>>
 ===
 
-title: d4_Morning_afterRepeatMission
+
+title: d04_Morning_afterRepeatMission
 tags:
-position: -53,-118 
+position: 173,353
 ---
-Boss He: That's it. Okay time to work.
-He lift the tea up to his mouth and making drink noise, 
-but then realize the cup is empty
-You stand there still 
-when he left his upper eyelid and rest his stare on you
-A fly laned next to your hand,
-You lift your hand up,
-and took the cup on his table.
-His voice sounded on your back as you walk towards the kettle
-Boss He:I don’t think we need to talk with the people to revise stuff anymore, you can just revise pretty much anything to whatever you want
-I trust you.
+Boss He:
+That's it. Okay,
+time to work.
+-
+He lifts the teacup to his mouth
+and makes a drinking noise,
+but then realizes the cup is empty.
+-
+You stand there,
+still,
+as he lifts his upper eyelid
+and rests his gaze on you.
+-
+The mosquito lands next to your hand,
+so you lift your hand up
+and take the cup from his desk.
+-
+//Day4 Prompt
+<<PlayAudioCue CommandManager Bell false>>
+<<MoveLineView CommandManager 0>>
+Boss He:
+With the recent increase in suicide cases, 
+let's spread positivity through the words we use. 
+Revise negative words such as sadness, depression, and despair.
+Replace them with their positive counterparts. 
+Let's bring an uplifting attitude to the public.
+-
+Boss He: I trust you.
+-
 <<StartWork CommandManager>>
 ===
+
 
 title: d04_EndWork
 Tags:
-position: 200,202
+position: 402,357
 ---
-Boss He: Nice work today, see you tomorrow.
+5 pm
+Boss He:
+Great work today. See you tomorrow.
+-
 <<StartPaperShredder CommandManager>>
 ===
-
 title: d05_Morning
 tags:
-position: -41,204
+position: -54,509
 ---
-Boss He: Morning.
-Boss He: Recently there has been a increase rate of suicided, lets just change most negative words into positive word.
-Boss He: Okay get to work now.
+<<PlayAudioCue CommandManager DoorOpen false>>
+//Day 5 Prompt
+Boss He: Good morning.
+-
+<<PlayAudioCue CommandManager Bell false>>
+<<MoveLineView CommandManager 0>>
+No specific focus today; 
+just keep up the good work! 
+By the way, there's no need 
+to consult the creators for revisions anymore. 
+Use your judgment and revise anything 
+as you see fit.
+-
+I trust you.
+-
+Boss He: Okay, get to work now.
+-
 <<WaitForFinishRepeatMission CommandManager 4>>
 ===
 
-title: d5_Morning_afterRepeatMission
+
+title: d05_Morning_afterRepeatMission
 tags:
-position: -53,-118 
+position: 177,507
 ---
+-
+He puts down his cup loudly.
+You pick it up, fill it with hot water.
+Then you see a dead mosquito
+floating there.
+You dip your finger into the tea
+and slowly crush its body with two fingers.
+-
 <<StartWork CommandManager>>
 ===
 
+
 title: d05_EndWork
 Tags:
-position: 200,202
+position: 399,509
 ---
 Boss He: See you tomorrow.
+You nod.
+The AC is off.
+-
 <<StartPaperShredder CommandManager>>
 ===
 
 
 title: d06_Morning
 tags:
-position: -41,204
+position: -54,682
 ---
 The door is locked.
-You tried it again, it still locked.
-A person from the office next door came out.
-"Why you are here?"
-"Didn't they not tell you your deparentment's work has been passed"
-"I mean, yeah paused, temportilialy."
-"You boss was yelling something earlier this morning"
-"something like he gonna talk to people high up"
-"something like he gonna protect the public?"
-"Isn't that funny. No offends but who the fuck listen to music now? It's a total waste of tax money on your office"
-"That damn ass was trying to telling me some shit wit AI even. "
-"But anyway, what were you guys doning exactly"
-<<WaitForFinishRepeatMission CommandManager 4>>
+You try it again, 
+Still locked.
+-
+A person from the office next door comes out.
+"Why are you here?"
+-
+"Didn't they tell you?
+Your department's work has been paused,
+temporarily, probably."
+-
+"Your boss was yelling something 
+earlier this morning,
+something like 
+he's gonna talk to people high up,
+something like 
+he's gonna protect the public?"
+-
+"Isn't that funny? 
+No offense, 
+but who the fuck listens to music now? 
+It's a total waste of tax money on your office."
+-
+"That dumbass was even rambling
+some shit about AI with me."
+-
+"But anyway, 
+what were you guys doing exactly?"
+-
+<<WaitForFinishRepeatMission CommandManager 5>>
 ===
 
-title: d6_Morning_afterRepeatMission
+
+title: d06_Morning_afterRepeatMission
 tags:
-position: -53,-118 
+position: 179,674
 ---
-You don't really know where to go
-the other person went back behind the door
-You stand in the hallway
-Till 5pm
+The person goes back to their room.
+-
+You don't really know where to go.
+You stand in the hallway and wait.
+-
+It’s 5 pm now.
 <<StartPaperShredder CommandManager>>
 ===
 
-
 title: default_morning
-tags: 
-position: -37,365
+tags:
+position: -47,857
 ---
 (A Regular Day At Work)
 Boss He: Morning.
-CATgpt: Let’s start our productive day.
 <<StartWork CommandManager>>
 ===
 
+
 title: default_EndWork
-tags: 
-position: 193,370
+tags:
+position: 183,862
 ---
-(End of a Regular Day At Work))
-You: 5:30 pm. Time to go home.
-CATgpt: See you tomorrow!
+(5 pm.)
+Boss He: Bye.
 <<StartPaperShredder CommandManager>>
 ===
+
+
 

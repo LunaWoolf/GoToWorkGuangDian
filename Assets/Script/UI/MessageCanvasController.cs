@@ -114,11 +114,13 @@ public class MessageCanvasController : MonoBehaviour
 
         if (isRevice)
         {
-            ReplyText = "No I don't want to change it.";
+            ReplyText = "Okay okay okay, what about " + revicedWord + " instead of " + orginalWord + " ?";
+          
         }
         else
         {
-            ReplyText = "Okay okay okay, what about " + revicedWord + "instead of " + orginalWord;
+            ReplyText = "No I don't want to change it.";
+
         }
 
 

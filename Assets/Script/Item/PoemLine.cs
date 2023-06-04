@@ -16,13 +16,14 @@ public class PoemLine : MonoBehaviour
     public List<Word> wordList = new List<Word>();
 
     [SerializeField]string[] _line;
+    //[SerializeField]string _UnProcessLine;
 
     void Start()
     {
         
     }
 
-    public void SetLine(string line)
+    public virtual void SetLine(string line)
     {
         _line = line.Split(" ");
 
@@ -34,7 +35,7 @@ public class PoemLine : MonoBehaviour
     }
 
 
-    public void insertWord(string word)
+    public virtual GameObject insertWord(string word)
     {
         
         GameObject w;
@@ -82,10 +83,16 @@ public class PoemLine : MonoBehaviour
             w.GetComponent<Word>().SetWordType(Word.WordType.None);
         }
 
+        w.GetComponent<Word>().indexInLine = wordList.Count;
         w.GetComponent<Word>().SetText(word);
+    
         wordList.Add(w.GetComponent<Word>());
 
         currentLetterCount += w.GetComponent<Word>().GetCleanText().Length;
+
+       
+
+        return w;
     }
 
      

@@ -14,9 +14,30 @@ public class DebugTool : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            GameManager.instance.isDebug = !GameManager.instance.isDebug;
+        }
+
         if (GameManager.instance.isDebug)
         {
+
+          
+
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                GameManager.instance.StartWork();
+            }
+
             if (Input.GetKeyDown(KeyCode.H))
+            {
+                if (FindObjectOfType<PaperShredderManager>())
+                    FindObjectOfType<PaperShredderManager>().ChangeGravity();
+            }
+
+
+           
+            if (Input.GetKeyDown(KeyCode.P))
             {
                 GameManager.instance.StartPaperShredder();
             }
@@ -45,6 +66,13 @@ public class DebugTool : MonoBehaviour
                 //Say
                 ViewManager.instance.UnloadAllView();
                 GameManager.instance.GoToSaySomething();
+            }
+
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                //Say
+                //ViewManager.instance.UnloadAllView();
+                //GameManager.instance.GoToLake();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1))

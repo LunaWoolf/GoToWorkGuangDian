@@ -1,11 +1,9 @@
 //using System.Collections;
 //using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.AssetImporters;
-//using UnityEditor.Experimental;
-//using UnityEditor.Experimental.AssetImporters;
+//using UnityEditor.AssetImporters;
 using System.IO;
-
+/*
 [ScriptedImporter(1, "word")]
 public class WordBankImporter : ScriptedImporter
 {
@@ -20,4 +18,9 @@ public class WordBankImporter : ScriptedImporter
         ctx.SetMainObject(word);
 
     }
+}
+*/
+public class WordBankImporter
+{
+   
 }

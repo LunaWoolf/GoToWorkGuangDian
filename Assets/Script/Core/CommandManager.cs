@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -123,5 +124,33 @@ public class CommandManager : MonoSingleton<CommandManager>
         GameManager.instance.GoToSaySomething();
     }
 
-  
+    [YarnCommand("PlayAudioCue")]
+    public void PlayAudioCue(string cueName, bool isLoop)
+    {
+        AudioManager.instance.PlayAudioCue(cueName, isLoop);
+    }
+
+    [YarnCommand("StopAudio")]
+    public void StopAudio()
+    {
+        AudioManager.instance.Stop();
+    }
+
+    [YarnCommand("ChangeGravity")]
+    public void ChangeGravity()
+    {
+        if(FindObjectOfType<PaperShredderManager>())
+            FindObjectOfType<PaperShredderManager>().ChangeGravity();
+    }
+
+
+    [YarnCommand("MoveLineView")]
+    public void MoveLineView(int index)
+    {
+        if (timelineManager == null) timelineManager = FindObjectOfType<TimelineManager>();
+        timelineManager.MoveLineViewToPosition(index);
+    }
+
+
+
 }

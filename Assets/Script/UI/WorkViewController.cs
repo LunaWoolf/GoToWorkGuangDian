@@ -90,6 +90,7 @@ public class WorkViewController : MonoBehaviour
         }
         else
         {
+           
             PassButton.gameObject.SetActive(false);
 
         }
@@ -126,6 +127,12 @@ public class WorkViewController : MonoBehaviour
     public void SetCurrentPoem( Poem p)
     {
         CurrentPoemOnCanvas = p;
+       
+        Selectable selectable = PassButton.GetComponent<Selectable>();
+        if (selectable != null)
+        {
+            selectable.transition = Selectable.Transition.ColorTint;
+        }
         PassButton.gameObject.SetActive(false);
         Debug.Log("Set Current Poem");
     }

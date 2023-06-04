@@ -7,9 +7,10 @@ public class TVButton : Word
 {
     bool isBroken = false;
     bool isReviseable = false;
+    [SerializeField] GameObject BrokenImage;
+    [SerializeField] GameObject RegularImage;
     [Header("UI Reference")]
-    [SerializeField] Sprite BrokenImage;
-    [SerializeField] Sprite RegularImage;
+  
     [SerializeField] Sprite WordVersion;
     [SerializeField] Image TVImage;
     [SerializeField] GameObject TV_Default;
@@ -33,21 +34,31 @@ public class TVButton : Word
             case TVState.Default:
                 TV_Default.SetActive(true);
                 TV_Broken.SetActive(false);
+                Background.gameObject.SetActive(false);
+                tm.gameObject.SetActive(false);
                 break;
             case TVState.Broken:
                 TV_Default.SetActive(false);
                 TV_Broken.SetActive(true);
+                Background.gameObject.SetActive(false);
+                tm.gameObject.SetActive(false);
                 break;
             case TVState.Text:
                 TV_Default.SetActive(false);
                 TV_Broken.SetActive(false);
+                Background.gameObject.SetActive(true);
+                tm.gameObject.SetActive(true);
                 if (isBroken)
                 {
-                    TVImage.sprite = BrokenImage;
+                    BrokenImage.SetActive(true);
+                    RegularImage.SetActive(false);
+                   //TVImage.sprite = BrokenImage;
                 }
                 else
                 {
-                    TVImage.sprite = RegularImage;
+                    BrokenImage.SetActive(false);
+                    //RegularImage.SetActive(true);
+                    //TVImage.sprite = RegularImage;
                 }
                 break;
 
@@ -120,7 +131,7 @@ public class TVButton : Word
 
     public override void ReviseWord()
     {
-        TVImage.sprite = RegularImage;
+        RegularImage.SetActive(true);
         dinnerViewController.OnReviseTV();
         isBroken = false; 
         Debug.Log("Revise TV");

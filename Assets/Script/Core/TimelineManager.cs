@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+using UnityEngine.UI;
+
 
 public class TimelineManager : MonoBehaviour
 {
@@ -17,6 +19,11 @@ public class TimelineManager : MonoBehaviour
     [SerializeField] List<timelineShot> timelineShotList = new List<timelineShot>();
     [SerializeField] public TimelineAsset doorOpenTimeline;
     [SerializeField] public TimelineAsset familyDoorOpenTimeline;
+
+    [Header("Dailogue")]
+    [SerializeField] public RectTransform LineViewParent;
+    [SerializeField] public List<RectTransform> LineViewTransform;
+  
 
     PlayableDirector playableDirector;
 
@@ -55,4 +62,37 @@ public class TimelineManager : MonoBehaviour
         playableDirector.Play();
 
     }
+
+    public void MoveLineViewToPosition(int index)
+    {
+
+        if (index < 0 || index >= LineViewTransform.Count)
+        {
+            Debug.LogError("Invalid line view index");
+            return;
+        }
+
+        RectTransform sourceRectTransform = LineViewTransform[index];
+
+        if (LineViewParent != null)
+        {
+            if (LineViewParent.gameObject.GetComponent<Floating>())
+            {
+                LineViewParent.gameObject.GetComponent<Floating>().SetStartPosition2D(sourceRectTransform.anchoredPosition);
+            }
+            LineViewParent.anchoredPosition = sourceRectTransform.anchoredPosition;
+
+            // Match rotation
+            LineViewParent.rotation = sourceRectTransform.rotation;
+
+            // Match scale
+            LineViewParent.localScale = sourceRectTransform.localScale;
+
+          
+        }
+           
+
+
+    }
 }
+

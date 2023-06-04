@@ -8,6 +8,9 @@ using System;
 
 public class ViewManager : MonoSingleton<ViewManager>
 {
+    [SerializeField] Texture2D customCursorTexture;
+    [SerializeField] Texture2D clickCursorTexture;
+
     [Header("Art Bank")]
     [SerializeField]  Sprite BossSprite;
     [SerializeField]  Sprite LiSprite;
@@ -29,10 +32,15 @@ public class ViewManager : MonoSingleton<ViewManager>
     [SerializeField] GameObject FadeCanvas;
     [SerializeField] GameObject MessageCanvas;
     [SerializeField] GameObject PropertyCanvas;
+    [SerializeField] GameObject LakeCanvas;
+    [SerializeField] GameObject TipCanvas;
+ 
 
     [Header("Dialogue Canvas")]
     [SerializeField] Image CharacterImage;
-
+    [SerializeField] GameObject BossCharacterArt_Day1;
+    [SerializeField] GameObject BossCharacterArt_Day4;
+    [SerializeField] GameObject LiCharacterArt;
     [SerializeField] TextMeshProUGUI TimerText;
 
     [SerializeField] public TextMeshProUGUI MoneyText;
@@ -44,6 +52,7 @@ public class ViewManager : MonoSingleton<ViewManager>
     [SerializeField] Canvas DoorCanvas;
 
     MessageCanvasController messageCanvasController_main;
+    TipViewController tipViewController;
 
     void Awake()
     {
@@ -74,10 +83,26 @@ public class ViewManager : MonoSingleton<ViewManager>
             FamilyDoorButton.onClick.AddListener(OnFamilyDoorButtonClicked);
 
         }
+        UnloadAllCharacterArt();
 
         messageCanvasController_main = FindObjectOfType<MessageCanvasController>();
 
         ToggleDoorButton(true, true, false);
+        Cursor.SetCursor(customCursorTexture, Vector2.zero, CursorMode.Auto);
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            // Set the click cursor texture when the mouse is clicked
+            Cursor.SetCursor(clickCursorTexture, Vector2.zero, CursorMode.Auto);
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            // Set the default cursor texture when the mouse button is released
+            Cursor.SetCursor(customCursorTexture, Vector2.zero, CursorMode.Auto);
+        }
     }
     public void SetTimerText(float time)
     {
@@ -102,17 +127,27 @@ public class ViewManager : MonoSingleton<ViewManager>
 
     public Image GetCharacterImage() { if (CharacterImage == null) CharacterImage = GameObject.Find("CharacterImage").GetComponent<Image>(); return CharacterImage; }
     public MessageCanvasController GetMessageCanvas() { return FindObjectOfType<MessageCanvasController>(); }
+
+    public void UnloadAllCharacterArt()
+    {
+        BossCharacterArt_Day1.SetActive(false);
+        BossCharacterArt_Day4.SetActive(false);
+        LiCharacterArt.SetActive(false);
+    }
+
     public void SwitchDialogueCharacterArt(string c)
     {
         if (c == string.Empty || c == null)
         {
             GetCharacterImage().gameObject.SetActive(false);
+            UnloadAllCharacterArt();
             return;
         } 
         string name = c;
         //Debug.Log(name);
        
         name = name.Replace(" ", "");
+     
 
         GameManager.Character character;
         if (System.Enum.TryParse<GameManager.Character>(name, out character))
@@ -121,25 +156,32 @@ public class ViewManager : MonoSingleton<ViewManager>
             switch (character)
             {
                 case GameManager.Character.BossHe:
-                    GetCharacterImage().sprite = BossSprite;
+                    UnloadAllCharacterArt();
+                    if (GameManager.instance.GetDay() < 3)
+                        BossCharacterArt_Day1.SetActive(true);
+                    else
+                        BossCharacterArt_Day4.SetActive(true);
+                    //GetCharacterImage().sprite = BossSprite;
                     break;
                 case GameManager.Character.Li:
-                    GetCharacterImage().sprite = LiSprite;
+                    UnloadAllCharacterArt();
+                    //LiCharacterArt.SetActive(true);
+                    //GetCharacterImage().sprite = LiSprite;
                     break;
                 case GameManager.Character.CATgpt:
-                    GetCharacterImage().sprite = CATSprite;
+                    //GetCharacterImage().sprite = CATSprite;
                     break;
                 case GameManager.Character.You:
                     //GetCharacterImage().sprite = YouSprite;
                     break;
                 case GameManager.Character.Mom:
-                    GetCharacterImage().sprite = MomSprite;
+                   // GetCharacterImage().sprite = MomSprite;
                     break;
                 case GameManager.Character.Dad:
-                    GetCharacterImage().sprite = DadSprite;
+                    //GetCharacterImage().sprite = DadSprite;
                     break;
                 case GameManager.Character.Sister:
-                    GetCharacterImage().sprite = SisSprite;
+                    //GetCharacterImage().sprite = SisSprite;
 
                     break;
             }
@@ -170,7 +212,10 @@ public class ViewManager : MonoSingleton<ViewManager>
             WriteCanvas.SetActive(false);
         if (DoorCanvas != null)
             DoorCanvas.gameObject.SetActive(false);
-
+        if (LakeCanvas != null)
+            LakeCanvas.gameObject.SetActive(false);
+        if (TipCanvas != null)
+            TipCanvas.gameObject.SetActive(false);
 
     }
 
@@ -210,6 +255,30 @@ public class ViewManager : MonoSingleton<ViewManager>
     {
         if (AfterWorkCanvas == null) return;
         AfterWorkCanvas.SetActive(true);
+    }
+
+    public void LoadLakeView()
+    {
+        if (LakeCanvas == null) return;
+        LakeCanvas.SetActive(true);
+    }
+
+    public void LoadTipView(TipViewController.TipType type)
+    {
+        if (TipCanvas == null) return;
+        if (tipViewController == null)
+            tipViewController = TipCanvas.GetComponent<TipViewController>();
+        tipViewController.LoadTip(type);
+    }
+
+
+
+    public void UnloadTipView()
+    {
+        if (TipCanvas == null) return;
+        if (tipViewController == null)
+            tipViewController = TipCanvas.GetComponent<TipViewController>();
+        tipViewController.UnloadAllTip(); 
     }
 
     public void FadeToBlack()

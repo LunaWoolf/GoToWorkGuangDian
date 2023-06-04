@@ -26,7 +26,9 @@ public class DinnerViewController : MonoBehaviour
     //[SerializeField] GameObject day6Scene;
 
     [SerializeField] Button SaySomethingButton;
+    [SerializeField] GameObject Flower;
 
+    int familyRevisedCount = 0;
 
     bool isNeedToEat = false;
     bool isNeedToWatchTV = false;
@@ -109,13 +111,13 @@ public class DinnerViewController : MonoBehaviour
             case 0: // Day1
                 day1Scene.SetActive(true);
                 TvButton.SetTVState(TVButton.TVState.Default);
-                isNeedToEat = true;
+                isNeedToEat = false; // rtemp
                 isNeedToWatchTV = true;
                 break;
             case 1:// Day2
                 day2Scene.SetActive(true);
                 TvButton.SetTVState(TVButton.TVState.Default);
-                isNeedToEat = true;
+                isNeedToEat = false; // temp
                 isNeedToWatchTV = true;
                 break;
             case 2:// Day3
@@ -134,9 +136,11 @@ public class DinnerViewController : MonoBehaviour
             case 4:// Day5
                 day5Scene.SetActive(true);
                 isNeedToReviseFamily = true;
+                TvButton.gameObject.SetActive(false);
                 TvButton.SetTVState(TVButton.TVState.Text);
                 TvButton.SetIsBroken(false);
                 TvButton.SetIsRevisable(false);
+                TvButton.gameObject.SetActive(false);
                 foreach (FamilyWordButton fb in FindObjectsOfType<FamilyWordButton>())
                 {
                     fb.SetIsBroken(true);
@@ -182,7 +186,12 @@ public class DinnerViewController : MonoBehaviour
 
     public void OnReviseFamily()
     {
-        hasReviseFamily = true;
+        familyRevisedCount++;
+        if (familyRevisedCount >= 3)
+        {
+            Flower.SetActive(true);
+            hasReviseFamily = true;
+        }
         CheckDinnerStatus();
     }
 

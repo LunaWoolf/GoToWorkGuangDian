@@ -14,7 +14,7 @@ public class DialogueWord : Word
     //public override float minFadeTime = 2f;
     //public override float maxFadeTime = 3f;
 
-    int[] sizeOption = { 60, 80, 100 };
+    int[] sizeOption = { 50, 50, 50, 60, 70 };
 
     private RectTransform rectTransform;
     private LayoutElement layoutElement;
@@ -78,6 +78,9 @@ public class DialogueWord : Word
             tm.color = new Color(0, 0, 0, 0);
             return;
         }
+
+        if(GameManager.instance.GetCurrentGameMode() == GameManager.GameMode.Lake)
+            tm.color = new Color(1, 1, 1, 0);
 
         if (this.gameObject.activeSelf) StartCoroutine(SetCircleSize());
         //if (this.gameObject.activeSelf) StartCoroutine(SetSize());

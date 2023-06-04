@@ -244,10 +244,11 @@ MonoBehaviour:
   tm: {fileID: 7957285137935027757}
   CircleImage: {fileID: 1220661368681710101}
   Background: {fileID: 3454838105891766351}
-  unconfirmColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  unconfirmColor: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
   confirmColor: {r: 0, g: 0, b: 0, a: 1}
   minFadeTime: 2
   maxFadeTime: 3
+  indexInLine: 0
   isCircledable: 1
   _isConfirm: 0
   OnWordConfirm:

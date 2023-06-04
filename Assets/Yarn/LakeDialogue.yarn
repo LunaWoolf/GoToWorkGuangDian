@@ -1,10 +1,59 @@
-﻿
-title: d03_Lake
+﻿title: d03_Lake
 tags:
 position: -49,42
 ---
-Meet 
-
+<<MoveLineView CommandManager 0>>
+You don't want to stay in that room anymore.
+You decide to take a walk.
+Summer evening is always chill.
+-
+There is a lake, 
+a 10-minute walk from where you live.
+-
+That lake 
+is why you don't know how to swim.
+When you were 8, 
+around the same time of the year,
+a kid who lived 3 floors above you
+drowned in that lake.
+-
+You wander along the lakeside,
+and as you walk, you see this stranger,
+around your age,
+with his hand in his pocket, 
+walking beside you.
+-
+Hi...
+-
+Nice weather to take a walk, 
+right?
+...
+-
+I like to listen to 
+the sound of the tides,
+especially in the evening.
+It helps me clear my mind,
+helps me write.
+...
+-
+If I knew how to swim, 
+I bet swimming here would feel good.
+-
+<<MoveLineView CommandManager 3>>
+It's not a swimming pool; 
+it's full of water plants.
+-
+<<MoveLineView CommandManager 0>>
+So?
+<<MoveLineView CommandManager 3>>
+They tangle with your feet,
+pull you down.
+A kid I know died because of that.
+-
+Will you be here tomorrow?
+Cool.
+Talk to you tomorrow.
+-
 <<GoToSaySomething CommandManager>>
 ===
 
@@ -12,20 +61,54 @@ title: d04_Lake
 tags:
 position: -49,42
 ---
-Do you Listen to music
-I rarely watch moives
-Am I too quiet
-I can see that.
-Where is tower on the horizon?
-That's a chimney.
-The factory closed 10 years ago.
-Still live in the old apartment assigned by the factory.
+<<MoveLineView CommandManager 0>>
+Do you listen to music?
+I rarely watch movies.
+-
+<<MoveLineView CommandManager 3>>
+I won't ask why you are so quiet.
+I won't loosen up 
+just because you said that.
+-
+<<MoveLineView CommandManager 0>>
+Where is that sculpture 
+on the horizon?
+That was a chimney.
+-
+<<MoveLineView CommandManager 3>>
+That factory shut down 
+10 years ago.
+I remember that day.
+-
+<<MoveLineView CommandManager 4>>
 I think my sister is gay.
 You have a sister?
-I never been to a dive bar.
+-
+<<MoveLineView CommandManager 3>>
+What are you writing?
+Doesn't sound good.
+-
+<<MoveLineView CommandManager 0>>
+I'm the kind who can survive 
+anywhere, anytime,
+as long as I have ink and paper.
+-
+<<MoveLineView CommandManager 3>>
+I'm good at running away.
+-
+<<MoveLineView CommandManager 4>>
+She got a master's degree, though.
+I have never been to a real bar.
+-
+<<MoveLineView CommandManager 3>>
+The government did not 
+pick our house.
 I wrote music.
-This year is tough
+-
+<<MoveLineView CommandManager 5>>
+This year has been tough.
 It's just the summer.
+-
 <<GoToSaySomething CommandManager>>
 ===
 
@@ -33,18 +116,45 @@ title: d05_Lake
 tags:
 position: -49,42
 ---
-You saw him again
-but he is all the way on the other side of the lake
-He sees you too, he waves, arms dnaces like willow branch in the wind
-You see him bend over, and throw something in the water, then look back at you
-the tide push that thing to your feet, you fick it up,
-it's an air pod.
+<<MoveLineView CommandManager 4>>
+You saw him again,
+but he is all the way 
+on the other side of the lake.
+-
+<<MoveLineView CommandManager 0>>
+He sees you too, 
+and waves his slim arm.
+You watch as he bends over 
+and throws something into the water.
+-
+<<MoveLineView CommandManager 4>>
+The tide pushes that thing
+across the lake
+until it reaches your feet.
+He's looking at you.
+-
+<<MoveLineView CommandManager 3>>
+You pick it up,
+and it's an AirPod.
 You put it in your ear,
-inside there are musics
-the lyrics are too blurry, it's hard to tell what that is.
-"Do you want a cigratte?" You yell. 
-"I'm fine, I quit" 
-Your voice bounce on the edge of the wave, push by the tide and echoing through the lake.
+and you hear music playing.
+-
+The lyrics are too blurry, 
+making it hard to tell what it is.
+-
+<<MoveLineView CommandManager 3>>
+"Do you want a cigarette?"
+you yell.
+-
+<<MoveLineView CommandManager 0>>
+"I'm fine,
+I quit."
+-
+<<MoveLineView CommandManager 4>>
+Your voice bounces 
+on the edge of the wave,
+pushed by the tide 
+and echoing through the lake.
 -
 <<GoToSaySomething CommandManager>>
 ===
@@ -53,15 +163,33 @@ title: d06_Lake
 tags:
 position: -49,42
 ---
+<<MoveLineView CommandManager 0>>
 You went to the lake again,
-there are old people taking a walk
-kids running right pass you, chasing each other
-He's not there.
-You lean on the fence, stare at the lake.
-You reach to your pocket and find that one air pod,
-it's not playing music anymore.
-You stare at the lake,
-and you realize what's wrong, it's too quiet.
-Then you suddenly realize,
-Lake has no tide. 
+and there you see an old couple
+holding hands and taking a walk.
+-
+A couple of kids run right past you, 
+chasing each other.
+-
+<<MoveLineView CommandManager 4>>
+But he's not there.
+-
+You lean on the fence 
+and stare down into the water.
+-
+As you reach into your pocket, 
+you find that AirPod,
+and the music suddenly stops.
+-
+<<ChangeGravity CommandManager>>
+You continue to stare at the lake
+for a while,
+and finally,
+you realize what's wrong today.
+It's too quiet.
+<<MoveLineView CommandManager 5>>
+-
+Then you suddenly remember,
+the lake has no tides.
 ===
+

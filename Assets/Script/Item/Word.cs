@@ -36,6 +36,8 @@ public class Word : MonoBehaviour
     public float minFadeTime = 2f;
     public float maxFadeTime = 3f;
 
+    public int indexInLine = 0;
+
     [Header("Variable")]
     public bool isCircledable = true;
     public bool _isConfirm = false;
@@ -50,8 +52,18 @@ public class Word : MonoBehaviour
                 if (isConfirm)
                 {
                     OnWordConfirm.Invoke();
-                    if (FindObjectOfType<WorkViewController>()) FindObjectOfType<WorkViewController>().OnWordConfirmed();
+                    GameManager.GameMode currentMode = GameManager.instance.GetCurrentGameMode();
+                    if (currentMode == GameManager.GameMode.Work)
+                    {
+                        if (FindObjectOfType<WorkViewController>()) FindObjectOfType<WorkViewController>().OnWordConfirmed();
+                    }
+                    else if(currentMode == GameManager.GameMode.Conversation)
+                    {
+                        if (this.GetComponentInParent<MissionLine>()) this.GetComponentInParent<MissionLine>().OnWordConfirmed();
+                    }
+                    
                     LeanTween.value(this.gameObject, unconfirmColor, confirmColor, 1f).setOnUpdate((Color val) => { if(tm) tm.color = val; });
+                  
                     
                 }
                 else
@@ -120,7 +132,10 @@ public class Word : MonoBehaviour
 
             this.isConfirm = true;
         }
-            
+
+        if (GameManager.instance.GetCurrentGameMode() == GameManager.GameMode.Dinner)
+            this.isConfirm = true;
+
         this.isConfirm = false;
         tm.color = unconfirmColor;
     }
@@ -137,9 +152,13 @@ public class Word : MonoBehaviour
 
         if (t.Length > 2 && t[0] == '?')
         {
+       
+
             banned = true;
             _Text = t.Substring(1, t.Length - 1);
             _Text = _Text.Replace("_", " ");
+            if (indexInLine == 0)
+                _Text = CapFirstLetter(_Text);
             tm.text = _Text;
            
 
@@ -158,6 +177,8 @@ public class Word : MonoBehaviour
             banned = true;
             _Text = t;
             _Text = _Text.Replace("_", " ");
+            if (indexInLine == 0)
+                _Text = CapFirstLetter(_Text);
             tm.text = _Text;
             tm.color = new Color(0, 0, 0, 1);
          
@@ -182,6 +203,32 @@ public class Word : MonoBehaviour
     public string GetCleanText() { return _Text_clean; }
 
     public string GetUnProcessText() { return _UnProcessText; }
+
+
+    public string CapFirstLetter(string word)
+    {
+        
+ 
+        char[] charArray = word.ToCharArray();
+        if (charArray.Length < 1) return word;
+
+        if (charArray[0] == '?' || charArray[0] == '\'')
+        {
+            if (charArray.Length < 2) return word;
+            charArray[1] = char.ToUpper(charArray[1]);
+            string result = new string(charArray);
+            return result;
+        }
+        else if (!char.IsUpper(charArray[0]))
+        {
+            charArray[0] = char.ToUpper(charArray[0]);
+            string result = new string(charArray);
+            return result;
+
+        }
+        return word;
+
+    }
 
     void OnWordRightClicked()
     {
@@ -219,6 +266,8 @@ public class Word : MonoBehaviour
 
         ToggleReviseButton(true, true);
     }
+
+
 
     // is reviseable is actually not going to work
     public void ToggleReviseButton(bool isOn, bool isReviseable)
@@ -288,7 +337,7 @@ public class Word : MonoBehaviour
     {
         Debug.Log("Revise word");
         int day = 0;
-        day = GameManager.instance.GetDay();
+        day = GameManager.instance.GetDay() + 1;
         bool isRevised = true;
         string orginalText = GetCleanText();
         string ReviceTest = "";
@@ -357,16 +406,27 @@ public class Word : MonoBehaviour
         float fadeTime = Random.Range(minFadeTime, maxFadeTime);
 
         // Use LeanTween to fade the color from the initial color to transparent over fadeTime seconds
-        LeanTween.value(gameObject, initialColor, new Color(initialColor.r, initialColor.g, initialColor.b, 0.0f), fadeTime)
-            .setOnUpdateColor((Color color) =>
-            {
-                tm.color = color;
-            })
-            .setOnComplete(() =>
-            {
-                // Destroy the game object when the fade is complete
+        if (LeanTween.tweensRunning < 1000)
+        {
+            LeanTween.value(gameObject, initialColor, new Color(initialColor.r, initialColor.g, initialColor.b, 0.0f), fadeTime)
+           .setOnUpdateColor((Color color) =>
+           {
+               if (tm)
+                   tm.color = color;
+           })
+           .setOnComplete(() =>
+           {
+               // Destroy the game object when the fade is complete
+               if (this.gameObject)
+                   Destroy(gameObject);
+           });
+        }
+        else
+        {
+            if (this.gameObject)
                 Destroy(gameObject);
-            });
+        }
+       
 
     }
 }

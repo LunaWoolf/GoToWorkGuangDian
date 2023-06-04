@@ -447,7 +447,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     public string GetRandomNoun(int DaySpecific)
     {
         int c = Random.Range(0, 100);
-        bool controversial = (c < ControversialPrecentage) ? true : false;
+        bool controversial = (c < ControversialPrecentage) ? true : false; 
         string w = " ";
         int rand = 0;
 

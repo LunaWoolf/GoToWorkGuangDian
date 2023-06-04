@@ -90,6 +90,7 @@ public class FamilyWordButton : Word
         PossibleReviseList[currentReviseIndex].SetActive(true);
         PossibleReviseList[currentReviseIndex].SetActive(true);
         dinnerViewController.OnReviseFamily();
+        this.gameObject.SetActive(false);
     }
 
 

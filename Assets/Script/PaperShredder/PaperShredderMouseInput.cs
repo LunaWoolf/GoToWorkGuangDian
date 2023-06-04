@@ -53,7 +53,16 @@ public class PaperShredderMouseInput : MonoBehaviour
                             if (w.currentWordType != Word.WordType.Empty)
                                 return;
                             string word = selectedObject.GetComponentInParent<ShredderWord>().word;
-                            FindObjectOfType<SaySomethingManager>().ReplaceText(w, word);
+                            GameManager.GameMode currentMode = GameManager.instance.GetCurrentGameMode();
+                            if (currentMode == GameManager.GameMode.SaySomething)
+                            {
+                                FindObjectOfType<SaySomethingManager>().ReplaceText(w, word);
+                            }
+                            else if (currentMode == GameManager.GameMode.Conversation)
+                            {
+                                FindObjectOfType<Mission>().ReplaceText(w, word);
+                            }
+                          
                             Destroy(selectedObject.GetComponentInParent<ShredderWord>().gameObject);
                         }
                         
@@ -82,6 +91,7 @@ public class PaperShredderMouseInput : MonoBehaviour
     ///Returns 'true' if we touched or hovering on Unity UI element.
     public static PoemPaperController IsPointerOverPoemPaper(List<RaycastResult> eventSystemRaysastResults)
     {
+        if (eventSystemRaysastResults == null) return null;
         for (int index = 0; index < eventSystemRaysastResults.Count; index++)
         {
             RaycastResult curRaysastResult = eventSystemRaysastResults[index];
@@ -104,6 +114,7 @@ public class PaperShredderMouseInput : MonoBehaviour
     ///Returns 'true' if we touched or hovering on Unity UI element.
     public static Word IsPointerOverSingleWord(List<RaycastResult> eventSystemRaysastResults)
     {
+        if (eventSystemRaysastResults == null) return null;
         for (int index = 0; index < eventSystemRaysastResults.Count; index++)
         {
             RaycastResult curRaysastResult = eventSystemRaysastResults[index];

@@ -13,21 +13,26 @@ public class TVManager : MonoBehaviour
     [SerializeField] GameObject PoemLine;
     [SerializeField] GameObject PoemParent;
 
-    [SerializeField][TextArea(3,10)] string[] tvOpenning = { "A musician stands in the middle of a vacant stage",
-                                              "With a spotlight shining from above",
-                                              "They sing:" };
+    [SerializeField]
+    [TextArea(3, 10)]
+    string[] tvOpenning = { "A musician stands in the middle of a vacant stage",
+                       "With a spotlight shining from above",
+                       "They sing:" };
 
-    [SerializeField][TextArea(3,10)] string[] tvNoShow = { "The channel that is supposed to play music is now playing the news.",
-                                            "No music has been released recently.",
-                                            "Who needs music when there is politics?", "Yeeks." };
+    [SerializeField]
+    [TextArea(3, 10)]
+    string[] tvNoShow = { "The channel that is supposed to play music is now playing the news.",
+                      "No music has been released recently.",
+                      "Who needs music when there is politics?",
+                      "Yeeks." };
 
     [SerializeField]
     [TextArea(3, 10)]
     string[] Day2TVNews = { "Emerent News:",
-                            "We recently get report that a lady was ———————— and",
-                            "—————————— around Candy Hill Street",
-                            "The police force was there right on time",
-                            "Thank for our police no one was harmed"};
+                        "We recently received reports that a lady was -- and",
+                        "---- around Candy Hill Street.",
+                        "The police force was there right on time.",
+                        "Thanks to our police, no one was harmed." };
 
 
     //[SerializeField] TextMeshProUGUI TVText;
@@ -200,8 +205,12 @@ public class TVManager : MonoBehaviour
             ClearTVscreen();
             StartCoroutine(StreamShow(Day2TVNews));
         }
+        else
+        {
+            CloseTVButton.gameObject.SetActive(true);
+        }
 
-        CloseTVButton.gameObject.SetActive(true);
+       
 
     }
 

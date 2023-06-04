@@ -78,7 +78,7 @@ public class AfterWorkViewController : MonoBehaviour
 
     void OnWriteButtonClicked()
     {
-        GameManager.instance.StartWrite();
+        GameManager.instance.StartSaySomething();
         //LocalDialogueManager.instance.LoadDialogue("ThinkAboutLife");
         AfterworkChoiceView.SetActive(false);
     }

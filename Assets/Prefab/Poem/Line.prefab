@@ -146,7 +146,7 @@ MonoBehaviour:
   line01: {fileID: 6526793347981131811}
   line02: {fileID: 8231505206133281860}
   checkBox: {fileID: 1844077067}
-  oneLineMaxLetter: 25
+  oneLineMaxLetter: 30
   wordCount: 0
   wordList: []
   _line: []
