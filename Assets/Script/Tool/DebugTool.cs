@@ -5,10 +5,22 @@ using UnityEngine;
 
 public class DebugTool : MonoBehaviour
 {
+    private int tapCount;
+    private bool isCounting;
+
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    private IEnumerator StartTapCount()
+    {
+        yield return new WaitForSeconds(3f);
+
+    
+        tapCount = 0;
+        isCounting = false;
     }
 
     // Update is called once per frame
@@ -16,7 +28,18 @@ public class DebugTool : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.U))
         {
-            GameManager.instance.isDebug = !GameManager.instance.isDebug;
+            if (!isCounting)
+            {
+                StartCoroutine(StartTapCount());
+                isCounting = true;
+            }
+            tapCount++;
+
+            if (tapCount >= 5)
+            {
+                tapCount = 0;
+                GameManager.instance.isDebug = !GameManager.instance.isDebug;
+            }
         }
 
         if (GameManager.instance.isDebug)

@@ -91,11 +91,7 @@ public class CommandManager : MonoSingleton<CommandManager>
         }
     }
 
-    [YarnCommand("EndGame")]
-    public void EndGame()
-    {
-        //GameManager.instance.LoadEndGameScene();
-    }
+   
 
     [YarnFunction("CheckRebellious")]
     public static bool CheckRebellious()
@@ -151,6 +147,12 @@ public class CommandManager : MonoSingleton<CommandManager>
         timelineManager.MoveLineViewToPosition(index);
     }
 
+    [YarnCommand("EndGame")]
+    public void EndGame()
+    {
+        GameManager.instance.LoadEndGameScene();
+       
+    }
 
 
 }

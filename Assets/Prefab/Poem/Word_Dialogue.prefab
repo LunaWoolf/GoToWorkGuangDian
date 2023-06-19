@@ -227,9 +227,10 @@ MonoBehaviour:
   CircleImage: {fileID: 1220661368681710101}
   Background: {fileID: 3454838105891766351}
   unconfirmColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  confirmColor: {r: 0, g: 0, b: 0, a: 1}
+  confirmColor: {r: 0, g: 0.13179249, b: 0.6320754, a: 1}
   minFadeTime: 0.5
   maxFadeTime: 2
+  indexInLine: 0
   isCircledable: 0
   _isConfirm: 0
   OnWordConfirm:

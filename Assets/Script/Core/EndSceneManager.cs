@@ -15,11 +15,16 @@ public class EndSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PoemLine0.GetComponent<PoemLine>().SetLine(PropertyManager.instance.writeLines[0]);
-        PoemLine1.GetComponent<PoemLine>().SetLine(PropertyManager.instance.writeLines[1]);
-        PoemLine2.GetComponent<PoemLine>().SetLine(PropertyManager.instance.writeLines[2]);
-        PoemLine3.GetComponent<PoemLine>().SetLine(PropertyManager.instance.writeLines[3]);
-        PoemLine4.GetComponent<PoemLine>().SetLine(PropertyManager.instance.writeLines[4]);
+        if(PropertyManager.instance.writeLines[0] != null)
+            PoemLine0.GetComponent<PoemLine>().SetLine(PropertyManager.instance.writeLines[0]);
+        if (PropertyManager.instance.writeLines[1] != null)
+            PoemLine1.GetComponent<PoemLine>().SetLine(PropertyManager.instance.writeLines[1]);
+        if (PropertyManager.instance.writeLines[2] != null)
+            PoemLine2.GetComponent<PoemLine>().SetLine(PropertyManager.instance.writeLines[2]);
+        if (PropertyManager.instance.writeLines[3] != null)
+            PoemLine3.GetComponent<PoemLine>().SetLine(PropertyManager.instance.writeLines[3]);
+        if (PropertyManager.instance.writeLines[4] != null)
+            PoemLine4.GetComponent<PoemLine>().SetLine(PropertyManager.instance.writeLines[4]);
     }
 
     // Update is called once per frame

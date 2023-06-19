@@ -197,7 +197,10 @@ public class GameManager : MonoSingleton<GameManager>
             //PropertyManager.instance.hasShownWorkTutorial = true;
         }*/
         ViewManager.instance.LoadWriteView();
+        ViewManager.instance.UnloadTipView();
+        ViewManager.instance.LoadTipView(TipViewController.TipType.SayTip);
         ViewManager.instance.TogglePropertyCanvas(true);
+
     }
 
     public void StartMoyu()
@@ -591,7 +594,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     IEnumerator IE_LoadEndGameScene()
     {
-        ViewManager.instance.FadeToBlack_end();
+        yield return new WaitForSeconds(5f);
+        //ViewManager.instance.FadeToBlack_end();
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("End_Poem", LoadSceneMode.Single);
     }

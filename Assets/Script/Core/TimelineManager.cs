@@ -71,7 +71,7 @@ public class TimelineManager : MonoBehaviour
             Debug.LogError("Invalid line view index");
             return;
         }
-
+    
         RectTransform sourceRectTransform = LineViewTransform[index];
 
         if (LineViewParent != null)
@@ -80,6 +80,8 @@ public class TimelineManager : MonoBehaviour
             {
                 LineViewParent.gameObject.GetComponent<Floating>().SetStartPosition2D(sourceRectTransform.anchoredPosition);
             }
+
+
             LineViewParent.anchoredPosition = sourceRectTransform.anchoredPosition;
 
             // Match rotation

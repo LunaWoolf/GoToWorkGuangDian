@@ -809,6 +809,8 @@ public class Effects : MonoBehaviour
 
             childObject.gameObject.GetComponent<DialogueWord>().FadeAndDestroy();
         }
+        Vector2 RandomOffset = new Vector2(UnityEngine.Random.Range(-4f, 5f), UnityEngine.Random.Range(-4f, 5f));
+        Line_Parent.GetComponent<RectTransform>().anchoredPosition += RandomOffset;
         WordPosX = 0;
         WordPosY = 0;
     }

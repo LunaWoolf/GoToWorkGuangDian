@@ -137,7 +137,8 @@ public class Word : MonoBehaviour
             this.isConfirm = true;
 
         this.isConfirm = false;
-        tm.color = unconfirmColor;
+        if(tm)
+            tm.color = unconfirmColor;
     }
 
     public virtual void SetText(string t)

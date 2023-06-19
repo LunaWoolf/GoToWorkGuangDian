@@ -25,8 +25,9 @@ public class Mission : MonoBehaviour
         ViewManager.instance.UnloadTipView();
         ViewManager.instance.LoadTipView(TipViewController.TipType.Basic);
         StartCoroutine(WaitToLoadTip());
+        StartCoroutine(DebugTimerWaitForPass());
 
-        
+
     }
 
     IEnumerator WaitToLoadTip()
@@ -93,25 +94,48 @@ public class Mission : MonoBehaviour
 
     void Update()
     {
-        
-        if (Input.GetMouseButton(0) && !isPassed)
+
+        if ((Input.GetMouseButton(0) || Input.GetMouseButton(1) || Input.GetMouseButtonUp(1) || Input.GetMouseButtonUp(0)) && !isPassed)
         {
 
             if (confirmedWord >= totalWord && CheckIfMissionAllConfirmed())
             {
-                GameManager.instance.OnCompleteRepeatMission();
-                foreach (Word w in GetComponentsInChildren<Word>())
-                {
-                    w.FadeAndDestroy();
-                }
-
-                isPassed = true;
-                StartCoroutine(DisableAfterDelay());
+                StartCoroutine(PassAfterDelay());
             }
-
-            
         }
     }
+
+    public void OnMissionPass()
+    {
+            GameManager.instance.OnCompleteRepeatMission();
+            foreach (Word w in GetComponentsInChildren<Word>())
+            {
+                w.FadeAndDestroy();
+            }
+
+            isPassed = true;
+            StopAllCoroutines();
+            StartCoroutine(DisableAfterDelay());
+        
+    }
+
+    IEnumerator DebugTimerWaitForPass()
+    {
+        yield return new WaitForSeconds(180f);
+        ViewManager.instance.UnloadTipView();
+        OnMissionPass();
+    }
+
+    IEnumerator PassAfterDelay()
+    {
+        ViewManager.instance.UnloadTipView();
+        ViewManager.instance.LoadTipView(TipViewController.TipType.DialogueTip);
+        yield return new WaitForSeconds(2f);
+        OnMissionPass();
+    }
+
+
+
 
     IEnumerator DisableAfterDelay()
     {

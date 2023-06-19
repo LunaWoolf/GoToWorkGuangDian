@@ -182,14 +182,15 @@ you find that AirPod,
 and the music suddenly stops.
 -
 <<ChangeGravity CommandManager>>
+<<MoveLineView CommandManager 5>>
 You continue to stare at the lake
 for a while,
 and finally,
 you realize what's wrong today.
 It's too quiet.
-<<MoveLineView CommandManager 5>>
 -
 Then you suddenly remember,
 the lake has no tides.
+<<EndGame CommandManager>>
 ===
 

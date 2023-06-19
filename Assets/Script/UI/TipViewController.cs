@@ -10,7 +10,8 @@ public class TipViewController : MonoBehaviour
         Mission_One,
         DialogueTip,
         InteractTip,
-        WorkTip
+        WorkTip,
+        SayTip,
     }
 
     [SerializeField] GameObject BasicTip;
@@ -18,6 +19,7 @@ public class TipViewController : MonoBehaviour
     [SerializeField] GameObject InteractTip;
     [SerializeField] GameObject DialogueTip;
     [SerializeField] GameObject WorkTip;
+    [SerializeField] GameObject SayTip;
 
     Animator animator;
     public void LoadTip(TipType type)
@@ -40,6 +42,9 @@ public class TipViewController : MonoBehaviour
             case TipType.WorkTip:
                 WorkTip.SetActive(true);
                 break;
+            case TipType.SayTip:
+                SayTip.SetActive(true);
+                break;
 
         }
     }
@@ -53,6 +58,7 @@ public class TipViewController : MonoBehaviour
         if (DialogueTip != null) DialogueTip.SetActive(false);
         if (InteractTip != null) InteractTip.SetActive(false);
         if(WorkTip != null) WorkTip.SetActive(false);
+        if (SayTip != null) SayTip.SetActive(false);
     }
 
 
