@@ -193,6 +193,7 @@ public class WorkViewController : MonoBehaviour
     //If pass "", will set prompt text back to daily prompt
     public void UpdatePromptText(string t)
     {
+        
         StopCoroutine(UpdatePromptTextToDeafult(2f));
         if (t == "")
         {
