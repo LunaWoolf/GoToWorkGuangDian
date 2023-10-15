@@ -8,12 +8,18 @@ public class TipButton : MonoBehaviour
     [SerializeField]Button button;
     [SerializeField] GameObject TipObject;
     [SerializeField] Animator TipCanvasAnimator;
-
+    public bool startOpen;
     // Start is called before the first frame update
     void Start()
     {
         if (button == null) button = GetComponent<Button>();
         button.onClick.AddListener(OnButtonClicked);
+        if (startOpen)
+        {
+            TipObject.SetActive(true);
+            TipCanvasAnimator.enabled = false;
+            TipCanvasAnimator.gameObject.GetComponent<CanvasGroup>().alpha = 1;
+        }
     }
 
     void OnButtonClicked()

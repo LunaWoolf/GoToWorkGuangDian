@@ -72,16 +72,16 @@ MonoBehaviour:
   active: 1
   scanLineJitter:
     m_OverrideState: 1
-    m_Value: 0.144
+    m_Value: 0.005
   verticalJump:
     m_OverrideState: 1
     m_Value: 0
   horizontalShake:
     m_OverrideState: 1
-    m_Value: 0.005
+    m_Value: 0
   colorDrift:
     m_OverrideState: 1
-    m_Value: 0.035
+    m_Value: 0
 --- !u!114 &-7011558710299706105
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899c54efeace73346a0a16faa3afe726, type: 3}
   m_Name: Vignette
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   color:
     m_OverrideState: 0
     m_Value: {r: 0, g: 0, b: 0, a: 1}
@@ -103,10 +103,10 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.029
+    m_Value: 0.2
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.22
+    m_Value: 1
   rounded:
     m_OverrideState: 0
     m_Value: 0
@@ -126,8 +126,9 @@ MonoBehaviour:
   - {fileID: 849379129802519247}
   - {fileID: -7893295128165547882}
   - {fileID: -7011558710299706105}
+  - {fileID: 1452290465962544878}
   - {fileID: -7857355361299317437}
-  - {fileID: 4907755782978038919}
+  - {fileID: 6759133933637982785}
 --- !u!114 &849379129802519247
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -144,7 +145,7 @@ MonoBehaviour:
   mode:
     m_OverrideState: 0
     m_Value: 2
---- !u!114 &4907755782978038919
+--- !u!114 &1452290465962544878
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,13 +154,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d536c364ebc24dd6b769ef6affde936a, type: 3}
-  m_Name: DigitalGlitchVolume
+  m_Script: {fileID: 11500000, guid: 29fa0085f50d5e54f8144f766051a691, type: 3}
+  m_Name: FilmGrain
   m_EditorClassIdentifier: 
   active: 1
+  type:
+    m_OverrideState: 1
+    m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.00001
+    m_Value: 0.2
+  response:
+    m_OverrideState: 1
+    m_Value: 0.8
+  texture:
+    m_OverrideState: 0
+    m_Value: {fileID: 0}
 --- !u!114 &5932969237171010068
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -185,3 +195,19 @@ MonoBehaviour:
   colorDrift:
     m_OverrideState: 1
     m_Value: 0
+--- !u!114 &6759133933637982785
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d536c364ebc24dd6b769ef6affde936a, type: 3}
+  m_Name: DigitalGlitchVolume
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.0001

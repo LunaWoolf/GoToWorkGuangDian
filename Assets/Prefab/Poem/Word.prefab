@@ -75,7 +75,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4278190186
   m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -258,6 +258,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 0
+  currentWordQuality: 0
 --- !u!222 &7944752338258845336
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -595,7 +596,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
     m_HighlightedColor: {r: 0.9622642, g: 0.9622642, b: 0.9622642, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -682,6 +683,7 @@ GameObject:
   - component: {fileID: 793863083061502908}
   - component: {fileID: 7717690876068471946}
   - component: {fileID: 244642665748747722}
+  - component: {fileID: 511942039640028806}
   m_Layer: 5
   m_Name: ReviseButton
   m_TagString: Untagged
@@ -783,6 +785,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7815224486781023130}
   m_CullTransparentMesh: 1
+--- !u!111 &511942039640028806
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7815224486781023130}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: c3795cf2ee0a8486aa065fa14049016d, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: c3795cf2ee0a8486aa065fa14049016d, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &8617514645566390723
 GameObject:
   m_ObjectHideFlags: 0

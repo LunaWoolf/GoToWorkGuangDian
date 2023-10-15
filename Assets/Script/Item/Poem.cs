@@ -59,4 +59,57 @@ public class Poem : MonoBehaviour
 
         
     }
+
+    int Politic_Count = 0;
+    int Violent_Count = 0;
+    int Sexual_Count = 0;
+    int Unreal_Count = 0;
+    int Negative_Count = 0;
+ 
+    public List<Word.WordQuality> CheckPoemQuality()
+    {
+        List<Word.WordQuality> qualities = new List<Word.WordQuality>();
+
+        foreach (PoemLine line in poemLines)
+        {
+            foreach (Word w in line.wordList)
+            {
+                switch (w.GetWordQuality())
+                {
+                    case Word.WordQuality.Politic:
+                        Politic_Count++;
+                        break;
+                    case Word.WordQuality.Violent:
+                        Violent_Count++;
+                        break;
+                    case Word.WordQuality.Sexual:
+                        Sexual_Count++;
+                        break;
+                    case Word.WordQuality.Unreal:
+                        Unreal_Count++;
+                        break;
+                    case Word.WordQuality.Negative:
+                        Negative_Count++;
+                        break;
+
+                }
+            }
+        }
+
+        if (Politic_Count > 1)
+            qualities.Add(Word.WordQuality.Politic);
+        if (Violent_Count > 1)
+            qualities.Add(Word.WordQuality.Violent);
+        if (Sexual_Count > 1)
+            qualities.Add(Word.WordQuality.Sexual);
+        if (Unreal_Count > 1)
+            qualities.Add(Word.WordQuality.Unreal);
+        if (Negative_Count > 1)
+            qualities.Add(Word.WordQuality.Negative);
+
+        if(qualities.Count == 0)
+            qualities.Add(Word.WordQuality.Good);
+
+        return qualities;
+    }
 }

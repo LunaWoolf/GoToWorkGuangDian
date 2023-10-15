@@ -59,7 +59,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
     string[] currentPoem;
 
-   
+    public UnityEvent OnMoveToNextPoem;
 
     public UnityEvent OnPoemRevise;
     void Awake()
@@ -83,7 +83,8 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     void Start()
     {
         if (PoemPaper_Read != null) PoemPaperAnimator_Read = PoemPaper_Read.GetComponent<Animator>();
-        if (poemPaperController_Read != null) poemPaperController_Read.OnPaperExitFinish.AddListener(TearPoem);
+        if(GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Story)
+            if (poemPaperController_Read != null) poemPaperController_Read.OnPaperExitFinish.AddListener(TearPoem);
         if (poemPaperController_Read != null) poemPaperController_Read.OnPaperExitFinish.AddListener(TryGoToNextPoem);
         GameManager.instance.OnPoemPass.AddListener(OnPoemPass);
         //GeneratorPoem(5);
@@ -198,6 +199,8 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     {
         string[] list = Regex.Split(line," ");
         string result = "";
+
+
         if (list.Length > 0) 
         {
             foreach (string s in list)
@@ -214,9 +217,18 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
                     if (!isvalid && controversial)
                     {
-                        rand = Random.Range(0, verbs_controversial[currentDay].Length);
-                        w = "?" + verbs_controversial[currentDay][rand];
-
+                        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Story)
+                        {
+                            rand = Random.Range(0, verbs_controversial[currentDay].Length);
+                            w = "?" + verbs_controversial[currentDay][rand];
+                        }
+                        else
+                        {
+                            int q = Random.Range(1, 6);
+                            rand = Random.Range(0, verbs_controversial[q].Length);
+                            w = "?" + q + verbs_controversial[q][rand];
+                        }
+            
                     }
                     else
                     {
@@ -261,8 +273,17 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
                     if (!isvalid && controversial)
                     {
-                        rand = Random.Range(0, nouns_controversial[currentDay].Length);
-                        w = "?" + nouns_controversial[currentDay][rand];
+                        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Story)
+                        {
+                            rand = Random.Range(0, nouns_controversial[currentDay].Length);
+                            w = "?" + nouns_controversial[currentDay][rand];
+                        }
+                        else
+                        {
+                            int q = Random.Range(1, 6);
+                            rand = Random.Range(0, nouns_controversial[q].Length);
+                            w = "?" + q + nouns_controversial[q][rand];
+                        }
 
                     }
                     else
@@ -306,8 +327,17 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
                     if (!isvalid && controversial)
                     {
-                        rand = Random.Range(0, adjs_controversial[currentDay].Length);
-                        w = "?" + adjs_controversial[currentDay][rand];
+                        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Story)
+                        {
+                            rand = Random.Range(0, adjs_controversial[currentDay].Length);
+                            w = "?" + adjs_controversial[currentDay][rand];
+                        }
+                        else
+                        {
+                            int q = Random.Range(1, 6);
+                            rand = Random.Range(0, adjs_controversial[q].Length);
+                            w = "?" + q + adjs_controversial[q][rand];
+                        }
 
                     }
                     else
@@ -356,14 +386,20 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
     }
 
+    
+
     public void TryGoToNextPoem()
     {
 
         if (waitForNextPoem)
         {
+            if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed)
+                TearPoem();
+
             GeneratorPoem(5);
             LoadPoemPaper();
             waitForNextPoem = false;
+            OnMoveToNextPoem.Invoke();
         }
     }
 
@@ -388,7 +424,17 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     public void UnloadPoemPaper() { if (PoemPaper_Read != null) PoemPaperAnimator_Read = PoemPaper_Read.GetComponent<Animator>(); PoemPaperAnimator_Read.SetTrigger("Exit"); }
    
 
-    public void LoadPoemPaper() { if (PoemPaper_Read != null) PoemPaperAnimator_Read = PoemPaper_Read.GetComponent<Animator>(); PoemPaperAnimator_Read.SetTrigger("Enter"); }
+    public void LoadPoemPaper()
+    {
+        if (PoemPaper_Read != null)
+        {
+            if(GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed)
+                PoemPaper_Read.GetComponent<PoemPaperController>().OnPoemPaperFadeBack();
+            PoemPaperAnimator_Read = PoemPaper_Read.GetComponent<Animator>();
+            PoemPaperAnimator_Read.SetTrigger("Enter");
+        }
+      
+    }
 
     ///////////////////////////
     //////Writing Mode/////////
@@ -451,6 +497,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         string w = " ";
         int rand = 0;
 
+
         if (DaySpecific > adjs_controversial.Length - 1 || DaySpecific < 0)
         {
             Debug.Log("invalid Day Input");
@@ -459,8 +506,16 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
         if (controversial)
         {
-            rand = Random.Range(1, nouns_controversial[DaySpecific].Length);
-            w = "?" + nouns_controversial[DaySpecific][rand];
+            if (GameManager.instance.GetCurrentAppMode() != GameManager.AppMode.Speed)
+            {
+                rand = Random.Range(1, nouns_controversial[DaySpecific].Length);
+                w = "?" + nouns_controversial[DaySpecific][rand];
+            }
+            else
+            {
+                rand = Random.Range(1, nouns_controversial[DaySpecific].Length);
+                w = "?" + DaySpecific +  nouns_controversial[DaySpecific][rand];
+            }
 
         }
         else
@@ -486,8 +541,16 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
         if (controversial)
         {
-            rand = Random.Range(1, verbs_controversial[DaySpecific].Length);
-            w = "?" + verbs_controversial[DaySpecific][rand];
+            if (GameManager.instance.GetCurrentAppMode() != GameManager.AppMode.Speed)
+            {
+                rand = Random.Range(1, verbs_controversial[DaySpecific].Length);
+                w = "?" + verbs_controversial[DaySpecific][rand];
+            }
+            else
+            {
+                rand = Random.Range(1, verbs_controversial[DaySpecific].Length);
+                w = "?" + DaySpecific + verbs_controversial[DaySpecific][rand];
+            }
 
         }
         else
@@ -515,8 +578,16 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
         if (controversial)
         {
-            rand = Random.Range(1, adjs_controversial[DaySpecific].Length);
-            w = "?" + adjs_controversial[DaySpecific][rand];
+            if (GameManager.instance.GetCurrentAppMode() != GameManager.AppMode.Speed)
+            {
+                rand = Random.Range(1, adjs_controversial[DaySpecific].Length);
+                w = "?" + adjs_controversial[DaySpecific][rand];
+            }
+            else
+            {
+                rand = Random.Range(1, adjs_controversial[DaySpecific].Length);
+                w = "?" + DaySpecific + adjs_controversial[DaySpecific][rand];
+            }
 
         }
         else

@@ -5,16 +5,20 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 using Yarn;
+using UnityEngine.Video;
 
 public class WorkViewController : MonoBehaviour
 {
     [Header("Work Canvas")]
     [SerializeField] Button PassButton;
     [SerializeField] Button DenyButton;
+    [SerializeField] Button NextButton;
     [SerializeField] Button MoyuButton;
     [SerializeField] Button NewsButton;
     [SerializeField] Button ReviseButton;
     [SerializeField] Animator PoemCanvasAnimator;
+    [SerializeField] Button SmokeButton;
+    [SerializeField] VideoPlayer SmokeVideoPlayer;
 
     [Header("ActionCount")]
     [SerializeField] GameObject ActionCountParent;
@@ -22,14 +26,15 @@ public class WorkViewController : MonoBehaviour
     List<GameObject> ActionCountList = new List<GameObject>();
 
     [SerializeField] GameObject PoemCanvas;
-
+    [SerializeField] public GameObject UICanvas;
     [SerializeField][TextArea(5,20)] List<string> DailyWorkPrompt;
 
     [Header("Work Promnt")]
     [HideInInspector] public Poem CurrentPoemOnCanvas = new Poem();
     [SerializeField] TextMeshProUGUI PromptText;
 
-   
+
+
 
     [SerializeField]
     [TextArea(5, 10)]
@@ -47,7 +52,8 @@ public class WorkViewController : MonoBehaviour
         if (PassButton != null)
         {
             PassButton.onClick.AddListener(OnPassButtonClicked);
-            PassButton.gameObject.SetActive(false);
+            if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Story)
+                PassButton.gameObject.SetActive(false);
         }
         if (DenyButton != null)
         {
@@ -71,7 +77,30 @@ public class WorkViewController : MonoBehaviour
             ReviseButton.onClick.AddListener(OnReviseButtonClicked);
             DenyButton.gameObject.SetActive(false);
         }
-      
+        if (SmokeButton != null)
+        {
+            SmokeButton.onClick.AddListener(OnSmokeButtonClicked);
+            if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed)
+            {
+                SmokeButton.gameObject.SetActive(true);
+               
+            }
+            else
+            {
+                SmokeButton.gameObject.SetActive(false);
+            }
+               
+        }
+        if (NextButton != null)
+        {
+            NextButton.gameObject.SetActive(false);
+            if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed)
+            {
+                
+                NextButton.onClick.AddListener(OnNextButtonClicked);
+            }
+        }
+
         //InitalActionCount(GameManager.instance.MaxWorkActionCountOfDay - GameManager.instance.WorkActionCountOfDay);
         GameManager.instance.onAction.AddListener(OnUseOneAction);
         UpdatePromptText("");
@@ -90,8 +119,8 @@ public class WorkViewController : MonoBehaviour
         }
         else
         {
-           
-            PassButton.gameObject.SetActive(false);
+           if(GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Story)
+                PassButton.gameObject.SetActive(false);
 
         }
     }
@@ -105,7 +134,8 @@ public class WorkViewController : MonoBehaviour
             PassButton.gameObject.SetActive(true);
         } else
         {
-            PassButton.gameObject.SetActive(false);
+            if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Story)
+                PassButton.gameObject.SetActive(false);
           
         }
     
@@ -115,6 +145,12 @@ public class WorkViewController : MonoBehaviour
     {
         int index = Random.Range(0, Boss_Confirmations.Count);
         UpdatePromptText(Boss_Confirmations[index]);
+        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed)
+        {
+           
+            NextButton.gameObject.SetActive(true);
+        }
+           
     }
 
     public void OnPoemPassFailed()
@@ -133,13 +169,21 @@ public class WorkViewController : MonoBehaviour
         {
             selectable.transition = Selectable.Transition.ColorTint;
         }
-        PassButton.gameObject.SetActive(false);
+        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Story)
+            PassButton.gameObject.SetActive(false);
         Debug.Log("Set Current Poem");
     }
+
+
     void OnPassButtonClicked()
     {
         GameManager.instance.OnPoemTryPass();
-        
+        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed)
+        {
+            PassButton.gameObject.SetActive(false);
+          
+        }
+
     }
 
     void OnReviseButtonClicked()
@@ -153,8 +197,53 @@ public class WorkViewController : MonoBehaviour
      
     }
 
-  
+    void OnSmokeButtonClicked()
+    {
+    
+        if (!GameManager.instance.BuyCigarette())
+        {
+            ViewManager.instance.LoadTutorialView("You don't have enough money. It take 5 dollor to clear your mind.");
+        }
+        else
+        {
+            SpeedSmoke();
+        }
 
+    }
+
+    void OnNextButtonClicked()
+    {
+        GameManager.instance.TryGoToNextPoem();
+        NextButton.gameObject.SetActive(false);
+        PassButton.gameObject.SetActive(true);
+    }
+
+
+    public UnityEvent OnSpeedSmokeStart;
+    public UnityEvent OnSpeedSmokeFinish;
+    public void SpeedSmoke()
+    {
+        PoemCanvas.SetActive(false);
+        UICanvas.SetActive(false);
+        //PassButton.gameObject.SetActive(false);
+        SmokeVideoPlayer.gameObject.SetActive(true);
+        SmokeVideoPlayer.Play();
+        SmokeVideoPlayer.loopPointReached += FinishSmoke;
+        OnSpeedSmokeStart.Invoke();
+    }
+
+    public void FinishSmoke(VideoPlayer source)
+    {
+        PoemCanvas.SetActive(true);
+        UICanvas.SetActive(true);
+        //PassButton.gameObject.SetActive(true);
+        SmokeVideoPlayer.gameObject.SetActive(false);
+        OnSpeedSmokeFinish.Invoke();
+        FindObjectOfType<PaperShredderManager>().ClearWordFilledAmaountAndSetColor();
+
+        if (source != null)
+            SmokeVideoPlayer.loopPointReached -= FinishSmoke;
+    }
 
     public void SetPassButtonActive(bool isOn)
     {
@@ -216,17 +305,20 @@ public class WorkViewController : MonoBehaviour
     public void StartTypewriterEffect(TextMeshProUGUI tm, string line, float letterDuration)
     {
         StopCoroutine(TypeText(null,null,0));
-        tm.text = "";
+        if(tm != null)
+            tm.text = "";
         StartCoroutine(TypeText(PromptText,line, letterDuration));
     }
 
     private IEnumerator TypeText(TextMeshProUGUI tm, string line, float letterDuration)
     {
-        tm.text = "";
+        if (tm != null)
+            tm.text = "";
 
         foreach (char letter in line)
         {
-            tm.text += letter;
+            if (tm != null)
+                tm.text += letter;
             yield return new WaitForSeconds(letterDuration);
         }
     }

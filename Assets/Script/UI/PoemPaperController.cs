@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 //[System.Serializable]
 public class UnityAnimationEvent : UnityEvent<string> { };
@@ -25,6 +27,9 @@ public class PoemPaperController : MonoBehaviour
 
     public PoemPaperMode poemPaperMode = PoemPaperMode.Read;
     public PoemGenerator poemGenerator;
+    [Header("UI Reference_Read")]
+    [SerializeField] Image PoemPaperImage;
+    //[SerializeField] RectTransform Paragraphy;
 
     [Header("UI Reference_Write")]
     public GameObject PoemParent_Write;
@@ -108,6 +113,44 @@ public class PoemPaperController : MonoBehaviour
 
         }
         Debug.Log(name);
+    }
+
+   
+    public void OnPoemPaperFade()
+    {
+        if (LeanTween.tweensRunning < 100)
+        {
+            UnityEngine.Color a = PoemPaperImage.color;
+            UnityEngine.Color b = new UnityEngine.Color(1, 1, 1, 0f);
+            LeanTween.value(gameObject, a, b, 2f)
+            .setOnUpdateColor((UnityEngine.Color color) =>
+            {
+                PoemPaperImage.color = color;
+           
+
+            });
+        }
+    }
+
+    public void OnPoemPaperFadeBack()
+    {
+        UnityEngine.Color a = PoemPaperImage.color;
+        UnityEngine.Color b = new UnityEngine.Color(1, 1, 1, 1f);
+        if (LeanTween.tweensRunning < 100)
+        {
+           
+            LeanTween.value(gameObject, a, b, 2f)
+            .setOnUpdateColor((UnityEngine.Color color) =>
+            {
+                PoemPaperImage.color = color;
+
+
+            });
+        }
+        else
+        {
+            PoemPaperImage.color = b;
+        }
     }
 
     public void OnPoemPaperEnterAnimationEnd()
