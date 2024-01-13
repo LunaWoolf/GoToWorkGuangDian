@@ -83,7 +83,6 @@ public class WorkViewController : MonoBehaviour
             if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed)
             {
                 SmokeButton.gameObject.SetActive(true);
-               
             }
             else
             {
@@ -225,8 +224,10 @@ public class WorkViewController : MonoBehaviour
     {
         PoemCanvas.SetActive(false);
         UICanvas.SetActive(false);
+        string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, "smoke_black.mp4");
         //PassButton.gameObject.SetActive(false);
         SmokeVideoPlayer.gameObject.SetActive(true);
+        SmokeVideoPlayer.url = videoPath;
         SmokeVideoPlayer.Play();
         SmokeVideoPlayer.loopPointReached += FinishSmoke;
         OnSpeedSmokeStart.Invoke();
