@@ -43,15 +43,19 @@ public class PropertyManager : MonoSingleton<PropertyManager>
     public int cigaretteCount = 0;
 
     [Header("General")]
-    private int money = 0;
+    public int money = 20;
 
     public int GetMoney() { return money; }
 
     public void UpdateMoney(int changeValue)
     {
         money += changeValue;
+     
         ViewManager.instance.SetMoneyText(PropertyManager.instance.money);
+        if (money < 0)
+            GameManager.instance.SpeedRunGameOver();
     }
+
 
 
     void Awake()
@@ -68,6 +72,12 @@ public class PropertyManager : MonoSingleton<PropertyManager>
         }
 
         DontDestroyOnLoad(this.gameObject);
+
+    }
+
+    public void Start()
+    {
+        UpdateMoney(0);
 
     }
 

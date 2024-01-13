@@ -7,14 +7,15 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using System.Text.RegularExpressions;
 using TMPro;
+using Unity.VisualScripting;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-
+    [SerializeField] AppMode currentAppMode = AppMode.Story;
     public bool isDebug = false;
     public bool isLoadOpenScene = false;
     [SerializeField] GameMode currentGameMode = GameMode.Conversation;
-
+  
 
     public struct personalBannedWord
     {
@@ -50,6 +51,14 @@ public class GameManager : MonoSingleton<GameManager>
         Dream,
     }
 
+
+    [Serializable]
+    public enum AppMode
+    {
+        Story,
+        Speed,
+    }
+
     [Serializable]
     public enum WorkMode
     {
@@ -82,7 +91,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     [Header("Mission Reference")]
     [SerializeField] GameObject[] Mission_Day;
-    [TextArea(2,10)]public string[] MissionLine;
+    [TextArea(2, 10)] public string[] MissionLine;
 
 
     [Header("Money")]
@@ -108,6 +117,13 @@ public class GameManager : MonoSingleton<GameManager>
 
     [Header("Dialogue")]
     public bool LoadTestDialogue = false;
+
+    public void SetCurrentAppMode(AppMode mode)
+    {
+        currentAppMode = mode;
+
+    }
+    public AppMode GetCurrentAppMode() { return currentAppMode; }
 
     public void SetCurrentGameMode(GameMode mode)
     {
@@ -138,12 +154,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void SetDay(int day) { dayCounter = day; }
 
-    public void TryStartWork()
-    {
-        StartWork();
-    }
-
-
+   
 
     public void StartWork()
     {
@@ -260,30 +271,58 @@ public class GameManager : MonoSingleton<GameManager>
             return;
         }
 
-        Debug.Log("starttt");
 
         //if (!isDebug || isLoadOpenScene)
-           //SceneManager.LoadScene("OpenScene", LoadSceneMode.Additive);
+        //SceneManager.LoadScene("OpenScene", LoadSceneMode.Additive);
 
-        Debug.Log(gameDate.Month.ToString("D2") + gameDate.Day.ToString("D2"));
+        //Debug.Log(gameDate.Month.ToString("D2") + gameDate.Day.ToString("D2"));
 
+        initializeDictionary();
+
+        if (GetCurrentAppMode() == AppMode.Story)
+        {
+            StartStoryMode();
+
+        }
+        else if (GetCurrentAppMode() == AppMode.Speed)
+        {
+            StartSpeedMode();
+        }
+    }
+
+    void initializeDictionary()
+    {
         personalBannedWord bannedWord = new personalBannedWord();
         bannedWord.word = "Default";
         bannedWord.count = 0;
 
         personalBannedWord_Day.Add("Default");
         personalBannedWordMap.Add("Default", bannedWord);
+    }
 
+    void StartStoryMode()
+    {
         if (ViewManager.instance != null)
+        {
             ViewManager.instance.UnloadWorkView();
+            ViewManager.instance.ToggleDoorButton(true, true, false);
+        }
+           
+    }
 
-
+    void StartSpeedMode()
+    {
+        StartWork();
     }
 
     // Update is called once per frame
     void Update()
     {
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            LoadEndGameScene();
+        }
       
         /*
         //increase Timer
@@ -342,10 +381,11 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if (/*personalBannedWord_Poem.Count == 0*/ true)
         {
-            if (isDebug)
+            if (isDebug ||  GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed)
             {
                 Debug.Log("Debug Pass for flow test");
-                PoemPass();
+
+                PoemPass_SpeedMode();
                 return;
             }
             if (PropertyManager.instance.currentPoemBannedWord > 0)
@@ -369,6 +409,35 @@ public class GameManager : MonoSingleton<GameManager>
         //Boss Give Comment
         //Disable pass button
         OnPoemPassFailed.Invoke();
+    }
+
+    public void PoemPass_SpeedMode()
+    {
+        passPoemCount_total++;
+        ViewManager.instance.SetPassPoemText(passPoemCount_total);
+        passPoemCount_day++;
+        PoemViewedToday++;
+
+        OnPoemPass.Invoke();
+
+
+        MessageCanvasController_Speed.instance.OnPoemPass();
+
+        PropertyManager.instance.UpdateMoney(passPoem_money); // Gain money for pass poem
+        PropertyManager.instance.UpdateMoney(-PropertyManager.instance.currentPoemBannedWord * passPoem_wrongword_money); // Lose money for each word that does not suppose to be passed
+        //PropertyManager.instance.rebelliousCount = 0;
+        PropertyManager.instance.currentPoemBannedWord = 0;
+
+        FindObjectOfType<PoemPaperController>().OnPoemPaperFade();
+        //if (AdjustAndCheckWorkActionCountOfDay(1))
+            //TryGoToNextPoem();
+
+    }
+
+    public void SpeedRunGameOver()
+    {
+        ViewManager.instance.GameOverButton.gameObject.SetActive(true);
+        FindObjectOfType<WorkViewController>().UICanvas.SetActive(false);
     }
 
 
@@ -414,7 +483,7 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    void TryGoToNextPoem()
+    public void TryGoToNextPoem()
     {
         PoemGenerator.instance.NextPoem();
     }
@@ -594,10 +663,10 @@ public class GameManager : MonoSingleton<GameManager>
 
     IEnumerator IE_LoadEndGameScene()
     {
-        yield return new WaitForSeconds(5f);
+        //yield return new WaitForSeconds(f);
         //ViewManager.instance.FadeToBlack_end();
-        yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene("End_Poem", LoadSceneMode.Single);
+        yield return new WaitForSeconds(.4f);
+        SceneManager.LoadScene("Feedback", LoadSceneMode.Single);
     }
 
     //temp fix

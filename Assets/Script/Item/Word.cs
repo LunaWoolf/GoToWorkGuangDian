@@ -20,6 +20,17 @@ public class Word : MonoBehaviour
         Dialouge,
     }
 
+    public enum WordQuality
+    {
+        Good,
+        Politic,
+        Violent,
+        Sexual,
+        Unreal,
+        Negative,
+
+    }
+
     [Header("Reference")]
     [SerializeField] public string _Text;
     [SerializeField] public string _Text_clean;
@@ -81,6 +92,7 @@ public class Word : MonoBehaviour
     public bool isInserable = false;
 
     public WordType currentWordType;
+    [SerializeField] WordQuality currentWordQuality = WordQuality.Good;
     ClickableObject clickableObject;
 
     public void SetWordType(WordType type)
@@ -98,6 +110,20 @@ public class Word : MonoBehaviour
                 //tm.fontStyle = FontStyles.Underline;
                 break;
         }
+
+    }
+
+    public WordQuality GetWordQuality() { return currentWordQuality; }
+
+    public void SetWordQuality(WordQuality quality)
+    {
+
+        currentWordQuality = quality;
+       /* switch (quality)
+        {
+            case WordType.Empty:
+                break;
+        }*/
 
     }
 
@@ -139,6 +165,9 @@ public class Word : MonoBehaviour
         this.isConfirm = false;
         if(tm)
             tm.color = unconfirmColor;
+
+        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed)
+            GameManager.instance.OnPoemPass.AddListener(ConfirmedWord);
     }
 
     public virtual void SetText(string t)
@@ -156,12 +185,46 @@ public class Word : MonoBehaviour
        
 
             banned = true;
-            _Text = t.Substring(1, t.Length - 1);
+
+            if(t.Length > 3 && GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed)
+            {
+                switch (t[1])
+                {
+                    case '1':
+                        this.currentWordQuality = WordQuality.Politic;
+                        break;
+                    case '2':
+                        this.currentWordQuality = WordQuality.Violent;
+                        break;
+                    case '3':
+                        this.currentWordQuality = WordQuality.Unreal;
+                        break;
+                    case '4':
+                        this.currentWordQuality = WordQuality.Sexual;
+                        break;
+                    case '5':
+                        this.currentWordQuality = WordQuality.Negative;
+                        break;
+                }
+                //Debug.Log("_Text" + t);
+                _Text = t.Substring(2, t.Length - 2);
+            }
+            else
+            {
+                _Text = t.Substring(1, t.Length - 1);
+            }
+
+
+
+
+           
             _Text = _Text.Replace("_", " ");
             if (indexInLine == 0)
                 _Text = CapFirstLetter(_Text);
             tm.text = _Text;
-           
+
+
+          
 
             //hightlight for debug
             if (PropertyManager.instance.hasCATgpt || GameManager.instance.isDebug)
@@ -176,6 +239,7 @@ public class Word : MonoBehaviour
         else
         {
             banned = true;
+            this.currentWordQuality = WordQuality.Good;
             _Text = t;
             _Text = _Text.Replace("_", " ");
             if (indexInLine == 0)
@@ -242,8 +306,14 @@ public class Word : MonoBehaviour
 
     void OnWordLeftClicked()
     {
-        isConfirm = true;
+        if(GameManager.instance.GetCurrentAppMode() != GameManager.AppMode.Speed)
+            isConfirm = true;
 
+    }
+
+    void ConfirmedWord()
+    {
+        isConfirm = true;
     }
 
 
@@ -265,7 +335,15 @@ public class Word : MonoBehaviour
 
         GameManager.instance.CircledWordInCurrentPoem(_Text_clean);
 
-        ToggleReviseButton(true, true);
+        if (currentWordType == WordType.Verb || currentWordType == WordType.Noun || currentWordType == WordType.Adj)
+        {
+            ToggleReviseButton(true, true);
+        }
+        else
+        {
+            ToggleReviseButton(true, false);
+        }
+           
     }
 
 
@@ -339,6 +417,11 @@ public class Word : MonoBehaviour
         Debug.Log("Revise word");
         int day = 0;
         day = GameManager.instance.GetDay() + 1;
+
+        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed)
+        {
+            day = Random.Range(1, 6);
+        }
         bool isRevised = true;
         string orginalText = GetCleanText();
         string ReviceTest = "";
@@ -381,17 +464,27 @@ public class Word : MonoBehaviour
                     break;
             }
 
+            // if revise success, then trigger paper shreed base on different mode 
             if (ReviceTest != "")
             {
                 GameManager.instance.CancleCircledWordInCurrentPoem(_Text_clean);
-                FindObjectOfType<PaperShredderManager>().readyToSpawnShredderWordList.Add(_Text_clean);
-
                 SetText(ReviceTest);
                 GameManager.instance.CircledWordInCurrentPoem(_Text_clean);
-            }
-            
+                ViewManager.instance.OnWordReviced(isRevised, orginalText, GetCleanText());
+                if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Story)
+                {
+                    FindObjectOfType<PaperShredderManager>().readyToSpawnShredderWordList.Add(_Text_clean);
+                }
+                else if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed)
+                {
 
-            ViewManager.instance.OnWordReviced(isRevised, orginalText, GetCleanText());
+                    FindObjectOfType<PaperShredderManager>().InstantiateWord(_Text_clean);
+
+                }
+            }
+
+
+
 
         }
     }

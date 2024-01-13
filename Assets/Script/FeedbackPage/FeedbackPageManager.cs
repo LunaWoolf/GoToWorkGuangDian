@@ -15,20 +15,30 @@ public class FeedbackPageManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Directory.CreateDirectory(Application.streamingAssetsPath + "/PlayTest_Feedback/");
-        SubmitButton.onClick.AddListener(OnSubmitButtonClicked);
+       // Directory.CreateDirectory(Application.streamingAssetsPath + "/PlayTest_Feedback/");
+        //SubmitButton.onClick.AddListener(OnSubmitButtonClicked);
         NayButton.onClick.AddListener(OnNayButtonClicked);
     }
 
     public void OnSubmitButtonClicked()
     {
-        CreateFeedback();
-        SceneManager.LoadScene("WorkScene");
+       // CreateFeedback();
+       // SceneManager.LoadScene("WorkScene");
     }
 
     public void OnNayButtonClicked()
     {
-        SceneManager.LoadScene("WorkScene");
+
+        if (GameManager.instance.gameObject != null)
+        {
+            Destroy(GameManager.instance.gameObject);
+        }
+        if (PoemGenerator.instance.gameObject != null)
+        {
+            Destroy(PoemGenerator.instance.gameObject);
+        }
+
+        SceneManager.LoadScene("SpeedRunTest");
     }
 
     public void CreateFeedback()

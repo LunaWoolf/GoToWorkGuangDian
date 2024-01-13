@@ -18,11 +18,7 @@ public class PoemLine : MonoBehaviour
     [SerializeField]string[] _line;
     //[SerializeField]string _UnProcessLine;
 
-    void Start()
-    {
-        
-    }
-
+ 
     public virtual void SetLine(string line)
     {
         _line = line.Split(" ");
@@ -82,6 +78,9 @@ public class PoemLine : MonoBehaviour
         {
             w.GetComponent<Word>().SetWordType(Word.WordType.None);
         }
+
+
+        
 
         w.GetComponent<Word>().indexInLine = wordList.Count;
         w.GetComponent<Word>().SetText(word);

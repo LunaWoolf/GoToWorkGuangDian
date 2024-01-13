@@ -171,9 +171,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4878771606995890554}
+  - component: {fileID: 4878771606995890552}
   - component: {fileID: 4878771606995890555}
   - component: {fileID: 4878771606995890553}
-  - component: {fileID: 4878771606995890552}
   - component: {fileID: 4878771606995890532}
   - component: {fileID: 4878771606995890533}
   m_Layer: 0
@@ -199,6 +199,56 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4878771606995890552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878771606995890559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05c72942960a24a73950c714bd744d42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentAppMode: 1
+  isDebug: 1
+  isLoadOpenScene: 0
+  currentGameMode: 0
+  eventSystem: {fileID: 0}
+  PoemViewedToday: 0
+  passPoemCount_total: 0
+  passPoemCount_day: 0
+  MaxWorkActionCountOfDay: 0
+  WorkActionCountOfDay: 0
+  denyPoemCount_total: 0
+  denyPoemCount_day: 0
+  onAction:
+    m_PersistentCalls:
+      m_Calls: []
+  onStartWork:
+    m_PersistentCalls:
+      m_Calls: []
+  WorkDayTimer: 0
+  WorkDayTimeLimit: 5
+  isPauseWorkDayTimer: 0
+  workMode: 1
+  Mission_Day: []
+  MissionLine: []
+  passPoem_money: 5
+  passPoem_wrongword_money: 3
+  denyPoem_money: 2
+  denyPoem_wrongword_money: 4
+  cigarettePrice: 5
+  personalBannedWord_Poem: []
+  personalBannedWord_Day: []
+  OnPoemPass:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPoemPassFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  LoadTestDialogue: 0
 --- !u!114 &4878771606995890555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,6 +273,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c327dffe3c0420ea90ef2eb8f0252f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  customCursorTexture: {fileID: 0}
+  clickCursorTexture: {fileID: 0}
   BossSprite: {fileID: 21300000, guid: 98a1d3912b749447eb345063ec8298f5, type: 3}
   LiSprite: {fileID: 21300000, guid: 27d18e66766634dfb8d92199f49026eb, type: 3}
   CATSprite: {fileID: 21300000, guid: d1ebbbc7af69c4e4ab903eaea43a5026, type: 3}
@@ -239,43 +291,18 @@ MonoBehaviour:
   WriteCanvas: {fileID: 0}
   FadeCanvas: {fileID: 1013755266}
   MessageCanvas: {fileID: 0}
+  PropertyCanvas: {fileID: 0}
+  LakeCanvas: {fileID: 0}
+  TipCanvas: {fileID: 0}
   CharacterImage: {fileID: 0}
+  BossCharacterArt_Day1: {fileID: 0}
+  BossCharacterArt_Day4: {fileID: 0}
+  LiCharacterArt: {fileID: 0}
   TimerText: {fileID: 0}
   MoneyText: {fileID: 0}
---- !u!114 &4878771606995890552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4878771606995890559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05c72942960a24a73950c714bd744d42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDebug: 1
-  isLoadOpenScene: 0
-  currentGameMode: 0
-  eventSystem: {fileID: 0}
-  dayCounter: 0
-  poemViewedToday: 0
-  PoemViewedToday: 0
-  denyPoemCount: 0
-  passPoemCount: 0
-  WorkActionCountOfDay: 0
-  MaxWorkActionCountOfDay: 0
-  onAction:
-    m_PersistentCalls:
-      m_Calls: []
-  onStartWork:
-    m_PersistentCalls:
-      m_Calls: []
-  WorkDayTimer: 0
-  WorkDayTimeLimit: 5
-  isPauseWorkDayTimer: 0
-  maxDayLimit: 1
-  temp_CircledWordList: []
+  WorkDoorButton: {fileID: 0}
+  FamilyDoorButton: {fileID: 0}
+  DoorCanvas: {fileID: 0}
 --- !u!114 &4878771606995890532
 MonoBehaviour:
   m_ObjectHideFlags: 0

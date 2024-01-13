@@ -52,7 +52,7 @@ public class TipViewController : MonoBehaviour
     public void UnloadAllTip()
     {
 
-        animator.enabled = true;
+        if(animator!= null) animator.enabled = true;
         if (BasicTip != null) BasicTip.SetActive(false);
         if (MissionOneTip != null) MissionOneTip.SetActive(false);
         if (DialogueTip != null) DialogueTip.SetActive(false);

@@ -31,6 +31,7 @@ public class ViewManager : MonoSingleton<ViewManager>
     [SerializeField] GameObject WriteCanvas;
     [SerializeField] GameObject FadeCanvas;
     [SerializeField] GameObject MessageCanvas;
+    [SerializeField] GameObject MessageCanvas_Speed;
     [SerializeField] GameObject PropertyCanvas;
     [SerializeField] GameObject LakeCanvas;
     [SerializeField] GameObject TipCanvas;
@@ -44,7 +45,7 @@ public class ViewManager : MonoSingleton<ViewManager>
     [SerializeField] TextMeshProUGUI TimerText;
 
     [SerializeField] public TextMeshProUGUI MoneyText;
-
+    [SerializeField] public TextMeshProUGUI PassPoemText;
 
     [Header("Door")]
     [SerializeField] Button WorkDoorButton;
@@ -52,7 +53,10 @@ public class ViewManager : MonoSingleton<ViewManager>
     [SerializeField] Canvas DoorCanvas;
 
     MessageCanvasController messageCanvasController_main;
+    MessageCanvasController_Speed messageCanvasController_speed;
     TipViewController tipViewController;
+
+    [SerializeField] public Button GameOverButton;
 
     void Awake()
     {
@@ -87,8 +91,10 @@ public class ViewManager : MonoSingleton<ViewManager>
 
         messageCanvasController_main = FindObjectOfType<MessageCanvasController>();
 
-        ToggleDoorButton(true, true, false);
+       
         Cursor.SetCursor(customCursorTexture, Vector2.zero, CursorMode.Auto);
+
+        GameOverButton.gameObject.SetActive(false);
     }
 
     void Update()
@@ -115,8 +121,19 @@ public class ViewManager : MonoSingleton<ViewManager>
 
     public void SetMoneyText(int money)
     {
+        float scaleFactor = Mathf.Clamp(10 - money, 1, 10);
+        Vector3 scale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+        MoneyText.transform.parent.gameObject.transform.localScale = scale;
+
         if (MoneyText)
             MoneyText.text = money.ToString();
+    }
+
+    public void SetPassPoemText(int poemCount)
+    {
+        
+        if (PassPoemText)
+            PassPoemText.text = poemCount.ToString();
     }
 
     public void TogglePropertyCanvas(bool isOn)
@@ -219,7 +236,7 @@ public class ViewManager : MonoSingleton<ViewManager>
     }
 
     public void LoadWorkView(){ if (WorkCanvas != null) WorkCanvas.SetActive(true);}
-
+    public WorkViewController GetWorkView() { return WorkCanvas.GetComponent<WorkViewController>(); }
     public void LoadWriteView()  { if (WriteCanvas != null) WriteCanvas.SetActive(true); }
     public void LoadConversationView()
     {
@@ -264,7 +281,8 @@ public class ViewManager : MonoSingleton<ViewManager>
 
     public void LoadTipView(TipViewController.TipType type)
     {
-        if (TipCanvas == null) return;
+        if (TipCanvas == null)
+            tipViewController = FindObjectOfType<TipViewController>();
         if (tipViewController == null)
             tipViewController = TipCanvas.GetComponent<TipViewController>();
         tipViewController.LoadTip(type);
@@ -274,7 +292,8 @@ public class ViewManager : MonoSingleton<ViewManager>
 
     public void UnloadTipView()
     {
-        //if (TipCanvas == null) return;
+        if (TipCanvas == null)
+            tipViewController = FindObjectOfType<TipViewController>();
         if (tipViewController == null)
             tipViewController = TipCanvas.GetComponent<TipViewController>();
         if (tipViewController != null) tipViewController.UnloadAllTip(); 
@@ -355,12 +374,16 @@ public class ViewManager : MonoSingleton<ViewManager>
 
     public void OnWordReviced(bool isRevice, string orginalWord, string revicedWord)
     {
-        if(messageCanvasController_main == null) messageCanvasController_main = FindObjectOfType<MessageCanvasController>();
-        if (messageCanvasController_main == null)
+        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Story)
         {
-            Debug.Log("No Message Canvas Controller exsist");
-            return;
+            if (messageCanvasController_main == null) messageCanvasController_main = FindObjectOfType<MessageCanvasController>();
+            if (messageCanvasController_main == null)
+            {
+                Debug.Log("No Message Canvas Controller exsist");
+                return;
+            }
+            messageCanvasController_main.GenerateReplyMessageBlock(isRevice, orginalWord, revicedWord);
         }
-        messageCanvasController_main.GenerateReplyMessageBlock(isRevice, orginalWord, revicedWord);
+       
     }
 }
