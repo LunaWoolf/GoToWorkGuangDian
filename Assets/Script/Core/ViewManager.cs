@@ -94,7 +94,7 @@ public class ViewManager : MonoSingleton<ViewManager>
        
         Cursor.SetCursor(customCursorTexture, Vector2.zero, CursorMode.Auto);
 
-        GameOverButton.gameObject.SetActive(false);
+        if(GameOverButton) GameOverButton.gameObject.SetActive(false);
     }
 
     void Update()
@@ -302,7 +302,16 @@ public class ViewManager : MonoSingleton<ViewManager>
     public void FadeToBlack()
     { 
         if(FadeCanvas == null) return;
-        FadeCanvas.GetComponent<Animator>().SetTrigger("Fade");
+        Color Black = new Color(0, 0, 0, 1);
+        
+        LeanTween.value(FadeCanvas, FadeCanvas.GetComponent<Image>().color, Black, 3f)
+          .setOnUpdateColor((UnityEngine.Color color) =>
+          {
+              FadeCanvas.GetComponent<Image>().color = color;
+              Debug.Log("Black");
+          });
+
+        //FadeCanvas.GetComponent<Animator>().SetTrigger("Fade");
     }
 
     public void FadeBack()

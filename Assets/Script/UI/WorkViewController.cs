@@ -61,10 +61,7 @@ public class WorkViewController : MonoBehaviour
             DenyButton.gameObject.SetActive(false);
         }
 
-        if (MoyuButton != null)
-        {
-            MoyuButton.onClick.AddListener(GameManager.instance.StartMoyu);
-        }
+      
 
         if (NewsButton != null)
         {

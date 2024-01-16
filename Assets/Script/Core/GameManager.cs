@@ -40,7 +40,6 @@ public class GameManager : MonoSingleton<GameManager>
         Conversation,
         PaperShredder,
         Work,
-        //Moyu,
         //Write,
         Bus,
         //News,
@@ -66,13 +65,12 @@ public class GameManager : MonoSingleton<GameManager>
         ActionCount,
     }
 
-
-
     public GameObject eventSystem;
 
-    [Header("Word Day")]
+    [Header("Day")]
     public DateTime gameDate = new DateTime(2019, 6, 6, 0, 0, 0);
-    int dayCounter = 0;
+    [SerializeField] int dayCounter = 0;
+
 
     [Header("Word Day")]
     [SerializeField] int PoemViewedToday = 0;
@@ -154,7 +152,13 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void SetDay(int day) { dayCounter = day; }
 
-   
+
+    public void StartChapter()
+    {
+        Debug.Log("StartChapter");
+        ViewManager.instance.FadeToBlack();
+    }
+
 
     public void StartWork()
     {
@@ -214,13 +218,6 @@ public class GameManager : MonoSingleton<GameManager>
 
     }
 
-    public void StartMoyu()
-    {
-        //SetCurrentGameMode(GameMode.Moyu);
-        //ViewManager.instance.UnloadAllView();
-        //ViewManager.instance.LoadMoyuView();
-
-    }
 
     public void StartNews()
     {
@@ -323,27 +320,6 @@ public class GameManager : MonoSingleton<GameManager>
         {
             LoadEndGameScene();
         }
-      
-        /*
-        //increase Timer
-        if (!isPauseWorkDayTimer && currentGameMode == GameMode.Work)
-        {
-            if (workMode == WorkMode.Timer)
-            {
-                WorkDayTimer += Time.deltaTime;
-                ViewManager.instance.SetTimerText(WorkDayTimeLimit - WorkDayTimer);
-                if (WorkDayTimer > WorkDayTimeLimit)
-                {
-                    EndOfWorkDay();
-                }
-            }
-            else
-            {
-                //turn off timer text
-            }
-
-        }*/
-
 
     }
 

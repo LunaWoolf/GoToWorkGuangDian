@@ -3207,6 +3207,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &179117998
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3624,6 +3625,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &185437535
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4448,6 +4450,9 @@ MonoBehaviour:
   PoemLine: {fileID: 5676340257267858763, guid: cdbe6765c12034f9482076d97ac49e14, type: 3}
   ValidPrecentag: 0
   ControversialPrecentage: 32
+  OnMoveToNextPoem:
+    m_PersistentCalls:
+      m_Calls: []
   OnPoemRevise:
     m_PersistentCalls:
       m_Calls: []
@@ -4999,6 +5004,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &226645336
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6337,6 +6343,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &279521232
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13202,6 +13209,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &575225712
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14563,6 +14571,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &646314801
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14992,6 +15001,7 @@ MonoBehaviour:
   button: {fileID: 657774707}
   TipObject: {fileID: 1903909710}
   TipCanvasAnimator: {fileID: 311060479}
+  startOpen: 0
 --- !u!114 &657774707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15547,6 +15557,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &668337391
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17493,6 +17504,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &761420766
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19036,6 +19048,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &845590173
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19554,6 +19567,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &875548616
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20657,6 +20671,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &917412038
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20998,6 +21013,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &941214091
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21799,6 +21815,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &980181348
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24222,6 +24239,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1110557866
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24617,6 +24635,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1126023288
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24829,6 +24848,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1139076248
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -25384,6 +25404,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1172177555
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -26369,6 +26390,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1209167662
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -27442,6 +27464,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1249647242
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31789,6 +31812,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1463504732
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -32261,6 +32285,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1476770620
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -32907,6 +32932,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1505092370
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -33656,6 +33682,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1545382713
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -34180,6 +34207,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1556010292
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -35184,6 +35212,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1648195496
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -35663,6 +35692,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1664034711
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -36042,6 +36072,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1678037714
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -36692,6 +36723,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1708311128
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -36975,6 +37007,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1740358066
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -37429,6 +37462,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1750115220
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -39299,6 +39333,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1850757167
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -40338,6 +40373,7 @@ MonoBehaviour:
       m_Calls: []
   poemPaperMode: 0
   poemGenerator: {fileID: 0}
+  PoemPaperImage: {fileID: 0}
   PoemParent_Write: {fileID: 0}
   PoemPaper_Write: {fileID: 0}
   poemPaperController_Write: {fileID: 0}
@@ -41383,6 +41419,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1977491500
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -41630,13 +41667,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PassButton: {fileID: 1775954113}
   DenyButton: {fileID: 112569186}
+  NextButton: {fileID: 0}
   MoyuButton: {fileID: 1412846524}
   NewsButton: {fileID: 2062699962}
   ReviseButton: {fileID: 399505344}
   PoemCanvasAnimator: {fileID: 696184588}
+  SmokeButton: {fileID: 0}
+  SmokeVideoPlayer: {fileID: 0}
   ActionCountParent: {fileID: 519523808}
   ActionCountPrefab: {fileID: 7599251284680593423, guid: 51c5239b6ec530843997400724989111, type: 3}
   PoemCanvas: {fileID: 696184583}
+  UICanvas: {fileID: 0}
   DailyWorkPrompt:
   - Today, avoid rebellion and protest. Protect the public from inciting words like
     revolution, revolt, and uprising.
@@ -41653,6 +41694,12 @@ MonoBehaviour:
   - Nice
   Boss_Deny:
   - Take a closer look...I believe there are work that should not passed
+  OnSpeedSmokeStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSpeedSmokeFinish:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1987679020
 GameObject:
   m_ObjectHideFlags: 0
@@ -41756,6 +41803,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &1987679024
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -41859,6 +41907,10 @@ PrefabInstance:
       propertyPath: maxFilledPrecent
       value: 70
       objectReference: {fileID: 0}
+    - target: {fileID: 7978768634819224562, guid: 200d9b6bba4446f459c5ae82868282f8, type: 3}
+      propertyPath: postProcessingVolume
+      value: 
+      objectReference: {fileID: 972511923}
     - target: {fileID: 7978768634819224562, guid: 200d9b6bba4446f459c5ae82868282f8, type: 3}
       propertyPath: shredderWordList.Array.size
       value: 50
@@ -42471,6 +42523,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &2006192311
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -44813,6 +44866,7 @@ MonoBehaviour:
   banned: 0
   isInserable: 0
   currentWordType: 6
+  currentWordQuality: 0
 --- !u!222 &2098429828
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -47516,6 +47570,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1013755268, guid: c53f1839a241d45ca94d269cf553756b, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4878771606995890552, guid: c53f1839a241d45ca94d269cf553756b, type: 3}
       propertyPath: isDebug
       value: 1
@@ -47528,6 +47586,10 @@ PrefabInstance:
       propertyPath: Mission_Day1
       value: 
       objectReference: {fileID: 1864502300}
+    - target: {fileID: 4878771606995890552, guid: c53f1839a241d45ca94d269cf553756b, type: 3}
+      propertyPath: currentAppMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4878771606995890552, guid: c53f1839a241d45ca94d269cf553756b, type: 3}
       propertyPath: LoadTestDialogue
       value: 0

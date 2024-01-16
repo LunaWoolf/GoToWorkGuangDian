@@ -40,6 +40,8 @@ public class DebugTool : MonoBehaviour
                 tapCount = 0;
                 GameManager.instance.isDebug = !GameManager.instance.isDebug;
             }
+
+            GameManager.instance.StartChapter();
         }
 
         if (GameManager.instance.isDebug)
