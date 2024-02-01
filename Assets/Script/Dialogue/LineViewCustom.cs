@@ -938,7 +938,7 @@ public class Effects : MonoBehaviour
                 }
 
                 GameObject new_word = Instantiate(WordPrefab, text_parent.transform);
-                new_word.GetComponent<DialogueWord>().SetText(line[LoadWordCount]);
+                new_word.GetComponent<DialogueWord>().SetText(line[LoadWordCount], false);
                 
                 LayoutRebuilder.ForceRebuildLayoutImmediate(new_word.GetComponent<RectTransform>());
                 Vector2 sizeDelta = new_word.GetComponent<RectTransform>().sizeDelta;

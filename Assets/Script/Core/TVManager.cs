@@ -167,7 +167,7 @@ public class TVManager : MonoBehaviour
             {
                 if (w._UnProcessText[0] == '?')
                 {
-                    w.SetText("————————");
+                    w.SetText("————————", false);
 
                 }
                 w.isCircledable = false;
@@ -188,7 +188,7 @@ public class TVManager : MonoBehaviour
                 
                 if (w._UnProcessText.Length > 0 && w._UnProcessText[0] == '?')
                 {
-                    w.SetText("————————");
+                    w.SetText("————————", false);
                 }
                 w.isCircledable = false;
 

@@ -56,6 +56,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Story,
         Speed,
+        Expo,
     }
 
     [Serializable]

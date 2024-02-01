@@ -1,43 +1,88 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 public class PoemLine : MonoBehaviour
 {
     [Header("Reference")]
     public GameObject wordPrefab;
+    public GameObject wordPrefab_Expo;
     public Transform line01;
     public Transform line02;
     [SerializeField] public LineCheckBox checkBox;
     public int oneLineMaxLetter = 50;
     int currentLetterCount = 0;
+    int currentTypingWordIndex = 0;
 
     public int wordCount = 0;
     public List<Word> wordList = new List<Word>();
 
-    [SerializeField]string[] _line;
-    //[SerializeField]string _UnProcessLine;
+    public UnityEvent OnLineCompleteType;
 
- 
+    [SerializeField]string[] _line;
+    public string roughLine = "";
     public virtual void SetLine(string line)
     {
-        _line = line.Split(" ");
+       _line = line.Split(" ");
+       
+        roughLine = line.Replace(" ", "");
 
-        foreach (string word in _line)
+        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo)
         {
-            insertWord(word);
+            if (GetComponentInParent<PoemPaperController>())
+            {
+                OnLineCompleteType.AddListener(GetComponentInParent<PoemPaperController>().OnPoemLineFinishTyping);
+            }
+            OnLineCompleteType.AddListener(PoemGenerator.instance.TypeNextLine);
+            TypeWord(_line[0]);
+
+        }
+        else 
+        {
+            foreach (string word in _line)
+            {
+                insertWord(word);
+            }
         }
 
     }
 
-
-    public virtual GameObject insertWord(string word)
+    /*IEnumerator TypeLine(string line)
     {
-        
+        _line = line.Split(" ");
+        foreach (string word in _line)
+        {
+            TypeWord(word);
+            
+            yield return new WaitForSeconds(0.2f);
+        }
+      
+    }*/
+    IEnumerator IE_TypeNextWord()
+    {
+        currentTypingWordIndex++;
+        if (currentTypingWordIndex >= _line.Length)
+        {
+            OnLineCompleteType.Invoke();
+            yield break;
+        }
+          
+        yield return new WaitForSeconds(0.2f);
+        TypeWord(_line[currentTypingWordIndex]);
+       
+    }
+
+    public void TypeNextWord()
+    {
+        StartCoroutine(IE_TypeNextWord());
+    }
+
+    public virtual GameObject TypeWord(string word)
+    {
         GameObject w;
         if (currentLetterCount < oneLineMaxLetter)
         {
-            w = Instantiate(wordPrefab, line01);
+            w = Instantiate(wordPrefab_Expo, line01);
             Debug.Log("LetterCount" + currentLetterCount);
 
         }
@@ -46,11 +91,28 @@ public class PoemLine : MonoBehaviour
             if (!line02.gameObject.activeSelf)
                 line02.gameObject.SetActive(true);
 
-            w = Instantiate(wordPrefab, line02);
-            
+            w = Instantiate(wordPrefab_Expo, line02);
+
         }
         wordCount++;
-      
+        word = AnalysisWord(word, w);
+
+        w.GetComponent<Word>().indexInLine = wordList.Count;
+        w.GetComponent<Word>().OnWordCompleteType.AddListener(TypeNextWord);
+        w.GetComponent<Word>().SetText(word, true);
+
+       
+        wordList.Add(w.GetComponent<Word>());
+
+        currentLetterCount += w.GetComponent<Word>().GetCleanText().Length;
+
+        return w;
+    }
+
+
+
+    public virtual string AnalysisWord(string word, GameObject w)
+    {
 
         if (word.Contains("<v>"))
         {
@@ -70,7 +132,7 @@ public class PoemLine : MonoBehaviour
         else if (word.Contains("<>"))
         {
             word = word.Replace("<>", "[__________]");
-        
+
 
             w.GetComponent<Word>().SetWordType(Word.WordType.Empty);
         }
@@ -79,11 +141,33 @@ public class PoemLine : MonoBehaviour
             w.GetComponent<Word>().SetWordType(Word.WordType.None);
         }
 
+        return word;
 
-        
+    }
+
+    public virtual GameObject insertWord(string word)
+    { 
+        GameObject w;
+        if (currentLetterCount < oneLineMaxLetter)
+        {
+            w = Instantiate(wordPrefab, line01);
+            Debug.Log("LetterCount" + currentLetterCount);
+
+        }
+        else
+        {
+            if (!line02.gameObject.activeSelf)
+                line02.gameObject.SetActive(true);
+
+            w = Instantiate(wordPrefab, line02);
+            
+        }
+        wordCount++;
+
+        word = AnalysisWord(word, w);
 
         w.GetComponent<Word>().indexInLine = wordList.Count;
-        w.GetComponent<Word>().SetText(word);
+        w.GetComponent<Word>().SetText(word, false);
     
         wordList.Add(w.GetComponent<Word>());
 

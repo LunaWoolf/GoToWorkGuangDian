@@ -143,10 +143,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wordPrefab: {fileID: 237680870892140123, guid: 391ac095b9309436b955bae60fc0187e, type: 3}
+  wordPrefab_Expo: {fileID: 237680870892140123, guid: 65d1ddbd7fc615b4490befd0e3cb6e81, type: 3}
   line01: {fileID: 6526793347981131811}
   line02: {fileID: 8231505206133281860}
   checkBox: {fileID: 1844077067}
-  oneLineMaxLetter: 30
+  oneLineMaxLetter: 70
   wordCount: 0
   wordList: []
   _line: []

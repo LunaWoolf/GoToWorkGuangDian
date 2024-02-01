@@ -14,7 +14,7 @@ public class MissionWord : Word
         bool isRevised = true;
         CancleCircledWord();
         ToggleReviseButton(false, true);
-        SetText(PossibleReviseList[currentReviseIndex]);
+        SetText(PossibleReviseList[currentReviseIndex], false);
         currentReviseIndex++;
         if (currentReviseIndex == PossibleReviseList.Count)
             currentReviseIndex = 0;

@@ -72,7 +72,7 @@ public class SaySomethingManager : MonoBehaviour
     {
         if (word.currentWordType == Word.WordType.Empty)
         {
-            word.SetText(text);
+            word.SetText(text, false);
             word.SetWordType(Word.WordType.Inserted);
         }
         else if (word.currentWordType == Word.WordType.Inserted)
@@ -81,7 +81,7 @@ public class SaySomethingManager : MonoBehaviour
             temp.Add(word.GetCleanText());
             FindObjectOfType<PaperShredderManager>().StartPaperShredderWithGivenList(temp);
             temp_UsedWordForCurrentLine.Remove(word.GetCleanText());
-            word.SetText(text);
+            word.SetText(text, false);
         }
        
         temp_UsedWordForCurrentLine.Add(text);

@@ -62,7 +62,7 @@ public class DialogueWord : Word
     }
 
 
-    public override void SetText(string t)
+    public override void SetText(string t, bool isTyping)
     {
 
 

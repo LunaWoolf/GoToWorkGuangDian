@@ -159,8 +159,9 @@ public class WorkViewController : MonoBehaviour
     public void SetCurrentPoem( Poem p)
     {
         CurrentPoemOnCanvas = p;
-       
-        Selectable selectable = PassButton.GetComponent<Selectable>();
+        Selectable selectable = null;
+        if (PassButton != null)
+            selectable = PassButton.GetComponent<Selectable>();
         if (selectable != null)
         {
             selectable.transition = Selectable.Transition.ColorTint;
@@ -245,16 +246,19 @@ public class WorkViewController : MonoBehaviour
 
     public void SetPassButtonActive(bool isOn)
     {
-        PassButton.enabled = isOn;
+        if(PassButton != null)
+            PassButton.enabled = isOn;
     }
     public void SetDenyButtonActive(bool isOn)
     {
-        DenyButton.enabled = isOn;
+        if (DenyButton != null)
+            DenyButton.enabled = isOn;
     }
 
     public void SetNewsButtonActive(bool isOn)
     {
-        NewsButton.enabled = isOn;
+        if (NewsButton != null)
+            NewsButton.enabled = isOn;
     }
   
     public void InitalActionCount(int action)

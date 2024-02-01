@@ -75,7 +75,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190186
+    rgba: 4278190080
   m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -254,6 +254,9 @@ MonoBehaviour:
   OnWordConfirm:
     m_PersistentCalls:
       m_Calls: []
+  OnWordCompleteType:
+    m_PersistentCalls:
+      m_Calls: []
   circled: 0
   banned: 0
   isInserable: 0
@@ -335,8 +338,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: placeholder
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: be8a43ccd271e4ed0b4a5243dfd5e793, type: 2}
-  m_sharedMaterial: {fileID: -117408375743790132, guid: be8a43ccd271e4ed0b4a5243dfd5e793, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cb64394328be44e43bf3507bbf1b3f80, type: 2}
+  m_sharedMaterial: {fileID: -2844063949009800104, guid: cb64394328be44e43bf3507bbf1b3f80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

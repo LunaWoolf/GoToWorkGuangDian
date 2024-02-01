@@ -40,7 +40,7 @@ public class FamilyWordButton : Word
             g.SetActive(false);
     }
 
-    public override void SetText(string t)
+    public override void SetText(string t, bool isTyping)
     {
 
     }

@@ -50,7 +50,7 @@ public class Mission : MonoBehaviour
     {
         if (word.currentWordType == Word.WordType.Empty)
         {
-            word.SetText(text);
+            word.SetText(text, false);
             word.isConfirm = true;
             word.SetWordType(Word.WordType.Inserted);
         }
@@ -59,7 +59,7 @@ public class Mission : MonoBehaviour
             List<string> temp = new List<string>();
             temp.Add(word.GetCleanText());
             FindObjectOfType<PaperShredderManager>().StartPaperShredderWithGivenList(temp);
-            word.SetText(text);
+            word.SetText(text, false);
         }
     }
 

@@ -68,14 +68,17 @@ public class Word : MonoBehaviour
                     {
                         if (FindObjectOfType<WorkViewController>()) FindObjectOfType<WorkViewController>().OnWordConfirmed();
                     }
-                    else if(currentMode == GameManager.GameMode.Conversation)
+                    else if (currentMode == GameManager.GameMode.Conversation)
                     {
                         if (this.GetComponentInParent<MissionLine>()) this.GetComponentInParent<MissionLine>().OnWordConfirmed();
                     }
-                    
-                    LeanTween.value(this.gameObject, unconfirmColor, confirmColor, 1f).setOnUpdate((Color val) => { if(tm) tm.color = val; });
-                  
-                    
+
+                    if(GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo)
+                        unconfirmColor = Color.white;
+
+                    LeanTween.value(this.gameObject, unconfirmColor, confirmColor, 1f).setOnUpdate((Color val) => { if (tm) tm.color = val; });
+
+
                 }
                 else
                 {
@@ -87,6 +90,8 @@ public class Word : MonoBehaviour
 
     }
     public UnityEvent OnWordConfirm;
+    public UnityEvent OnWordCompleteType;
+    bool finishTyping = false;
     public bool circled = false;
     public bool banned = false;
     public bool isInserable = false;
@@ -95,6 +100,9 @@ public class Word : MonoBehaviour
     [SerializeField] WordQuality currentWordQuality = WordQuality.Good;
     ClickableObject clickableObject;
 
+    [Header("Variable")]
+    bool isHighlighted;
+    bool isRamdonRevising = false;
     public void SetWordType(WordType type)
     {
 
@@ -119,23 +127,23 @@ public class Word : MonoBehaviour
     {
 
         currentWordQuality = quality;
-       /* switch (quality)
-        {
-            case WordType.Empty:
-                break;
-        }*/
+        /* switch (quality)
+         {
+             case WordType.Empty:
+                 break;
+         }*/
 
     }
 
     private void Awake()
     {
-        if (_Text.Length > 0 )
-            SetText(_Text);
+        if (_Text.Length > 0)
+            SetText(_Text, false);
     }
 
     protected virtual void Start()
     {
-        if(!tm) tm = this.GetComponentInChildren<TextMeshProUGUI>();
+        if (!tm) tm = this.GetComponentInChildren<TextMeshProUGUI>();
         if (tm) tm.text = _Text;
         if (wordbutton == null) wordbutton = this.GetComponentInChildren<Button>();
         //if (wordbutton != null) wordbutton.onClick.AddListener(OnWordClicked);
@@ -146,7 +154,7 @@ public class Word : MonoBehaviour
         }
         if (PoemGenerator.instance) PoemGenerator.instance.OnPoemRevise.AddListener(ReviseWord);
 
-      
+
         clickableObject = this.GetComponentInChildren<ClickableObject>();
         if (clickableObject != null)
         {
@@ -163,14 +171,28 @@ public class Word : MonoBehaviour
             this.isConfirm = true;
 
         this.isConfirm = false;
-        if(tm)
+        if (tm)
             tm.color = unconfirmColor;
 
         if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed)
             GameManager.instance.OnPoemPass.AddListener(ConfirmedWord);
     }
+    protected virtual void Update()
+    {
+        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo && !isRamdonRevising && finishTyping)
+        {
+            if (currentWordType != WordType.None && currentWordType != WordType.Empty)
+            {
+                int i = Random.Range(1, 100);
+                if (i == 1)
+                    StartCoroutine(IE_RandamRevise());
 
-    public virtual void SetText(string t)
+            }
+        }
+      
+    }
+
+    public virtual void SetText(string t, bool isTyping)
     {
         _UnProcessText = t;
 
@@ -182,11 +204,10 @@ public class Word : MonoBehaviour
 
         if (t.Length > 2 && t[0] == '?')
         {
-       
-
+ 
             banned = true;
 
-            if(t.Length > 3 && GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed)
+            if(t.Length > 3 && (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed || GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo))
             {
                 switch (t[1])
                 {
@@ -213,21 +234,13 @@ public class Word : MonoBehaviour
             {
                 _Text = t.Substring(1, t.Length - 1);
             }
-
-
-
-
            
             _Text = _Text.Replace("_", " ");
             if (indexInLine == 0)
                 _Text = CapFirstLetter(_Text);
-            tm.text = _Text;
-
-
-          
 
             //hightlight for debug
-            if (PropertyManager.instance.hasCATgpt || GameManager.instance.isDebug)
+            if ((PropertyManager.instance != null && PropertyManager.instance.hasCATgpt) || GameManager.instance.isDebug)
             {
                 tm.fontStyle = FontStyles.Underline;
 
@@ -244,11 +257,25 @@ public class Word : MonoBehaviour
             _Text = _Text.Replace("_", " ");
             if (indexInLine == 0)
                 _Text = CapFirstLetter(_Text);
-            tm.text = _Text;
-            tm.color = new Color(0, 0, 0, 1);
+         
+
+            //tm.color = new Color(0, 0, 0, 1);
          
 
         }
+
+        if (!isTyping)
+        {
+            tm.text = _Text;
+            tm.maxVisibleCharacters = tm.text.Length;
+        }
+        else
+        {
+            tm.maxVisibleCharacters = 0;
+            tm.text = _Text;
+            StartCoroutine(StartTypeWord(_Text));
+        }
+       
 
         _Text_clean = _Text.Replace(".", "");
         _Text_clean = _Text_clean.Replace("?", "");
@@ -263,6 +290,19 @@ public class Word : MonoBehaviour
         if (_Text == "" || _Text == " ")
             isConfirm = true;
     }
+
+    IEnumerator StartTypeWord(string word)
+    {
+        while (tm.maxVisibleCharacters < tm.text.Length)
+        {
+            tm.maxVisibleCharacters++;
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        OnWordCompleteType.Invoke();
+        finishTyping = true;
+    }
+
     public string GetText() { return _Text; }
 
     public string GetCleanText() { return _Text_clean; }
@@ -418,7 +458,7 @@ public class Word : MonoBehaviour
         int day = 0;
         day = GameManager.instance.GetDay() + 1;
 
-        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed)
+        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed || GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo)
         {
             day = Random.Range(1, 6);
         }
@@ -426,11 +466,12 @@ public class Word : MonoBehaviour
         string orginalText = GetCleanText();
         string ReviceTest = "";
         int breakCoutner = 0;
-        if (circled)
+        if (circled || GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo)
         {
             if (banned)
             {
                 PropertyManager.instance.currentPoemBannedWord--;
+                
             }
             switch (currentWordType)
             {
@@ -468,7 +509,7 @@ public class Word : MonoBehaviour
             if (ReviceTest != "")
             {
                 GameManager.instance.CancleCircledWordInCurrentPoem(_Text_clean);
-                SetText(ReviceTest);
+                SetText(ReviceTest, false);
                 GameManager.instance.CircledWordInCurrentPoem(_Text_clean);
                 ViewManager.instance.OnWordReviced(isRevised, orginalText, GetCleanText());
                 if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Story)
@@ -482,9 +523,6 @@ public class Word : MonoBehaviour
 
                 }
             }
-
-
-
 
         }
     }
@@ -522,5 +560,69 @@ public class Word : MonoBehaviour
         }
        
 
+    }
+
+
+    public void Highlight()
+    {
+
+        Button b = Background.GetComponent<Button>();
+        LeanTween.value(gameObject, b.colors.normalColor, Color.white, 0.1f)
+         .setOnUpdateColor((Color color) =>
+         {
+             ColorBlock cb = b.colors;
+             cb.normalColor = color;
+             b.colors = cb;
+
+             Background.GetComponent<Image>().color = color;
+         });
+
+        LeanTween.value(gameObject, tm.color, Color.black, 0.1f)
+         .setOnUpdateColor((Color color) =>
+         {
+             tm.color = color;
+         });
+
+        isHighlighted  = true;
+    }
+
+    public void UnHighlight()
+    {
+        Button b = Background.GetComponent<Button>();
+        LeanTween.value(gameObject, b.colors.normalColor, new Color(0, 0, 0, 0), 0.1f)
+        .setOnUpdateColor((Color color) =>
+        {
+           
+            ColorBlock cb = b.colors;
+            cb.normalColor = color;
+            b.colors = cb;
+
+            Background.GetComponent<Image>().color = color;
+            
+        });
+
+        LeanTween.value(gameObject, Background.GetComponent<Image>().color, Color.white, 0.1f)
+         .setOnUpdateColor((Color color) =>
+         {
+             tm.color = color;
+         });
+
+
+        isHighlighted = false;
+    }
+
+    IEnumerator IE_RandamRevise()
+    {
+        isRamdonRevising = true;
+        if (!isHighlighted) Highlight();
+        yield return new WaitForSeconds(0.2f);
+        int reviseTime = Random.Range(1, 6);
+        for (int i = 0; i < reviseTime; i++)
+        {
+            ReviseWord();
+            yield return new WaitForSeconds(2f);
+        }
+
+        isRamdonRevising = false;
     }
 }

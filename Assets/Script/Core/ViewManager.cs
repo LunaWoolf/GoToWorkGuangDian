@@ -123,10 +123,14 @@ public class ViewManager : MonoSingleton<ViewManager>
     {
         float scaleFactor = Mathf.Clamp(10 - money, 1, 10);
         Vector3 scale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
-        MoneyText.transform.parent.gameObject.transform.localScale = scale;
+
 
         if (MoneyText)
+        {
+            MoneyText.transform.parent.gameObject.transform.localScale = scale;
             MoneyText.text = money.ToString();
+        }
+           
     }
 
     public void SetPassPoemText(int poemCount)

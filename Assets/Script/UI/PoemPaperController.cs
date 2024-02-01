@@ -29,13 +29,15 @@ public class PoemPaperController : MonoBehaviour
     public PoemGenerator poemGenerator;
     [Header("UI Reference_Read")]
     [SerializeField] Image PoemPaperImage;
+    [SerializeField] float lineHeight = 15f;
+    public int lineCount = 0;
     //[SerializeField] RectTransform Paragraphy;
 
     [Header("UI Reference_Write")]
     public GameObject PoemParent_Write;
     public GameObject PoemPaper_Write;
     public PoemPaperController poemPaperController_Write;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -81,8 +83,31 @@ public class PoemPaperController : MonoBehaviour
        
         poemGenerator = FindObjectOfType<PoemGenerator>();
         GameManager.instance.OnPoemPass.AddListener(OnPoemPass);
+
     }
 
+    public void Update()
+    {
+        if (lineCount > 5 && GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo)
+        {
+
+            this.GetComponent<RectTransform>().position += new Vector3(0, 2 * Time.deltaTime, 0);
+
+            
+        }
+    }
+    public void OnPoemLineFinishTyping()
+    {
+        lineCount++;
+        this.GetComponent<Animator>().enabled = false;
+        if (lineCount > 5 &&  GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo)
+        {
+           
+            this.GetComponent<RectTransform>().position += new Vector3(0, lineHeight, 0);
+           
+            Debug.Log("MoveUp");
+        }
+    }
     public void SwitchOnAnimationStart(string name)
     {
         //Excute when Animation Clip Start, name is the name of the clip

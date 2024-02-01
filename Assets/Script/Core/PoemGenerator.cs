@@ -1,12 +1,12 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Text.RegularExpressions;
-
+using Pinyin4net;
 public class PoemGenerator : MonoSingleton<PoemGenerator>
 {
-    [Header("Word Bank")]
+    [Header("Word Bank_Eng")]
     public TextAsset nounRef;
     public TextAsset verbRef;
     public TextAsset adjRef;
@@ -16,7 +16,15 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     public List<TextAsset> verbRef_controversial = new List<TextAsset>();
     public List<TextAsset> adjRef_controversial = new List<TextAsset>();
 
+    [Header("Word Bank_cn")]
+    public TextAsset nounRef_cn;
+    public TextAsset verbRef_cn;
+    public TextAsset adjRef_cn;
+    public TextAsset lineRef_cn;
 
+    public List<TextAsset> nounRef_controversial_cn = new List<TextAsset>();
+    public List<TextAsset> verbRef_controversial_cn = new List<TextAsset>();
+    public List<TextAsset> adjRef_controversial_cn = new List<TextAsset>();
 
     [Header("WordList")]
     List<string> nounsList = new List<string>();
@@ -62,6 +70,9 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     public UnityEvent OnMoveToNextPoem;
 
     public UnityEvent OnPoemRevise;
+
+    [Header("Expo")]
+    List<PoemLine> currentLineOnScreen = new List<PoemLine>();
     void Awake()
     {
         var objs = FindObjectsOfType<PoemGenerator>();
@@ -88,6 +99,10 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         if (poemPaperController_Read != null) poemPaperController_Read.OnPaperExitFinish.AddListener(TryGoToNextPoem);
         GameManager.instance.OnPoemPass.AddListener(OnPoemPass);
         //GeneratorPoem(5);
+
+        string[] pinyinStr = PinyinHelper.ToHanyuPinyinStringArray('李');
+        Debug.Log(pinyinStr[0]);
+
     }
 
     // Update is called once per frame
@@ -95,8 +110,16 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            TearPoem();
-            GeneratorPoem(5);
+            if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo)
+            {
+                StartCoroutine(StartGeneratorPoem_Expo());
+            }
+            else
+            {
+                TearPoem();
+                GeneratorPoem(5);
+            }
+
         }
     }
 
@@ -134,6 +157,57 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         string line_tem = lines[randLine];
         line_tem = CapFirstLetter(line_tem);
         return line_tem;
+    }
+
+    public void TypeNextLine()
+    {
+        StartCoroutine(StartGeneratorPoem_Expo());
+    }
+    IEnumerator StartGeneratorPoem_Expo()
+    {
+        yield return new WaitForSeconds(0.5f);
+        GeneratorPoem_Expo();
+   
+    }
+    public string GeneratorPoem_Expo()
+    {
+        currentDay = GameManager.instance.GetDay() + 1;
+        string poem = "";
+        int rand = Random.Range(0, 100);
+        bool isValid = (rand < ValidPrecentag) ? true : false;
+        Poem _currentPoem = new Poem();
+
+        //Line
+        int randLine = Random.Range(0, lines.Length);
+        string line_tem = lines[randLine];
+
+        line_tem = ReplaceVerb(line_tem, isValid);
+        line_tem = ReplaceNoun(line_tem, isValid);
+        line_tem = ReplaceAdj(line_tem, isValid);
+        line_tem = CapFirstLetter(line_tem);
+        //poem[i] = line_tem;
+        Debug.Log(line_tem);
+
+        // Generate Line
+
+        GameObject p = Instantiate(PoemLine, PoemParent_Read.transform, false);
+        p.GetComponent<PoemLine>().SetLine(line_tem);
+        _currentPoem.poemLines.Add(p.GetComponent<PoemLine>());
+
+        currentLineOnScreen.Add(p.GetComponent<PoemLine>());
+
+        //currentPoem = poem; // todo: refactor that to poem logic
+        return poem;
+    }
+
+    public string TypeLinefromSpeech(string line)
+    {
+        Poem _currentPoem = new Poem();
+
+        GameObject p = Instantiate(PoemLine, PoemParent_Read.transform, false);
+        p.GetComponent<PoemLine>().SetLine(line);
+        _currentPoem.poemLines.Add(p.GetComponent<PoemLine>());
+        return line;
     }
 
     public string[] GeneratorPoem(int line)
@@ -386,8 +460,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
     }
 
-    
-
+   
     public void TryGoToNextPoem()
     {
 
@@ -506,7 +579,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
         if (controversial)
         {
-            if (GameManager.instance.GetCurrentAppMode() != GameManager.AppMode.Speed)
+            if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Story)
             {
                 rand = Random.Range(1, nouns_controversial[DaySpecific].Length);
                 w = "?" + nouns_controversial[DaySpecific][rand];
@@ -541,7 +614,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
         if (controversial)
         {
-            if (GameManager.instance.GetCurrentAppMode() != GameManager.AppMode.Speed)
+            if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Story)
             {
                 rand = Random.Range(1, verbs_controversial[DaySpecific].Length);
                 w = "?" + verbs_controversial[DaySpecific][rand];
@@ -578,7 +651,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
         if (controversial)
         {
-            if (GameManager.instance.GetCurrentAppMode() != GameManager.AppMode.Speed)
+            if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Story)
             {
                 rand = Random.Range(1, adjs_controversial[DaySpecific].Length);
                 w = "?" + adjs_controversial[DaySpecific][rand];
@@ -598,6 +671,40 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         return w;
     }
 
+    public bool CheckSpeechWordForEarse(string speechText)
+    {
+        Debug.Log("Clean Speech Text " + speechText);
+        foreach (PoemLine line in currentLineOnScreen)
+        {
+            int minLength = Mathf.Min(speechText.Length, line.roughLine.Length);
+            int commonChars = 0;
+
+            for (int i = 0; i < minLength; i++)
+            {
+                if (speechText[i] == line.roughLine[i])
+                {
+                    commonChars++;
+                }
+            }
+
+            float overlapPercentage = (float)commonChars / line.roughLine.Length * 100f;
+            Debug.Log("Line Speech Text " + line.roughLine);
+            if (overlapPercentage >= 20f || commonChars > 5)
+            {
+                foreach (Word w in line.wordList)
+                {
+                    w.UnHighlight();
+                    w.isConfirm = true;
+                }
+                //line.gameObject.SetActive(false);
+                return true;
+
+            }
+        }
+
+
+        return false;
+    }
     
     
 }
