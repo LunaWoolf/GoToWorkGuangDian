@@ -19,6 +19,8 @@ position: -61,-114
 The Day
 is June 6th
 It’s early summer
+-> Test Option One
+-> Test Option Two
 -
 <<PlayAudioCue CommandManager AC true>>
 The noise of the AC

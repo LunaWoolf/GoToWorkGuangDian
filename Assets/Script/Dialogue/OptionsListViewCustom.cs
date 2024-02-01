@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace Yarn.Unity
-{
+using Yarn.Unity;
+
+
     public class OptionsListViewCustom : DialogueViewBase
     {
         [SerializeField] CanvasGroup canvasGroup;
 
-        [SerializeField] OptionView optionViewPrefab;
+        [SerializeField] OptionViewCustom optionViewPrefab;
 
         [SerializeField] TextMeshProUGUI lastLineText;
 
@@ -19,7 +20,7 @@ namespace Yarn.Unity
         [SerializeField] bool showUnavailableOptions = false;
 
         // A cached pool of OptionView objects so that we can reuse them 
-        List<OptionView> optionViews = new List<OptionView>();
+        List<OptionViewCustom> optionViews = new List<OptionViewCustom>();
 
         // The method we should call when an option has been selected.
         Action<int> OnOptionSelected;
@@ -79,7 +80,16 @@ namespace Yarn.Unity
 
                 optionView.gameObject.SetActive(true);
 
-                optionView.Option = option;
+                DialogueOptionCustom optionCustom = new DialogueOptionCustom();
+                optionCustom.DialogueOptionID = option.DialogueOptionID;
+                optionCustom.TextID = option.TextID;
+                optionCustom.Line = option.Line;
+                optionCustom.IsAvailable = option.IsAvailable;
+
+
+
+
+                optionView.Option = optionCustom;
 
                 // The first available option is selected by default
                 if (optionViewsCreated == 0)
@@ -114,7 +124,7 @@ namespace Yarn.Unity
             /// Creates and configures a new <see cref="OptionView"/>, and adds
             /// it to <see cref="optionViews"/>.
             /// </summary>
-            OptionView CreateNewOptionView()
+            OptionViewCustom CreateNewOptionView()
             {
                 var optionView = Instantiate(optionViewPrefab);
                 optionView.transform.SetParent(transform, false);
@@ -129,11 +139,11 @@ namespace Yarn.Unity
             /// <summary>
             /// Called by <see cref="OptionView"/> objects.
             /// </summary>
-            void OptionViewWasSelected(DialogueOption option)
+            void OptionViewWasSelected(DialogueOptionCustom option)
             {
                 StartCoroutine(OptionViewWasSelectedInternal(option));
 
-                IEnumerator OptionViewWasSelectedInternal(DialogueOption selectedOption)
+                IEnumerator OptionViewWasSelectedInternal(DialogueOptionCustom selectedOption)
                 {
                     yield return StartCoroutine(Effects.FadeAlpha(canvasGroup, 1, 0, fadeTime));
                     OnOptionSelected(selectedOption.DialogueOptionID);
@@ -141,4 +151,4 @@ namespace Yarn.Unity
             }
         }
     }
-}
+

@@ -57,9 +57,14 @@ public class TimelineManager : MonoBehaviour
         }
         Debug.Log("Play timeline : " + index + " " + timelineShotList[index].name);
         TimelineAsset timelineAsset = timelineShotList[index].timelineAsset;
-      
-        playableDirector.playableAsset = timelineAsset;
-        playableDirector.Play();
+
+        if (timelineAsset)
+        {
+            playableDirector.playableAsset = timelineAsset;
+            playableDirector.Play();
+
+        }
+       
 
     }
 
