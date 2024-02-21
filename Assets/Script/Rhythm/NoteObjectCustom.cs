@@ -54,13 +54,13 @@ namespace SonicBloom.Koreo.Demos
 		void Update()
 		{
 			UpdateScale();
-
+			IsNoteMissed();
 			//UpdatePosition();
 
 			//if (transform.position.y <= laneController.DespawnY)
 			//{
-				//gameController.ReturnNoteObjectToPool(this);
-				//Reset();
+			//gameController.ReturnNoteObjectToPool(this);
+			//Reset();
 			//}
 		}
 
@@ -119,7 +119,12 @@ namespace SonicBloom.Koreo.Demos
 				bMissed = (curTime - noteTime > hitWindow);
 			}
 
+			if(bMissed)
+				this.gameObject.SetActive(false);
+		
 			return bMissed;
+
+
 		}
 
 		// Returns this Note Object to the pool which is controlled by the Rhythm Game Controller.  This
