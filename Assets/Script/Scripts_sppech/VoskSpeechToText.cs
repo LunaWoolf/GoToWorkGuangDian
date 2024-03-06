@@ -162,6 +162,7 @@ public class VoskSpeechToText : MonoBehaviour
         yield return null;
 
         OnStatusUpdated?.Invoke("Initialized");
+        DebugTool.instance.SetDebugCanvasText("Initialized");
         VoiceProcessor.OnFrameCaptured += VoiceProcessorOnOnFrameCaptured;
         VoiceProcessor.OnRecordingStop += VoiceProcessorOnOnRecordingStop;
        
@@ -208,6 +209,7 @@ public class VoskSpeechToText : MonoBehaviour
         }
 
         OnStatusUpdated?.Invoke("Decompressing model...");
+        DebugTool.instance.SetDebugCanvasText("Decompressing model...");
         string dataPath = Path.Combine(Application.streamingAssetsPath, ModelPath);
 
         Stream dataStream;
@@ -236,7 +238,7 @@ public class VoskSpeechToText : MonoBehaviour
 
         //Update status text
         OnStatusUpdated?.Invoke("Reading Zip file");
-
+        DebugTool.instance.SetDebugCanvasText("Reading Zip file!");
         //Start Extraction
         zipFile.ExtractAll(Application.persistentDataPath);
 
@@ -248,6 +250,7 @@ public class VoskSpeechToText : MonoBehaviour
 
         //Update status text
         OnStatusUpdated?.Invoke("Decompressing complete!");
+        DebugTool.instance.SetDebugCanvasText("Decompressing complete!");
         //Wait a second in case we need to initialize another object.
         yield return new WaitForSeconds(1);
         //Dispose the zipfile reader.
@@ -287,6 +290,12 @@ public class VoskSpeechToText : MonoBehaviour
     //Calls the On Phrase Recognized event on the Unity Thread
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            ToggleRecording();
+        }
+
         lock (_resultLock)
         {
             if (_result != _threadedRecognitionResult)
@@ -297,6 +306,8 @@ public class VoskSpeechToText : MonoBehaviour
                 OnTranscriptionResult_printLine(_result);
             }
         }
+
+     
     }
 
     //Callback from the voice processor when new audio is detected
@@ -389,15 +400,6 @@ public class VoskSpeechToText : MonoBehaviour
     public void OnTranscriptionResult_printLine(string obj)
     {
         var result = new RecognitionResult(obj);
-        /*for (int i = 0; i < result.Phrases.Length; i++)
-        {
-            if (i > 0)
-            {
-                ResultText.text += "\n ---------- \n";
-            }
-
-            ResultText.text += result.Phrases[0].Text + " | " + "Confidence: " + result.Phrases[0].Confidence;
-        }*/
 
         if (PoemGenerator.instance)
         {
@@ -409,11 +411,7 @@ public class VoskSpeechToText : MonoBehaviour
             }
         }
            
-        Debug.Log("speech result is: " + result.Phrases[0].Text);
-
-        
+        Debug.Log("speech result is: " + result.Phrases[0].Text); 
     }
-
-
 
 }

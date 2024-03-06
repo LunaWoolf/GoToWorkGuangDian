@@ -77,7 +77,7 @@ public class Word : MonoBehaviour
                         unconfirmColor = Color.white;
 
                     LeanTween.value(this.gameObject, unconfirmColor, confirmColor, 1f).setOnUpdate((Color val) => { if (tm) tm.color = val; });
-
+                    UnHighlight();
 
                 }
                 else
@@ -179,13 +179,20 @@ public class Word : MonoBehaviour
     }
     protected virtual void Update()
     {
-        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo && !isRamdonRevising && finishTyping)
+       
+        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo && !isRamdonRevising && finishTyping && !isConfirm)
         {
+           
             if (currentWordType != WordType.None && currentWordType != WordType.Empty)
             {
+                
                 int i = Random.Range(1, 100);
                 if (i == 1)
+                {
+                   
                     StartCoroutine(IE_RandamRevise());
+                }
+                    
 
             }
         }

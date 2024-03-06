@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using TMPro;
 
-public class DebugTool : MonoBehaviour
+public class DebugTool : MonoSingleton<DebugTool>
 {
     private int tapCount;
     private bool isCounting;
 
+    [SerializeField] GameObject DebugCanvas;
+    [SerializeField] TextMeshProUGUI DebugCanvas_Text;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +29,15 @@ public class DebugTool : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo)
+        {
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                DebugCanvas.SetActive(!DebugCanvas.activeSelf);
+            }
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.U))
         {
             if (!isCounting)
@@ -131,5 +143,10 @@ public class DebugTool : MonoBehaviour
             }
         }
 
+    }
+
+    public void SetDebugCanvasText(string text)
+    {
+        DebugCanvas_Text.text = text;
     }
 }

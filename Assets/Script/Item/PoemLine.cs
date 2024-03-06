@@ -97,14 +97,14 @@ public class PoemLine : MonoBehaviour
         wordCount++;
         word = AnalysisWord(word, w);
 
-        w.GetComponent<Word>().indexInLine = wordList.Count;
-        w.GetComponent<Word>().OnWordCompleteType.AddListener(TypeNextWord);
-        w.GetComponent<Word>().SetText(word, true);
+        w.GetComponent<ExpoWord>().indexInLine = wordList.Count;
+        w.GetComponent<ExpoWord>().OnWordCompleteType.AddListener(TypeNextWord);
+        w.GetComponent<ExpoWord>().SetText(word, true);
 
        
-        wordList.Add(w.GetComponent<Word>());
+        wordList.Add(w.GetComponent<ExpoWord>());
 
-        currentLetterCount += w.GetComponent<Word>().GetCleanText().Length;
+        currentLetterCount += w.GetComponent<ExpoWord>().GetCleanText().Length;
 
         return w;
     }
@@ -117,28 +117,42 @@ public class PoemLine : MonoBehaviour
         if (word.Contains("<v>"))
         {
             word = word.Replace("<v>", "");
-            w.GetComponent<Word>().SetWordType(Word.WordType.Verb);
+            if(w.GetComponent<Word>())
+                w.GetComponent<Word>().SetWordType(Word.WordType.Verb);
+            else
+                w.GetComponent<ExpoWord>().SetWordType(Word.WordType.Verb);
         }
         else if (word.Contains("<n>"))
         {
             word = word.Replace("<n>", "");
-            w.GetComponent<Word>().SetWordType(Word.WordType.Noun);
+            if (w.GetComponent<Word>())
+                w.GetComponent<Word>().SetWordType(Word.WordType.Noun);
+            else
+                w.GetComponent<ExpoWord>().SetWordType(Word.WordType.Noun);
         }
         else if (word.Contains("<adj>"))
         {
             word = word.Replace("<adj>", "");
-            w.GetComponent<Word>().SetWordType(Word.WordType.Adj);
+            if (w.GetComponent<Word>())
+                w.GetComponent<Word>().SetWordType(Word.WordType.Adj);
+            else
+                w.GetComponent<ExpoWord>().SetWordType(Word.WordType.Adj);
         }
         else if (word.Contains("<>"))
         {
             word = word.Replace("<>", "[__________]");
 
-
-            w.GetComponent<Word>().SetWordType(Word.WordType.Empty);
+            if (w.GetComponent<Word>())
+                w.GetComponent<Word>().SetWordType(Word.WordType.Empty);
+            else
+                w.GetComponent<ExpoWord>().SetWordType(Word.WordType.Empty);
         }
         else
         {
-            w.GetComponent<Word>().SetWordType(Word.WordType.None);
+            if (w.GetComponent<Word>())
+                w.GetComponent<Word>().SetWordType(Word.WordType.None);
+            else
+                w.GetComponent<ExpoWord>().SetWordType(Word.WordType.None);
         }
 
         return word;

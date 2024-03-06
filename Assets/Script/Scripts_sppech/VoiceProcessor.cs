@@ -183,6 +183,8 @@ public class VoiceProcessor : MonoBehaviour
     /// <param name="autoDetect">Should the audio continuously record based on the volume</param>
     public void StartRecording(int sampleRate = 16000, int frameSize = 512, bool ?autoDetect = null)
     {
+        Debug.Log("StartRecording");
+        DebugTool.instance.SetDebugCanvasText("Rec");
         if (autoDetect != null)
         {
             _autoDetect = (bool) autoDetect;
@@ -217,6 +219,8 @@ public class VoiceProcessor : MonoBehaviour
     /// </summary>
     public void StopRecording()
     {
+        Debug.Log("StopRecording");
+        DebugTool.instance.SetDebugCanvasText("Stop Rec");
         if (!IsRecording)
             return;
 
@@ -299,11 +303,11 @@ public class VoiceProcessor : MonoBehaviour
                 }
                 else
                 {
-                    _transmit = false;
-
+                    //_transmit = false;
+                    Debug.Log("speech volumn too low");
                     if (_audioDetected && Time.time - _timeAtSilenceBegan > _silenceTimer)
                     {
-                        _audioDetected = false;
+                        _transmit=_audioDetected = false;
                     }
                 }
             }
