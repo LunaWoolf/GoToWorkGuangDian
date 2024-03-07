@@ -11,14 +11,23 @@ public class DebugTool : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
+    }
+
+
+
+    [Cheat]
+    private static void LoadDialogue(string startNode)
+    {
+       LocalDialogueManager.instance.LoadDialogue(startNode);
+
     }
 
     private IEnumerator StartTapCount()
     {
         yield return new WaitForSeconds(3f);
 
-    
+
         tapCount = 0;
         isCounting = false;
     }
@@ -41,13 +50,13 @@ public class DebugTool : MonoBehaviour
                 GameManager.instance.isDebug = !GameManager.instance.isDebug;
             }
 
-            GameManager.instance.StartChapter();
+            //GameManager.instance.StartChapter();
         }
 
         if (GameManager.instance.isDebug)
         {
 
-          
+
 
             if (Input.GetKeyDown(KeyCode.W))
             {
@@ -61,7 +70,7 @@ public class DebugTool : MonoBehaviour
             }
 
 
-           
+
             if (Input.GetKeyDown(KeyCode.P))
             {
                 GameManager.instance.StartPaperShredder();
@@ -132,4 +141,7 @@ public class DebugTool : MonoBehaviour
         }
 
     }
+
 }
+
+

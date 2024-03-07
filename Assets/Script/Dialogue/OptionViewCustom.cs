@@ -23,9 +23,12 @@ using Yarn.Unity;
 
         bool hasSubmittedOptionSelection = false;
         public bool _isHighlight = false;
+        public bool _isEssentialOption = false;
+
+        public string _cleanOptionText = "Defualt Option";
 
     public DialogueOptionCustom Option
-        {
+    {
             get => _option;
 
             set
@@ -34,22 +37,43 @@ using Yarn.Unity;
 
                 hasSubmittedOptionSelection = false;
 
-                // When we're given an Option, use its text and update our
-                // interactibility.
-                if (showCharacterName)
-                {
-                    tm.text = value.Line.Text.Text;
-                }
-                else
-                {
-                    tm.text = value.Line.TextWithoutCharacterName.Text;
-                }
-                interactable = value.IsAvailable;
+                InternalParseForOption(value);
+
             }
+    }
+
+    // If we receive a submit or click event, invoke our "we just selected
+    // this option" handler.
+
+    public void InternalParseForOption(DialogueOptionCustom value)
+    {
+        
+        if (showCharacterName)
+        {
+            _cleanOptionText = value.Line.Text.Text;
+        }
+        else
+        {
+            _cleanOptionText = value.Line.TextWithoutCharacterName.Text;
         }
 
-        // If we receive a submit or click event, invoke our "we just selected
-        // this option" handler.
+        if (value.Line.Text.Text.Contains("<E>"))
+        {
+            _isEssentialOption = true;
+            _cleanOptionText = value.Line.Text.Text.Replace("<E>", "");
+        }
+
+        tm.text = _cleanOptionText;
+        interactable = value.IsAvailable;
+
+        if (_isEssentialOption)
+        {
+            LocalDialogueManager.instance.StartEssentialOptionTransition();
+        }
+    }
+
+
+
         public void OnSubmit(BaseEventData eventData)
         {
             InvokeOptionSelected();
@@ -57,9 +81,7 @@ using Yarn.Unity;
 
         public void InvokeOptionSelected()
         {
-            // We only want to invoke this once, because it's an error to
-            // submit an option when the Dialogue Runner isn't expecting it. To
-            // prevent this, we'll only invoke this if the flag hasn't been cleared already.
+           
             if (hasSubmittedOptionSelection == false)
             {
                 OnOptionSelected.Invoke(Option);
@@ -84,9 +106,6 @@ using Yarn.Unity;
     {
         isHighlight = false;
     }
-
-
-
 
     public bool isHighlight
     {

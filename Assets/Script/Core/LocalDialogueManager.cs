@@ -45,6 +45,7 @@ public class LocalDialogueManager : MonoSingleton<LocalDialogueManager>
         return dialogueRunner.NodeExists(startNode);
     }
 
+   
     public void LoadDialogue(string startNode)
     {
         if (ViewManager.instance)
@@ -69,5 +70,10 @@ public class LocalDialogueManager : MonoSingleton<LocalDialogueManager>
         }
 
       
+    }
+
+    public void StartEssentialOptionTransition()
+    { 
+    
     }
 }

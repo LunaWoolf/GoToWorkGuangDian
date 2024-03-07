@@ -84,13 +84,13 @@ namespace SonicBloom.Koreo.Demos
 		void UpdatePosition()
 		{
 			// Get the number of samples we traverse given the current speed in Units-Per-Second.
-			//float samplesPerUnit = gameController.SampleRate / gameController.noteSpeed;
+			float samplesPerUnit = gameController.SampleRate / gameController.noteSpeed;
 
 			// Our position is offset by the distance from the target in world coordinates.  This depends on
 			//  the distance from "perfect time" in samples (the time of the Koreography Event!).
-			//Vector3 pos = laneController.TargetPosition;
-			//pos.y -= (gameController.DelayedSampleTime - trackedEvent.StartSample) / samplesPerUnit;
-			//transform.position = pos;
+			Vector3 pos = laneController.TargetPosition;
+			pos.y -= (gameController.DelayedSampleTime - trackedEvent.StartSample) / samplesPerUnit;
+			transform.position = pos;
 		}
 
 		// Checks to see if the Note Object is currently hittable or not based on current audio sample

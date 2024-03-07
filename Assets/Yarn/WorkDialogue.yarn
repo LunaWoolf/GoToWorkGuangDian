@@ -1,4 +1,18 @@
-﻿title: d01_Morning_Test
+﻿title: Dialogue_Test
+tags:
+position: -57,-270
+---
+(June 6th, A Regular Day At Work)
+-> Test Option One
+-> Test Option Two
+(Essential Question)
+-> <E>Test Essential Question
+-> <E>Test Essential Question
+-
+<<WaitForFinishRepeatMission CommandManager 1>>
+===
+
+title: d01_Morning_Test
 tags:
 position: -57,-270
 ---
