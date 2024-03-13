@@ -41,8 +41,8 @@ public class Word : MonoBehaviour
     public Image CircleImage;
     public GameObject Background;
 
-    [SerializeField] Color unconfirmColor = Color.grey; // Starting color
-    [SerializeField] Color confirmColor = Color.black; // Ending color
+    [SerializeField] public Color unconfirmColor = Color.grey; // Starting color
+    [SerializeField] public Color confirmColor = Color.black; // Ending color
 
     public float minFadeTime = 2f;
     public float maxFadeTime = 3f;
@@ -76,14 +76,14 @@ public class Word : MonoBehaviour
                     if(GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo)
                         unconfirmColor = Color.white;
 
-                    LeanTween.value(this.gameObject, unconfirmColor, confirmColor, 1f).setOnUpdate((Color val) => { if (tm) tm.color = val; });
+                    LeanTween.value(this.gameObject, tm.color, confirmColor, 1f).setOnUpdate((Color val) => { if (tm) tm.color = val; });
                     UnHighlight();
 
                 }
                 else
                 {
 
-                    LeanTween.value(gameObject, confirmColor, confirmColor, 1f).setOnUpdate((Color val) => { if (tm) tm.color = val; });
+                    LeanTween.value(gameObject, tm.color, unconfirmColor, 1f).setOnUpdate((Color val) => { if (tm) tm.color = val; });
                 }
             }
         }
@@ -278,8 +278,6 @@ public class Word : MonoBehaviour
         }
         else
         {
-            tm.maxVisibleCharacters = 0;
-            tm.text = _Text;
             StartCoroutine(StartTypeWord(_Text));
         }
        
@@ -300,13 +298,33 @@ public class Word : MonoBehaviour
 
     IEnumerator StartTypeWord(string word)
     {
-        while (tm.maxVisibleCharacters < tm.text.Length)
+        bool initalSet = false;
+        if (tm.text != "placeholder")
         {
-            tm.maxVisibleCharacters++;
+
+            
+            for (int i = tm.text.Length; i >= 0; i--)
+            {
+                tm.text = tm.text.Substring(0, i);
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
+        else
+        {
+            initalSet = true;
+            tm.text = "";
+        }
+
+       // tm.text = word;
+
+        for (int i = 0; i <= word.Length; i++)
+        {
+            tm.text = word.Substring(0, i);
             yield return new WaitForSeconds(0.2f);
         }
 
-        OnWordCompleteType.Invoke();
+        if (initalSet)
+            OnWordCompleteType.Invoke();
         finishTyping = true;
     }
 
@@ -626,7 +644,8 @@ public class Word : MonoBehaviour
         int reviseTime = Random.Range(1, 6);
         for (int i = 0; i < reviseTime; i++)
         {
-            ReviseWord();
+            if(finishTyping)
+                ReviseWord();
             yield return new WaitForSeconds(2f);
         }
 

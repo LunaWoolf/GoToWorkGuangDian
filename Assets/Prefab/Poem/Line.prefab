@@ -150,7 +150,12 @@ MonoBehaviour:
   oneLineMaxLetter: 70
   wordCount: 0
   wordList: []
+  OnLineCompleteType:
+    m_PersistentCalls:
+      m_Calls: []
   _line: []
+  roughLine: 
+  SpeechLineColor: {r: 0.8962264, g: 0, b: 0, a: 1}
 --- !u!1 &6028331818757087447
 GameObject:
   m_ObjectHideFlags: 0

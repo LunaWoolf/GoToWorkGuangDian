@@ -6,6 +6,10 @@ using System.Text.RegularExpressions;
 using Pinyin4net;
 public class PoemGenerator : MonoSingleton<PoemGenerator>
 {
+
+    [Range(0, 100)]
+    public int EnglishPrecentage = 70;
+
     [Header("Word Bank_Eng")]
     public TextAsset nounRef;
     public TextAsset verbRef;
@@ -59,6 +63,11 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     string[] adjs;
     string[] lines;
 
+    string[] nouns_cn;
+    string[] verbs_cn;
+    string[] adjs_cn;
+    string[] lines_cn;
+
     string[][] nouns_controversial = new string[6][];
     string[][] verbs_controversial = new string[6][];
     string[][] adjs_controversial = new string[6][];
@@ -105,7 +114,6 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
         string[] pinyinStr = PinyinHelper.ToHanyuPinyinStringArray('李');
         Debug.Log(pinyinStr[0]);
-
     }
 
     // Update is called once per frame
@@ -137,6 +145,15 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         if (lineRef != null)
             lines = lineRef.text.Split("\n");
 
+        if (nounRef_cn != null)
+            nouns_cn = nounRef_cn.text.Split("\n");
+        if (verbRef_cn != null)
+            verbs_cn = verbRef_cn.text.Split("\n");
+        if (adjRef_cn != null)
+            adjs_cn = adjRef_cn.text.Split("\n");
+        if (lineRef_cn != null)
+            lines_cn = lineRef_cn.text.Split("\n");
+
         //Banned Word
         if (nounRef_controversial != null && verbRef_controversial != null && adjRef_controversial != null)
         {
@@ -150,8 +167,6 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
             }
         }
-   
-      
     }
 
     public string GenerateEmptyLine()
@@ -174,19 +189,68 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
             case ExpoManager.ExpoState.NoText:
                 break;
             case ExpoManager.ExpoState.FocusText:
+                GeneratorWrod_Expo();
                 break;
             case ExpoManager.ExpoState.RevieceFocsText:
+                GeneratorWrod_Expo();
                 break;
             case ExpoManager.ExpoState.FinalState:
                 GeneratorPoem_Expo();
                 break;
-
         }
 
        // yield return new WaitForSeconds(9f);
         //StartCoroutine(StartGeneratorPoem_Expo());
 
     }
+
+    public string GeneratorWrod_Expo()
+    {
+        currentDay = GameManager.instance.GetDay() + 1;
+        string poem = "";
+        int rand = Random.Range(0, 100);
+        bool isValid = (rand < ValidPrecentag) ? true : false;
+        Poem _currentPoem = new Poem();
+
+        //Line
+        string line_tem;
+        if (Random.Range(0, 100) < EnglishPrecentage)
+        {
+            int randLine = Random.Range(0, lines.Length);
+            line_tem = "<n>";
+        }
+        else
+        {
+            int randLine = Random.Range(0, lines_cn.Length);
+            line_tem = "<n>";
+        }
+
+
+        line_tem = ReplaceVerb(line_tem, isValid);
+        line_tem = ReplaceNoun(line_tem, isValid);
+        line_tem = ReplaceAdj(line_tem, isValid);
+        line_tem = CapFirstLetter(line_tem);
+        //poem[i] = line_tem;
+        Debug.Log(line_tem);
+
+        // Generate Line
+        // Set the position of the object
+
+
+        GameObject p = Instantiate(PoemLine, PoemCanvasRect.transform, false);
+        p.GetComponent<RectTransform>().position += GetRandomPositionOncanvas();
+        p.GetComponent<RectTransform>().localScale = new Vector3(2, 2, 2);
+
+
+        p.GetComponent<PoemLine>().SetLine(line_tem);
+        _currentPoem.poemLines.Add(p.GetComponent<PoemLine>());
+
+        currentLineOnScreen.Add(p.GetComponent<PoemLine>());
+
+        //currentPoem = poem; // todo: refactor that to poem logic
+        return poem;
+    }
+
     public string GeneratorPoem_Expo()
     {
         currentDay = GameManager.instance.GetDay() + 1;
@@ -196,8 +260,18 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         Poem _currentPoem = new Poem();
 
         //Line
-        int randLine = Random.Range(0, lines.Length);
-        string line_tem = lines[randLine];
+        string line_tem;
+        if (Random.Range(0, 100) < EnglishPrecentage)
+        {
+            int randLine = Random.Range(0, lines.Length);
+            line_tem = lines[randLine];
+        }
+        else
+        {
+            int randLine = Random.Range(0, lines_cn.Length);
+            line_tem = lines_cn[randLine];
+        }
+       
 
         line_tem = ReplaceVerb(line_tem, isValid);
         line_tem = ReplaceNoun(line_tem, isValid);
@@ -255,6 +329,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         GameObject p = Instantiate(PoemLine, PoemCanvasRect.transform, false);
         p.GetComponent<RectTransform>().position += GetRandomPositionOncanvas();
         p.GetComponent<RectTransform>().localScale = new Vector3(2, 2, 2);
+        p.GetComponent<PoemLine>().LineComeFromSpeech = true;
         p.GetComponent<PoemLine>().SetLine(line);
         _currentPoem.poemLines.Add(p.GetComponent<PoemLine>());
         return line;
@@ -356,8 +431,16 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
                     }
                     else
                     {
-                        rand = Random.Range(0, verbs.Length);
-                        w = verbs[rand];
+                        if (Random.Range(0, 100) < EnglishPrecentage)
+                        {
+                            rand = Random.Range(0, verbs.Length);
+                            w = verbs[rand];
+                        }
+                        else
+                        {
+                            rand = Random.Range(0, verbs_cn.Length);
+                            w = verbs_cn[rand];
+                        }
 
                     }
 
@@ -412,8 +495,16 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
                     }
                     else
                     {
-                        rand = Random.Range(0, nouns.Length);
-                        w = nouns[rand];
+                        if (Random.Range(0, 100) < EnglishPrecentage)
+                        {
+                            rand = Random.Range(0, nouns.Length);
+                            w = nouns[rand];
+                        }
+                        else
+                        {
+                            rand = Random.Range(0, nouns_cn.Length);
+                            w = nouns_cn[rand];
+                        }
 
                     }
 
@@ -466,8 +557,16 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
                     }
                     else
                     {
-                        rand = Random.Range(0, adjs.Length);
-                        w = adjs[rand];
+                        if (Random.Range(0, 100) < EnglishPrecentage)
+                        {
+                            rand = Random.Range(0, adjs.Length);
+                            w = adjs[rand];
+                        }
+                        else
+                        {
+                            rand = Random.Range(0, adjs_cn.Length);
+                            w = adjs_cn[rand];
+                        }
                     }
 
 

@@ -21,6 +21,9 @@ public class PoemLine : MonoBehaviour
 
     [SerializeField]string[] _line;
     public string roughLine = "";
+    public Color SpeechLineColor;
+
+    public bool LineComeFromSpeech = false;
     public virtual void SetLine(string line)
     {
        _line = line.Split(" ");
@@ -100,8 +103,10 @@ public class PoemLine : MonoBehaviour
         w.GetComponent<ExpoWord>().indexInLine = wordList.Count;
         w.GetComponent<ExpoWord>().OnWordCompleteType.AddListener(TypeNextWord);
         w.GetComponent<ExpoWord>().SetText(word, true);
+        if(LineComeFromSpeech)
+            w.GetComponent<ExpoWord>().SetUnconfirmColor(SpeechLineColor);
 
-       
+
         wordList.Add(w.GetComponent<ExpoWord>());
 
         currentLetterCount += w.GetComponent<ExpoWord>().GetCleanText().Length;
@@ -215,4 +220,6 @@ public class PoemLine : MonoBehaviour
         wordCount = 0;
         currentLetterCount = 0;
     }
+
+  
 }

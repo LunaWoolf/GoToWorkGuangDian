@@ -29,6 +29,22 @@ public class ExpoManager : MonoSingleton<ExpoManager>
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            CurrentExpoState = ExpoState.NoText;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            CurrentExpoState = ExpoState.FocusText;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            CurrentExpoState = ExpoState.RevieceFocsText;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            CurrentExpoState = ExpoState.FinalState;
+        }
+
     }
 }

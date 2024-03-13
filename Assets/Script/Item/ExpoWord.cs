@@ -74,7 +74,11 @@ public class ExpoWord : Word
        StartCoroutine(AutoFade());
         
     }
- 
+    public void SetUnconfirmColor(Color c)
+    {
+        unconfirmColor = c;
+
+    }
     public void SetTextColor()
     {
 
@@ -83,6 +87,71 @@ public class ExpoWord : Word
             return;
         }
         tm.color = new Color(tm.color.r, tm.color.g, tm.color.b, 1);
+    }
+
+    public override void ReviseWord()
+    {
+        Debug.Log("Revise word Expo");
+        int day = 0;
+        day = GameManager.instance.GetDay() + 1;
+
+        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Speed || GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo)
+        {
+            day = Random.Range(1, 6);
+        }
+        bool isRevised = true;
+        string orginalText = GetCleanText();
+        string ReviceTest = "";
+        int breakCoutner = 0;
+        if (circled || GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo)
+        {
+            if (banned)
+            {
+                PropertyManager.instance.currentPoemBannedWord--;
+
+            }
+            switch (currentWordType)
+            {
+                case WordType.Noun:
+                    ReviceTest = PoemGenerator.instance.GetRandomNoun(day);
+                    while (ReviceTest == GetText() || breakCoutner > 5)
+                    {
+                        ReviceTest = PoemGenerator.instance.GetRandomNoun(day);
+                        breakCoutner++;
+                    }
+                    break;
+                case WordType.Verb:
+                    ReviceTest = PoemGenerator.instance.GetRandomVerb(day);
+                    while (ReviceTest == GetText() || breakCoutner > 5)
+                    {
+                        ReviceTest = PoemGenerator.instance.GetRandomVerb(day);
+                        breakCoutner++;
+                    }
+                    break;
+                case WordType.Adj:
+                    ReviceTest = PoemGenerator.instance.GetRandomAdj(day);
+                    while (ReviceTest == GetText() || breakCoutner > 5)
+                    {
+                        ReviceTest = PoemGenerator.instance.GetRandomAdj(day);
+                        breakCoutner++;
+                    }
+                    break;
+                default:
+                    //displace not reviseable
+                    isRevised = false;
+                    break;
+            }
+
+            // if revise success, then trigger paper shreed base on different mode 
+            if (ReviceTest != "")
+            {
+                GameManager.instance.CancleCircledWordInCurrentPoem(_Text_clean);
+                SetText(ReviceTest, true);
+                GameManager.instance.CircledWordInCurrentPoem(_Text_clean);
+                ViewManager.instance.OnWordReviced(isRevised, orginalText, GetCleanText());
+            }
+
+        }
     }
 
 }
