@@ -60,8 +60,8 @@ public class ExpoWord : Word
     {
         float randomTime = Random.RandomRange(3, 8);
         yield return new WaitForSeconds(randomTime);
-        
-        isConfirm = true;
+
+        FadeAndDestroy();
         
     }
     public override void SetText(string t, bool isTyping)
@@ -88,6 +88,58 @@ public class ExpoWord : Word
         }
         tm.color = new Color(tm.color.r, tm.color.g, tm.color.b, 1);
     }
+
+    public override void FadeAndDestroy()
+    {
+
+
+       
+        Color initialColor = tm.color;
+
+      
+        float fadeTime = Random.Range(minFadeTime, maxFadeTime);
+
+     
+        if (LeanTween.tweensRunning < 1000)
+        {
+            LeanTween.value(gameObject, initialColor, new Color(initialColor.r, initialColor.g, initialColor.b, 0.0f), fadeTime)
+           .setOnUpdateColor((Color color) =>
+           {
+               if (tm)
+                   tm.color = color;
+           })
+           .setOnComplete(() =>
+           {
+
+               if (this.gameObject)
+               {
+                   Debug.Log("Enqueue " + PoemGenerator.instance.ExpoWordQueue.Count);
+                   PoemGenerator.instance.ExpoWordQueue.Enqueue(this.gameObject);
+                   this.gameObject.SetActive(false);
+                   this.gameObject.transform.SetParent(null);
+                   tm.text = "placeholder";
+
+
+               }
+                 
+           });
+        }
+        else
+        {
+            if (this.gameObject)
+            {
+                Debug.Log("Enqueue " + PoemGenerator.instance.ExpoWordQueue.Count);
+                PoemGenerator.instance.ExpoWordQueue.Enqueue(this.gameObject);
+                this.gameObject.SetActive(false);
+                this.gameObject.transform.SetParent(null);
+                tm.text = "placeholder";
+            }
+             
+        }
+
+
+    }
+
 
     public override void ReviseWord()
     {

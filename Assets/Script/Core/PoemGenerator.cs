@@ -84,6 +84,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
     [Header("Expo")]
     List<PoemLine> currentLineOnScreen = new List<PoemLine>();
+    [SerializeField]public Queue<GameObject> ExpoWordQueue = new Queue<GameObject>();
 
     void Awake()
     {

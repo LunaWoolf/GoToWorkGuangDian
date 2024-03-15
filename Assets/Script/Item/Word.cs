@@ -324,7 +324,7 @@ public class Word : MonoBehaviour
         }
 
         if (initalSet)
-            OnWordCompleteType.Invoke();
+           OnWordCompleteType.Invoke();
         finishTyping = true;
     }
 
@@ -552,7 +552,7 @@ public class Word : MonoBehaviour
         }
     }
 
-    public void FadeAndDestroy()
+    public virtual void FadeAndDestroy()
     {
 
 

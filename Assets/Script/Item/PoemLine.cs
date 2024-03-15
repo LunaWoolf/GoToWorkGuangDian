@@ -85,7 +85,22 @@ public class PoemLine : MonoBehaviour
         GameObject w;
         if (currentLetterCount < oneLineMaxLetter)
         {
-            w = Instantiate(wordPrefab_Expo, line01);
+            if (PoemGenerator.instance.ExpoWordQueue.Count > 0)
+            {
+                Debug.Log("Dequeue " + PoemGenerator.instance.ExpoWordQueue.Count);
+                w = PoemGenerator.instance.ExpoWordQueue.Dequeue();
+                w.SetActive(true);
+                w.transform.SetParent(line01, false);
+                w.GetComponent<ExpoWord>().OnWordCompleteType.RemoveAllListeners();
+                //Debug.Log("Dequeued: " + dequeuedElement);
+            }
+            else
+            {
+                Debug.Log("Queue is empty " + PoemGenerator.instance.ExpoWordQueue.Count);
+                w = Instantiate(wordPrefab_Expo, line01);
+            }
+
+
             Debug.Log("LetterCount" + currentLetterCount);
 
         }
@@ -106,6 +121,7 @@ public class PoemLine : MonoBehaviour
         if(LineComeFromSpeech)
             w.GetComponent<ExpoWord>().SetUnconfirmColor(SpeechLineColor);
 
+        //PoemGenerator.instance.ExpoWordQueue.Enqueue(w);
 
         wordList.Add(w.GetComponent<ExpoWord>());
 
