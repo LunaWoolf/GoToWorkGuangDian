@@ -12,6 +12,8 @@ public class ExpoWord : Word
 
     private RectTransform rectTransform;
     private LayoutElement layoutElement;
+    public bool WordComeFromSpeech = false;
+
     void Awake()
     {
         //isCircledable = false;
@@ -32,13 +34,59 @@ public class ExpoWord : Word
     void Start()
     {
         base.Start();
-
+        tm.fontSize = sizeOption[Random.Range(0, sizeOption.Length)];
+        OnWordCompleteType.AddListener(AutoFade);
     }
 
     void Update()
     {
         base.Update();
 
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (!WordComeFromSpeech)
+            {
+                StopAllCoroutines();
+                FadeAndDestroy();
+            }
+          
+        }
+
+    }
+
+    public void ResetExpoWrod()
+    {
+        this.gameObject.SetActive(false);
+        this.gameObject.transform.SetParent(null);
+        this.gameObject.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
+        this.gameObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
+        _Text = "";
+       _Text_clean = "";
+        _UnProcessText = "";
+        indexInLine = 0;
+        isConfirm = false;
+        finishTyping = false;
+        isFading = false;
+        circled = false;
+        banned = false;
+        isInserable = false;
+        isHighlighted = false;
+        isRamdonRevising = false;
+        WordComeFromSpeech = false;
+        tm.text = "placeholder";
+        currentWordType = WordType.None;
+        StopCoroutine(IE_RandamRevise());
+        StopAllCoroutines();
+        Button b = Background.GetComponent<Button>();
+        ColorBlock cb = b.colors;
+        cb.normalColor = new Color(0, 0, 0, 0);
+        b.colors = cb;
+        Background.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+        
+        tm.color = Color.white;
+        tm.fontSize = sizeOption[Random.Range(0, sizeOption.Length)];
+
+        OnWordCompleteType.AddListener(AutoFade);
     }
     public IEnumerator SetSize()
     {
@@ -56,9 +104,15 @@ public class ExpoWord : Word
         LayoutRebuilder.ForceRebuildLayoutImmediate(this.GetComponentInParent<RectTransform>());
     }
 
-    public IEnumerator AutoFade()
+    public void AutoFade()
     {
-        float randomTime = Random.RandomRange(3, 8);
+        StartCoroutine(IE_AutoFade());
+
+    }
+
+    public IEnumerator IE_AutoFade()
+    {
+        float randomTime = Random.RandomRange(6, 8);
         yield return new WaitForSeconds(randomTime);
 
         FadeAndDestroy();
@@ -66,12 +120,10 @@ public class ExpoWord : Word
     }
     public override void SetText(string t, bool isTyping)
     {
-        tm.fontSize = sizeOption[Random.Range(0, sizeOption.Length)];
-       // StartCoroutine(SetSize()) ;
+       
         base.SetText(t, isTyping);
-      //  StartCoroutine(SetSize());
-      
-       StartCoroutine(AutoFade());
+
+       
         
     }
     public void SetUnconfirmColor(Color c)
@@ -91,18 +143,34 @@ public class ExpoWord : Word
 
     public override void FadeAndDestroy()
     {
-
-
-       
         Color initialColor = tm.color;
+        isFading = true;
 
-      
-        float fadeTime = Random.Range(minFadeTime, maxFadeTime);
 
-     
+        float fadeTime = 2f;
+        if (isHighlighted)
+        {
+            Button b = Background.GetComponent<Button>();
+            LeanTween.value(gameObject, b.colors.normalColor, new Color(0, 0, 0, 0), 1.8f)
+            .setOnUpdateColor((Color color) =>
+            {
+
+                ColorBlock cb = b.colors;
+                cb.normalColor = color;
+                b.colors = cb;
+
+                Background.GetComponent<Image>().color = color;
+
+            });
+
+            isHighlighted = false;
+        }
+          
+
+        StopAllCoroutines();
         if (LeanTween.tweensRunning < 1000)
         {
-            LeanTween.value(gameObject, initialColor, new Color(initialColor.r, initialColor.g, initialColor.b, 0.0f), fadeTime)
+            LeanTween.value(gameObject, initialColor, new Color(1, 1, 1, 0.0f), fadeTime)
            .setOnUpdateColor((Color color) =>
            {
                if (tm)
@@ -113,11 +181,13 @@ public class ExpoWord : Word
 
                if (this.gameObject)
                {
+
+
                    Debug.Log("Enqueue " + PoemGenerator.instance.ExpoWordQueue.Count);
+
+                   ResetExpoWrod();
                    PoemGenerator.instance.ExpoWordQueue.Enqueue(this.gameObject);
-                   this.gameObject.SetActive(false);
-                   this.gameObject.transform.SetParent(null);
-                   tm.text = "placeholder";
+               
 
 
                }
@@ -129,10 +199,9 @@ public class ExpoWord : Word
             if (this.gameObject)
             {
                 Debug.Log("Enqueue " + PoemGenerator.instance.ExpoWordQueue.Count);
+                ResetExpoWrod();
                 PoemGenerator.instance.ExpoWordQueue.Enqueue(this.gameObject);
-                this.gameObject.SetActive(false);
-                this.gameObject.transform.SetParent(null);
-                tm.text = "placeholder";
+        
             }
              
         }

@@ -82,9 +82,12 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
     public UnityEvent OnPoemRevise;
 
+    public float AutoLineGenerationInterval = 3F;
+
     [Header("Expo")]
     List<PoemLine> currentLineOnScreen = new List<PoemLine>();
     [SerializeField]public Queue<GameObject> ExpoWordQueue = new Queue<GameObject>();
+    [SerializeField] public Queue<GameObject> ExpoLineQueue = new Queue<GameObject>();
 
     void Awake()
     {
@@ -124,7 +127,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         {
             if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo)
             {
-                StartCoroutine(StartGeneratorPoem_Expo());
+                StartCoroutine(IE_TypeNextLine());
             }
             else
             {
@@ -132,6 +135,11 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
                 GeneratorPoem(5);
             }
 
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            StartCoroutine(StartGeneratorPoem_Expo());
         }
     }
 
@@ -178,10 +186,22 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         return line_tem;
     }
 
-    public void TypeNextLine()
+    public void TextNextLine()
     {
         StartCoroutine(StartGeneratorPoem_Expo());
     }
+
+    public IEnumerator IE_TypeNextLine()
+    {
+        StartCoroutine(StartGeneratorPoem_Expo());
+        while (true)
+        {
+            yield return new WaitForSeconds(AutoLineGenerationInterval);
+            StartCoroutine(StartGeneratorPoem_Expo());
+        }
+       
+    }
+
     IEnumerator StartGeneratorPoem_Expo()
     {
         yield return new WaitForSeconds(0.1f);
@@ -200,11 +220,26 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
                 break;
         }
 
-       // yield return new WaitForSeconds(9f);
-        //StartCoroutine(StartGeneratorPoem_Expo());
 
     }
 
+    GameObject FindLineFromQueue()
+    {
+        GameObject p;
+        //if (ExpoLineQueue.Count > 0)
+        //{
+            //p = ExpoLineQueue.Dequeue();
+          
+        //}
+        //else
+        //{
+            p = Instantiate(PoemLine, PoemCanvasRect.transform, false);
+        //}
+       
+
+        return p;
+        
+    }
     public string GeneratorWrod_Expo()
     {
         currentDay = GameManager.instance.GetDay() + 1;
@@ -238,8 +273,8 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         // Set the position of the object
 
 
-        GameObject p = Instantiate(PoemLine, PoemCanvasRect.transform, false);
-        p.GetComponent<RectTransform>().position += GetRandomPositionOncanvas();
+        GameObject p = FindLineFromQueue();
+        p.GetComponent<RectTransform>().position += GetRandomPositionOncanvas(line_tem, false);
         p.GetComponent<RectTransform>().localScale = new Vector3(2, 2, 2);
 
 
@@ -283,10 +318,10 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
         // Generate Line
         // Set the position of the object
-   
 
-        GameObject p = Instantiate(PoemLine, PoemCanvasRect.transform, false);
-        p.GetComponent<RectTransform>().position += GetRandomPositionOncanvas();
+
+        GameObject p = FindLineFromQueue();
+        p.GetComponent<RectTransform>().position += GetRandomPositionOncanvas(line_tem, false);
         p.GetComponent<RectTransform>().localScale = new Vector3(2, 2, 2);
 
 
@@ -303,23 +338,47 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     public float xOffset_max;
     public float yOffset_min;
     public float yOffset_max;
-    public Vector3 GetRandomPositionOncanvas()
+    public Vector3 GetRandomPositionOncanvas(string line, bool isGeneratefromSpeech)
     {
-       
-    
         float canvasWidth = PoemCanvasRect.rect.width;
         float canvasHeight = PoemCanvasRect.rect.height;
-
         float xOffset = 0;
         float yOffset = 0;
+
+        if (!isGeneratefromSpeech)
+        {
+
+            xOffset = Random.Range(xOffset_min, xOffset_max);
+            yOffset = Random.Range(yOffset_min, yOffset_max);
+
+
+
+            return new Vector3(xOffset, yOffset, 0);
+        }
+        else
+        {
+            if (line.Length > 30)
+            {
+                xOffset = xOffset_min;
+            }
+            else if (line.Length > 15)
+            {
+                xOffset = Random.Range(xOffset_min, xOffset_max / 2);
+            }
+            else
+            {
+                xOffset = Random.Range(xOffset_min, xOffset_max / 3);
+            }
+    
+            yOffset = Random.Range(yOffset_min, yOffset_max);
+
+            return new Vector3(xOffset, yOffset, 0.5f);
+        }
+      
+
+   
      
 
-        xOffset = Random.Range(xOffset_min, xOffset_max);
-        yOffset = Random.Range(yOffset_min, yOffset_max);
-
-     
-
-        return new Vector3(xOffset, yOffset, 0);
 
     }
     
@@ -328,7 +387,9 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         Poem _currentPoem = new Poem();
 
         GameObject p = Instantiate(PoemLine, PoemCanvasRect.transform, false);
-        p.GetComponent<RectTransform>().position += GetRandomPositionOncanvas();
+
+
+        p.GetComponent<RectTransform>().position += GetRandomPositionOncanvas(line , true);
         p.GetComponent<RectTransform>().localScale = new Vector3(2, 2, 2);
         p.GetComponent<PoemLine>().LineComeFromSpeech = true;
         p.GetComponent<PoemLine>().SetLine(line);
@@ -670,7 +731,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     {
         if (currentLine == null)
         {
-            GameObject line = Instantiate(PoemLine, PoemParent_Write.transform, false);
+            GameObject line = Instantiate(PoemLine, PoemParent_Read.transform, false);
             currentLine = line.GetComponent<PoemLine>();
         }
 

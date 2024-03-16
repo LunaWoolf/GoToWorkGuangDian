@@ -2788,11 +2788,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &179117998
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3209,11 +3213,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &185437535
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3772,10 +3780,11 @@ MonoBehaviour:
   OnPoemRevise:
     m_PersistentCalls:
       m_Calls: []
-  xOffset_min: -70
+  AutoLineGenerationInterval: 5
+  xOffset_min: -50
   xOffset_max: 70
-  yOffset_min: -60
-  yOffset_max: 50
+  yOffset_min: -50
+  yOffset_max: 45
 --- !u!4 &214944662
 Transform:
   m_ObjectHideFlags: 0
@@ -4321,11 +4330,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &226645336
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5290,11 +5303,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &279521232
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9877,7 +9894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45099d624c1e6c14e9514f4e5ea1ed9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spoutName: SpoutSender
+  _spoutName: Spout Sender
   _keepAlpha: 0
   _captureMethod: 0
   _sourceCamera: {fileID: 0}
@@ -11108,11 +11125,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &575225712
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12102,11 +12123,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &646314801
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12937,11 +12962,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &668337391
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14369,11 +14398,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &761420766
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15769,11 +15802,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &845590173
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16154,11 +16191,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &875548616
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17185,11 +17226,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &917412038
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17530,11 +17575,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &941214091
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18395,11 +18444,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &980181348
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20481,11 +20534,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1110557866
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20751,11 +20808,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1126023288
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20891,11 +20952,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1139076248
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21545,11 +21610,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1172177555
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -22355,11 +22424,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1209167662
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -22943,11 +23016,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1249647242
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -26588,11 +26665,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1463504732
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -27064,11 +27145,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1476770620
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -27672,11 +27757,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1505092370
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28425,11 +28514,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1545382713
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28730,11 +28823,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1556010292
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -29521,11 +29618,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1648195496
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30004,11 +30105,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1664034711
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30460,11 +30565,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1678037714
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31038,11 +31147,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1708311128
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31325,11 +31438,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1740358066
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31649,11 +31766,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1750115220
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -33165,11 +33286,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1850757167
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -34703,11 +34828,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1977491500
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -35008,11 +35137,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &1987679024
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -35840,11 +35973,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &2006192311
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -37396,11 +37533,15 @@ MonoBehaviour:
   OnWordCompleteType:
     m_PersistentCalls:
       m_Calls: []
+  finishTyping: 0
   circled: 0
   banned: 0
   isInserable: 0
   currentWordType: 6
   currentWordQuality: 0
+  isHighlighted: 0
+  isRamdonRevising: 0
+  isFading: 0
 --- !u!222 &2098429828
 CanvasRenderer:
   m_ObjectHideFlags: 0

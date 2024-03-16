@@ -24,6 +24,21 @@ public class PoemLine : MonoBehaviour
     public Color SpeechLineColor;
 
     public bool LineComeFromSpeech = false;
+
+    public void Start()
+    {
+        if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo)
+        {
+            if (GetComponentInParent<PoemPaperController>())
+            {
+                OnLineCompleteType.AddListener(GetComponentInParent<PoemPaperController>().OnPoemLineFinishTyping);
+            }
+            //OnLineCompleteType.AddListener(PoemGenerator.instance.TypeNextLine);
+            OnLineCompleteType.AddListener(RollForAutoDestroy);
+
+        }
+        
+    }
     public virtual void SetLine(string line)
     {
        _line = line.Split(" ");
@@ -32,13 +47,7 @@ public class PoemLine : MonoBehaviour
 
         if (GameManager.instance.GetCurrentAppMode() == GameManager.AppMode.Expo)
         {
-            if (GetComponentInParent<PoemPaperController>())
-            {
-                OnLineCompleteType.AddListener(GetComponentInParent<PoemPaperController>().OnPoemLineFinishTyping);
-            }
-            OnLineCompleteType.AddListener(PoemGenerator.instance.TypeNextLine);
             TypeWord(_line[0]);
-
         }
         else 
         {
@@ -50,17 +59,18 @@ public class PoemLine : MonoBehaviour
 
     }
 
-    /*IEnumerator TypeLine(string line)
+
+    public void ResetLine()
     {
-        _line = line.Split(" ");
-        foreach (string word in _line)
-        {
-            TypeWord(word);
-            
-            yield return new WaitForSeconds(0.2f);
-        }
-      
-    }*/
+        currentLetterCount = 0;
+        currentTypingWordIndex = 0;
+        GetComponent<RectTransform>().position = Vector3.zero;
+        wordCount = 0;
+        wordList.Clear();
+        roughLine = "";
+        LineComeFromSpeech = false;
+    }
+
     IEnumerator IE_TypeNextWord()
     {
         currentTypingWordIndex++;
@@ -89,15 +99,17 @@ public class PoemLine : MonoBehaviour
             {
                 Debug.Log("Dequeue " + PoemGenerator.instance.ExpoWordQueue.Count);
                 w = PoemGenerator.instance.ExpoWordQueue.Dequeue();
+                w.GetComponent<ExpoWord>().tm.color = Color.white;
                 w.SetActive(true);
                 w.transform.SetParent(line01, false);
-                w.GetComponent<ExpoWord>().OnWordCompleteType.RemoveAllListeners();
-                //Debug.Log("Dequeued: " + dequeuedElement);
+          
             }
             else
             {
                 Debug.Log("Queue is empty " + PoemGenerator.instance.ExpoWordQueue.Count);
                 w = Instantiate(wordPrefab_Expo, line01);
+              
+           
             }
 
 
@@ -110,18 +122,22 @@ public class PoemLine : MonoBehaviour
                 line02.gameObject.SetActive(true);
 
             w = Instantiate(wordPrefab_Expo, line02);
-
+            
         }
         wordCount++;
         word = AnalysisWord(word, w);
-
+     
         w.GetComponent<ExpoWord>().indexInLine = wordList.Count;
         w.GetComponent<ExpoWord>().OnWordCompleteType.AddListener(TypeNextWord);
         w.GetComponent<ExpoWord>().SetText(word, true);
-        if(LineComeFromSpeech)
-            w.GetComponent<ExpoWord>().SetUnconfirmColor(SpeechLineColor);
+        if (LineComeFromSpeech)
+        {
+            w.GetComponent<ExpoWord>().tm.color = SpeechLineColor;
+            w.GetComponent<ExpoWord>().WordComeFromSpeech = true;
+        }
 
-        //PoemGenerator.instance.ExpoWordQueue.Enqueue(w);
+
+
 
         wordList.Add(w.GetComponent<ExpoWord>());
 
@@ -237,5 +253,33 @@ public class PoemLine : MonoBehaviour
         currentLetterCount = 0;
     }
 
-  
+    public void RollForAutoDestroy()
+    {
+       //StartCoroutine(IE_RollForAutoDestroy());
+
+    }
+
+    public IEnumerator IE_RollForAutoDestroy()
+    {
+        float randomTime = Random.RandomRange(10, 15);
+        yield return new WaitForSeconds(randomTime);
+
+        FadeAndDestroy();
+
+    }
+
+    public void FadeAndDestroy()
+    {
+
+        foreach (ExpoWord w in this.GetComponentsInChildren<ExpoWord>())
+        {
+            //w.gameObject.transform.SetParent(null, true);
+           // w.FadeAndDestroy();
+        }
+
+        ResetLine();
+        PoemGenerator.instance.TextNextLine();
+        PoemGenerator.instance.ExpoLineQueue.Enqueue(this.gameObject);
+    }
+
 }

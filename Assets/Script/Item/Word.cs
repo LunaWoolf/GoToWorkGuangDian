@@ -91,7 +91,7 @@ public class Word : MonoBehaviour
     }
     public UnityEvent OnWordConfirm;
     public UnityEvent OnWordCompleteType;
-    bool finishTyping = false;
+    public bool finishTyping = false;
     public bool circled = false;
     public bool banned = false;
     public bool isInserable = false;
@@ -101,8 +101,10 @@ public class Word : MonoBehaviour
     ClickableObject clickableObject;
 
     [Header("Variable")]
-    bool isHighlighted;
-    bool isRamdonRevising = false;
+    public bool isHighlighted;
+    public  bool isRamdonRevising = false;
+
+    public bool isFading = false;
     public void SetWordType(WordType type)
     {
 
@@ -127,11 +129,7 @@ public class Word : MonoBehaviour
     {
 
         currentWordQuality = quality;
-        /* switch (quality)
-         {
-             case WordType.Empty:
-                 break;
-         }*/
+    
 
     }
 
@@ -144,7 +142,8 @@ public class Word : MonoBehaviour
     protected virtual void Start()
     {
         if (!tm) tm = this.GetComponentInChildren<TextMeshProUGUI>();
-        if (tm) tm.text = _Text;
+        if((GameManager.instance.GetCurrentAppMode() != GameManager.AppMode.Expo))
+            if (tm) tm.text = _Text;
         if (wordbutton == null) wordbutton = this.GetComponentInChildren<Button>();
         //if (wordbutton != null) wordbutton.onClick.AddListener(OnWordClicked);
         if (revisebutton)
@@ -301,16 +300,16 @@ public class Word : MonoBehaviour
         bool initalSet = false;
         if (tm.text != "placeholder")
         {
-
-            
-            for (int i = tm.text.Length; i >= 0; i--)
+            string oldtext = tm.text;
+            for (int i = oldtext.Length; i >= 0; i--)
             {
-                tm.text = tm.text.Substring(0, i);
+                tm.text = oldtext.Substring(0, i);
                 yield return new WaitForSeconds(0.2f);
             }
         }
         else
         {
+            Debug.Log("inital");
             initalSet = true;
             tm.text = "";
         }
@@ -323,8 +322,9 @@ public class Word : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
 
-        if (initalSet)
-           OnWordCompleteType.Invoke();
+        OnWordCompleteType.Invoke();
+        OnWordCompleteType.RemoveAllListeners();
+     
         finishTyping = true;
     }
 
@@ -590,9 +590,10 @@ public class Word : MonoBehaviour
 
     public void Highlight()
     {
-
+        if (isHighlighted || isFading )
+            return;
         Button b = Background.GetComponent<Button>();
-        LeanTween.value(gameObject, b.colors.normalColor, Color.white, 0.1f)
+        LeanTween.value(gameObject, b.colors.normalColor, Color.white, 1f)
          .setOnUpdateColor((Color color) =>
          {
              ColorBlock cb = b.colors;
@@ -602,7 +603,7 @@ public class Word : MonoBehaviour
              Background.GetComponent<Image>().color = color;
          });
 
-        LeanTween.value(gameObject, tm.color, Color.black, 0.1f)
+        LeanTween.value(gameObject, tm.color, Color.black, 1f)
          .setOnUpdateColor((Color color) =>
          {
              tm.color = color;
@@ -613,8 +614,10 @@ public class Word : MonoBehaviour
 
     public void UnHighlight()
     {
+        if (!isHighlighted)
+            return;
         Button b = Background.GetComponent<Button>();
-        LeanTween.value(gameObject, b.colors.normalColor, new Color(0, 0, 0, 0), 0.1f)
+        LeanTween.value(gameObject, b.colors.normalColor, new Color(0, 0, 0, 0), 2f)
         .setOnUpdateColor((Color color) =>
         {
            
@@ -626,7 +629,7 @@ public class Word : MonoBehaviour
             
         });
 
-        LeanTween.value(gameObject, Background.GetComponent<Image>().color, Color.white, 0.1f)
+        LeanTween.value(gameObject, Background.GetComponent<Image>().color, Color.white, 2f)
          .setOnUpdateColor((Color color) =>
          {
              tm.color = color;
@@ -636,7 +639,7 @@ public class Word : MonoBehaviour
         isHighlighted = false;
     }
 
-    IEnumerator IE_RandamRevise()
+    public IEnumerator IE_RandamRevise()
     {
         isRamdonRevising = true;
         if (!isHighlighted) Highlight();
@@ -646,7 +649,7 @@ public class Word : MonoBehaviour
         {
             if(finishTyping)
                 ReviseWord();
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(4f);
         }
 
         isRamdonRevising = false;
