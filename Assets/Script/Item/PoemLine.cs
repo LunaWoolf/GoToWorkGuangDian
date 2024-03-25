@@ -121,8 +121,23 @@ public class PoemLine : MonoBehaviour
             if (!line02.gameObject.activeSelf)
                 line02.gameObject.SetActive(true);
 
-            w = Instantiate(wordPrefab_Expo, line02);
-            
+            if (PoemGenerator.instance.ExpoWordQueue.Count > 0)
+            {
+                Debug.Log("Dequeue " + PoemGenerator.instance.ExpoWordQueue.Count);
+                w = PoemGenerator.instance.ExpoWordQueue.Dequeue();
+                w.GetComponent<ExpoWord>().tm.color = Color.white;
+                w.SetActive(true);
+                w.transform.SetParent(line01, false);
+
+            }
+            else
+            {
+                Debug.Log("Queue is empty " + PoemGenerator.instance.ExpoWordQueue.Count);
+                w = Instantiate(wordPrefab_Expo, line02);
+
+
+            }
+
         }
         wordCount++;
         word = AnalysisWord(word, w);
@@ -132,8 +147,9 @@ public class PoemLine : MonoBehaviour
         w.GetComponent<ExpoWord>().SetText(word, true);
         if (LineComeFromSpeech)
         {
-            w.GetComponent<ExpoWord>().tm.color = SpeechLineColor;
             w.GetComponent<ExpoWord>().WordComeFromSpeech = true;
+            w.GetComponent<ExpoWord>().tm.color = SpeechLineColor;
+            w.GetComponent<ExpoWord>().SetUnconfirmColor(SpeechLineColor);
         }
 
 

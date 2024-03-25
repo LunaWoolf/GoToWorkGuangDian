@@ -147,7 +147,7 @@ MonoBehaviour:
   line01: {fileID: 6526793347981131811}
   line02: {fileID: 8231505206133281860}
   checkBox: {fileID: 1844077067}
-  oneLineMaxLetter: 70
+  oneLineMaxLetter: 30
   wordCount: 0
   wordList: []
   OnLineCompleteType:
@@ -155,7 +155,8 @@ MonoBehaviour:
       m_Calls: []
   _line: []
   roughLine: 
-  SpeechLineColor: {r: 0.8962264, g: 0, b: 0, a: 1}
+  SpeechLineColor: {r: 1, g: 1, b: 1, a: 1}
+  LineComeFromSpeech: 0
 --- !u!1 &6028331818757087447
 GameObject:
   m_ObjectHideFlags: 0

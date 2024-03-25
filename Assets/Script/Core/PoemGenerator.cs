@@ -394,6 +394,7 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         p.GetComponent<PoemLine>().LineComeFromSpeech = true;
         p.GetComponent<PoemLine>().SetLine(line);
         _currentPoem.poemLines.Add(p.GetComponent<PoemLine>());
+        Debug.Log("type speech result is: " + line);
         return line;
     }
 

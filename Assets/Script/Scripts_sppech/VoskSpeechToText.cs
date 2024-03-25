@@ -200,6 +200,7 @@ public class VoskSpeechToText : MonoBehaviour
             || Directory.Exists(
                 Path.Combine(Application.persistentDataPath, Path.GetFileNameWithoutExtension(ModelPath))))
         {
+            Debug.Log("Decompressed File Exsist");
             OnStatusUpdated?.Invoke("Using existing decompressed model.");
             _decompressedModelPath =
                 Path.Combine(Application.persistentDataPath, Path.GetFileNameWithoutExtension(ModelPath));
@@ -211,6 +212,8 @@ public class VoskSpeechToText : MonoBehaviour
         OnStatusUpdated?.Invoke("Decompressing model...");
         DebugTool.instance.SetDebugCanvasText("Decompressing model...");
         string dataPath = Path.Combine(Application.streamingAssetsPath, ModelPath);
+
+        Debug.Log("Decompressed Start");
 
         Stream dataStream;
         // Read data from the streaming assets path. You cannot access the streaming assets directly on Android.
@@ -404,11 +407,13 @@ public class VoskSpeechToText : MonoBehaviour
         if (PoemGenerator.instance)
         {
             string _cleanText = result.Phrases[0].Text.Replace(" ", "");
-            if (!PoemGenerator.instance.CheckSpeechWordForEarse(_cleanText))
-            {
-                PoemGenerator.instance.TypeLinefromSpeech(result.Phrases[0].Text);
-                
-            }
+            //if (!PoemGenerator.instance.CheckSpeechWordForEarse(_cleanText))
+            //{
+
+
+            //}
+
+            PoemGenerator.instance.TypeLinefromSpeech(result.Phrases[0].Text);
         }
            
         Debug.Log("speech result is: " + result.Phrases[0].Text); 
