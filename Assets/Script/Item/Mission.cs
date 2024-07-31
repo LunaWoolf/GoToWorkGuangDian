@@ -24,7 +24,8 @@ public class Mission : MonoBehaviour
         FindObjectOfType<PaperShredderManager>().StartPaperShredderWithGivenList(GivenWordList);
         ViewManager.instance.UnloadTipView();
         ViewManager.instance.LoadTipView(TipViewController.TipType.Basic);
-        StartCoroutine(WaitToLoadTip());
+        if (GameManager.instance.GetDay() == 0)
+            StartCoroutine(WaitToLoadTip());
         StartCoroutine(DebugTimerWaitForPass());
 
 
@@ -98,7 +99,7 @@ public class Mission : MonoBehaviour
         if ((Input.GetMouseButton(0) || Input.GetMouseButton(1) || Input.GetMouseButtonUp(1) || Input.GetMouseButtonUp(0)) && !isPassed)
         {
 
-            if (confirmedWord >= totalWord && CheckIfMissionAllConfirmed())
+            if (confirmedWord >= totalWord - 3 && CheckIfMissionAllConfirmed())
             {
                 StartCoroutine(PassAfterDelay());
             }
@@ -121,7 +122,7 @@ public class Mission : MonoBehaviour
 
     IEnumerator DebugTimerWaitForPass()
     {
-        yield return new WaitForSeconds(180f);
+        yield return new WaitForSeconds(90f);
         ViewManager.instance.UnloadTipView();
         OnMissionPass();
     }
@@ -135,6 +136,13 @@ public class Mission : MonoBehaviour
     }
 
 
+    IEnumerator DebugMissionUnload()
+    {
+        ViewManager.instance.UnloadTipView();
+        ViewManager.instance.LoadTipView(TipViewController.TipType.DialogueTip);
+        yield return new WaitForSeconds(2f);
+        OnMissionPass();
+    }
 
 
     IEnumerator DisableAfterDelay()
@@ -158,12 +166,26 @@ public class Mission : MonoBehaviour
             for (int j = 0; j < MissionLineList[i].wordList.Count; j++)
             {
                 if (j >= missionLines[i].Length) return false;
-                if (missionLines[i][j].ToLower() != MissionLineList[i].wordList[j]._UnProcessText.ToLower())
+                if (GameManager.instance.GetDay() == 0)
                 {
-                    Debug.Log(missionLines[i][j].ToLower() + "  :  " + MissionLineList[i].wordList[j]._UnProcessText.ToLower());
-                    return false;
+                    if (missionLines[i][j].ToLower() != MissionLineList[i].wordList[j]._UnProcessText.ToLower())
+                    {
+                        Debug.Log(missionLines[i][j].ToLower() + "  :  " + MissionLineList[i].wordList[j]._UnProcessText.ToLower());
+                        return false;
 
-                } 
+                    }
+                }
+                else
+                {
+                    if (MissionLineList[i].wordList[j]._UnProcessText.ToLower() == "")
+                    {
+                        Debug.Log(missionLines[i][j].ToLower() + "  :  " + MissionLineList[i].wordList[j]._UnProcessText.ToLower());
+                        return false;
+
+                    }
+
+                }
+             
             }
         }
         return true;
