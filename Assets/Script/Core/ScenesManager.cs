@@ -101,14 +101,6 @@ public class ScenesManager : MonoSingleton<ScenesManager>
         if (prevScene.isLoaded)
             SceneManager.UnloadSceneAsync(prevScene);
         
-        /*
-        if (GetPreviousScene() != SceneType.None)
-        {
-            string sceneToUnLoad = GetSceneNameFromSceneType(GetPreviousScene());
-            Scene prevScene = SceneManager.GetSceneByName(sceneToUnLoad);
-            if (prevScene.isLoaded)
-                SceneManager.UnloadSceneAsync(sceneToUnLoad);
-        }*/
     }
 
     
@@ -139,49 +131,49 @@ public class ScenesManager : MonoSingleton<ScenesManager>
     // called to start loading next scene's assets in background thread
     public void StartBufferingScene(string sceneToBuffer)
     {
-        //if (isSceneBuffering) return;
-        //string sceneName = GetSceneNameFromSceneType(sceneToBuffer);
+        isSceneBuffering = true;
+        asyncOperation = SceneManager.LoadSceneAsync(sceneToBuffer, LoadSceneMode.Single);
+        asyncOperation.allowSceneActivation = false;
 
-        StartCoroutine(BufferScene(sceneToBuffer));
         UnityEngine.Debug.Log("Started buffering scene: " + sceneToBuffer);
     }
 
-    IEnumerator BufferScene(string SceneName)
+    public IEnumerator BufferScene()
     {
-        isSceneBuffering = true;
+      
         ViewManager.instance.FadeToBlack();
         yield return new WaitForSeconds(2f);
-        asyncOperation = SceneManager.LoadSceneAsync(SceneName, LoadSceneMode.Additive);
-        asyncOperation.allowSceneActivation = false;
-
+      
         // Wait until the asynchronous scene fully loads
-        while (!asyncOperation.isDone)
+        while (isSceneBuffering)
         {
             if (IsBufferedSceneReadyToLoad() && executeSceneLoad)
             {
                 //ApplicationManager.loadNextScene();
                 asyncOperation.allowSceneActivation = true;
-                OnNewSceneLoaded(SceneName);
-              
+                //OnNewSceneLoaded(SceneName);
+
             }
             //Debug.Log(asyncOperation.progress);
             yield return null;
         }
+        //ViewManager.instance.FadeBack();
         isSceneBuffering = false;
         executeSceneLoad = false;
 
     }
 
+
     public void LoadBufferedScene()
     {
-        executeSceneLoad = true;
+        StartCoroutine(BufferScene());
     }
 
     private bool IsBufferedSceneReadyToLoad()
     {
         if (asyncOperation.progress >= .9f)
         {
-            LoadBufferedScene();
+            executeSceneLoad = true;
             return true;
         }
         else
@@ -213,5 +205,22 @@ public class ScenesManager : MonoSingleton<ScenesManager>
         System.Diagnostics.Process.Start(Application.dataPath.Replace("_Data", ".exe"));
         Application.Quit();
 #endif
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Fade back once the new scene is loaded
+        ViewManager.instance.FadeBack();
+    }
+
+    // Register this function with the scene load event
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

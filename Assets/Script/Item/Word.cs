@@ -75,6 +75,9 @@ public class Word : MonoBehaviour
         }
 
     }
+
+    public bool isTheWordHasSpecialReviseEvent = false;
+
     public UnityEvent OnWordConfirm;
     public bool circled = false;
     public bool banned = false;
@@ -242,8 +245,16 @@ public class Word : MonoBehaviour
 
     void OnWordLeftClicked()
     {
-        isConfirm = true;
+        if (!circled)
+            CircledWord();
+        else
+            CancleCircledWord();
 
+        //isConfirm = true;
+        //if (!circled)
+        //CircledWord();
+        //else
+        //CancleCircledWord();
     }
 
 
@@ -343,11 +354,19 @@ public class Word : MonoBehaviour
         string orginalText = GetCleanText();
         string ReviceTest = "";
         int breakCoutner = 0;
+
         if (circled)
         {
+            if (isTheWordHasSpecialReviseEvent)
+            {
+                ///Trigger Word Special Revise Event;
+                PoemGenerator.instance.OnSpecialReviseEventTrigger(this._Text_clean);
+            }
+
+
             if (banned)
             {
-                PropertyManager.instance.currentPoemBannedWord--;
+                //PropertyManager.instance.currentPoemBannedWord--;
             }
             switch (currentWordType)
             {

@@ -22,7 +22,6 @@ public class AfterWorkViewController : MonoBehaviour
     {
         ThinkButton.onClick.AddListener(OnThinkButtonClicked);
         MusicButton.onClick.AddListener(OnMusicButtonClicked);
-        ReadNewsButton.onClick.AddListener(OnReadNewsButtonClicked);
         WriteButton.onClick.AddListener(OnWriteButtonClicked);
 
         ConfigureAfterWorkState();
@@ -70,11 +69,6 @@ public class AfterWorkViewController : MonoBehaviour
         AfterworkChoiceView.SetActive(false);
     }
 
-    void OnReadNewsButtonClicked()
-    {
-        GameManager.instance.StartNews();
-        AfterworkChoiceView.SetActive(false);
-    }
 
     void OnWriteButtonClicked()
     {

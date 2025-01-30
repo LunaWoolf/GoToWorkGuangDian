@@ -11,8 +11,6 @@ public class WorkViewController : MonoBehaviour
     [Header("Work Canvas")]
     [SerializeField] Button PassButton;
     [SerializeField] Button DenyButton;
-    [SerializeField] Button MoyuButton;
-    [SerializeField] Button NewsButton;
     [SerializeField] Button ReviseButton;
     [SerializeField] Animator PoemCanvasAnimator;
 
@@ -26,7 +24,8 @@ public class WorkViewController : MonoBehaviour
     [SerializeField][TextArea(5,20)] List<string> DailyWorkPrompt;
 
     [Header("Work Promnt")]
-    [HideInInspector] public Poem CurrentPoemOnCanvas = new Poem();
+    public Poem CurrentPoemOnCanvas = new Poem();
+
     [SerializeField] TextMeshProUGUI PromptText;
 
    
@@ -55,15 +54,6 @@ public class WorkViewController : MonoBehaviour
             DenyButton.gameObject.SetActive(false);
         }
 
-        if (MoyuButton != null)
-        {
-            MoyuButton.onClick.AddListener(GameManager.instance.StartMoyu);
-        }
-
-        if (NewsButton != null)
-        {
-            NewsButton.onClick.AddListener(GameManager.instance.StartNews);
-        }
         if (PoemCanvas != null) PoemCanvasAnimator = PoemCanvas.GetComponent<Animator>();
 
         if (ReviseButton != null)
@@ -165,10 +155,6 @@ public class WorkViewController : MonoBehaviour
         DenyButton.enabled = isOn;
     }
 
-    public void SetNewsButtonActive(bool isOn)
-    {
-        NewsButton.enabled = isOn;
-    }
   
     public void InitalActionCount(int action)
     {

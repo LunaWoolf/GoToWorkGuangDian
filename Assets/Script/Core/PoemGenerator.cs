@@ -6,6 +6,8 @@ using System.Text.RegularExpressions;
 
 public class PoemGenerator : MonoSingleton<PoemGenerator>
 {
+    public int GernerateLineNum = 1;
+
     [Header("Word Bank")]
     public TextAsset nounRef;
     public TextAsset verbRef;
@@ -30,13 +32,17 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     public PoemPaperController poemPaperController_Read;
 
     [Header("UI Reference_Write")]
-    public GameObject PoemParent_Write;
-    public GameObject PoemPaper_Write;
-    Animator PoemPaperAnimator_Write;
-    public PoemPaperController poemPaperController_Write;
+    [HideInInspector]public GameObject PoemParent_Write;
+    [HideInInspector] public GameObject PoemPaper_Write;
+    [HideInInspector] Animator PoemPaperAnimator_Write;
+    [HideInInspector] public PoemPaperController poemPaperController_Write;
 
     [Header("Prefab Reference")]
     public GameObject PoemLine;
+
+    [Header("Special Revise Event Canvas")]
+    public RevisePoemViewController SpecialReviseEventCanvas;
+
 
     [Header("Generate Param")]
     [Range(0, 100)]
@@ -59,7 +65,8 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
 
     string[] currentPoem;
 
-   
+    [SerializeField] List<PoemFile> poemFileList;
+    PoemFile currentLoadedPoemFile;
 
     public UnityEvent OnPoemRevise;
     void Awake()
@@ -92,10 +99,11 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             TearPoem();
-            GeneratorPoem(5);
+            //GeneratorPoem(GernerateLineNum);
+            LoadPoemFromPoemFile(poemFileList[0]);
         }
     }
 
@@ -527,6 +535,87 @@ public class PoemGenerator : MonoSingleton<PoemGenerator>
         return w;
     }
 
-    
-    
+    public Poem _currentPoem;
+
+    public string[] LoadPoemFromPoemFile(PoemFile poemFile)
+    {
+        string[] poem = poemFile.poemText.Split("\n");
+        int rand = Random.Range(0, 100);
+        bool isValid = (rand < ValidPrecentag) ? true : false;
+
+        _currentPoem = new Poem();
+        for (int i = 0; i < poem.Length; i++)
+        {
+            int loadLine = Random.Range(0, lines.Length);
+            string line_tem = poem[i];
+
+            line_tem = ReplaceVerb(line_tem, isValid);
+            line_tem = ReplaceNoun(line_tem, isValid);
+            line_tem = ReplaceAdj(line_tem, isValid);
+            line_tem = CapFirstLetter(line_tem);
+            poem[i] = line_tem;
+            Debug.Log(line_tem);
+
+            GameObject p = Instantiate(PoemLine, PoemParent_Read.transform, false);
+            p.GetComponent<PoemLine>().SetLine(line_tem);
+            _currentPoem.poemLines.Add(p.GetComponent<PoemLine>());
+            poemPaperController_Read.poemLinesList.Add(p.GetComponent<PoemLine>());
+
+        }
+
+        if (FindObjectOfType<WorkViewController>())
+        {
+            _currentPoem.SetTotalWordCount();
+            FindObjectOfType<WorkViewController>().SetCurrentPoem(_currentPoem);
+          
+        }
+        else
+        {
+            Debug.Log("Can not find canvas");
+        }
+
+        poemPaperController_Read.SetCurrentPoem(_currentPoem);
+        //FindObjectOfType<PoemPaperController>().SetCurrentPoem(_currentPoem);
+
+        currentPoem = poem; // todo: refactor that to poem logic
+        currentLoadedPoemFile = poemFile;
+
+        return poem;
+    }
+
+    public void OnSpecialReviseEventTrigger(string wordText)
+    {
+        foreach (PoemFile.ReviseEvent reviseEvent in currentLoadedPoemFile.ReviseEventList)
+        {
+            if (reviseEvent.ReviseWord == wordText)
+            {
+                if (reviseEvent.canBeRevised)
+                {
+
+                }
+                else
+                {
+                    Debug.Log(wordText + " Can not be reviced");
+                }
+
+                SpecialReviseEventCanvas.gameObject.SetActive(true);
+
+                if (reviseEvent.SpeicalReply != "")
+                {
+
+                    SpecialReviseEventCanvas.SetReplyText(reviseEvent.SpeicalReply);
+                }
+
+                if (reviseEvent.SpeicalImage != null)
+                {
+                    SpecialReviseEventCanvas.SetReplyImage(reviseEvent.SpeicalImage);
+                }
+
+                return;
+            }
+        }
+
+        Debug.Log("couldn't find this word in the current PoemFile Revise event");
+    }
+
 }

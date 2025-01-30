@@ -596,8 +596,8 @@ public class Effects : MonoBehaviour
 
             //Charaacter Image Luna
             
-        if (ViewManager.instance)
-            ViewManager.instance.SwitchDialogueCharacterArt(dialogueLine.CharacterName);
+        //if (ViewManager.instance)
+            //ViewManager.instance.SwitchDialogueCharacterArt(dialogueLine.CharacterName);
 
         // Begin running the line as a coroutine.// Run Line In the Regular way
         //StartCoroutine(RunLineInternal(dialogueLine, onDialogueLineFinished));
@@ -791,7 +791,7 @@ public class Effects : MonoBehaviour
     public void CleanUpLine()
     {
         List<GameObject> childObjects = new List<GameObject>();
-        ViewManager.instance.UnloadAllCharacterArt();
+        //ViewManager.instance.UnloadAllCharacterArt();
         foreach (Transform child in Line_Parent.transform)
         {
             childObjects.Add(child.gameObject);

@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c947a48a2d4de4889a08c9b0f844053f, type: 3}
+  m_Name: FirstPoem
+  m_EditorClassIdentifier: 
+  poemText: "Yesterday, I opened a (red) door in my (dream) ,\nA (dragonfly) landed
+    softly on my shoulder.\nYesterday someone threw a question into the lake,\nShattering
+    the tiny skull of a (dove) .\n(Blood) soaked through the white shadow,\nAs thousands
+    of (shadow)\nCried out in (anger) from afar.\nI close my eyes\u2014then my (fear)
+    falls silent."
+  GenericReply: I don't think <word> is red.
+  ReviseEventList:
+  - ReviseWord: red
+    canBeRevised: 0
+    SpeicalImage: {fileID: 0}
+    SpeicalReply: Yes, you are right
+    DialogueIDToLoad: 
+  - ReviseWord: dream
+    canBeRevised: 0
+    SpeicalImage: {fileID: 0}
+    SpeicalReply: It could be but, let's not worry about it.
+    DialogueIDToLoad: 
+  - ReviseWord: dragonfly
+    canBeRevised: 0
+    SpeicalImage: {fileID: 2800000, guid: a19c8f21f0d0f42a2b9b4ee7b87f06cb, type: 3}
+    SpeicalReply: Hmm, I guess some dargon fly could be red.
+    DialogueIDToLoad: 
+  - ReviseWord: dove
+    canBeRevised: 0
+    SpeicalImage: {fileID: 0}
+    SpeicalReply: That's should be common sense...
+    DialogueIDToLoad: 
+  - ReviseWord: blood
+    canBeRevised: 0
+    SpeicalImage: {fileID: 0}
+    SpeicalReply: 
+    DialogueIDToLoad: 
+  - ReviseWord: shadow
+    canBeRevised: 0
+    SpeicalImage: {fileID: 0}
+    SpeicalReply: red shadow...could be a name for fictional super hero
+    DialogueIDToLoad: 
+  - ReviseWord: anger
+    canBeRevised: 0
+    SpeicalImage: {fileID: 0}
+    SpeicalReply: 
+    DialogueIDToLoad: P01_blood
+  - ReviseWord: fear
+    canBeRevised: 0
+    SpeicalImage: {fileID: 0}
+    SpeicalReply: 
+    DialogueIDToLoad: P01_blood

@@ -11,22 +11,10 @@ public class ViewManager : MonoSingleton<ViewManager>
     [SerializeField] Texture2D customCursorTexture;
     [SerializeField] Texture2D clickCursorTexture;
 
-    [Header("Art Bank")]
-    [SerializeField]  Sprite BossSprite;
-    [SerializeField]  Sprite LiSprite;
-    [SerializeField]  Sprite CATSprite;
-    [SerializeField] Sprite MomSprite;
-    [SerializeField] Sprite DadSprite;
-    [SerializeField] Sprite SisSprite;
-    //[SerializeField]  Sprite YouSprite;
-
     [Header("Canvas Reference")]
     [SerializeField] GameObject WorkCanvas;
     [SerializeField] GameObject PoemCanvas;
-    [SerializeField] GameObject MoyuCanvas;
-    [SerializeField] GameObject DialogueCanvas;
     [SerializeField] GameObject TutorialCanvas;
-    [SerializeField] GameObject NewsCanvas;
     [SerializeField] GameObject AfterWorkCanvas;
     [SerializeField] GameObject WriteCanvas;
     [SerializeField] GameObject FadeCanvas;
@@ -35,13 +23,6 @@ public class ViewManager : MonoSingleton<ViewManager>
     [SerializeField] GameObject LakeCanvas;
     [SerializeField] GameObject TipCanvas;
  
-
-    [Header("Dialogue Canvas")]
-    [SerializeField] Image CharacterImage;
-    [SerializeField] GameObject BossCharacterArt_Day1;
-    [SerializeField] GameObject BossCharacterArt_Day4;
-    [SerializeField] GameObject LiCharacterArt;
-    [SerializeField] TextMeshProUGUI TimerText;
 
     [SerializeField] public TextMeshProUGUI MoneyText;
 
@@ -83,7 +64,7 @@ public class ViewManager : MonoSingleton<ViewManager>
             FamilyDoorButton.onClick.AddListener(OnFamilyDoorButtonClicked);
 
         }
-        UnloadAllCharacterArt();
+    
 
         messageCanvasController_main = FindObjectOfType<MessageCanvasController>();
 
@@ -109,8 +90,7 @@ public class ViewManager : MonoSingleton<ViewManager>
         TimeSpan timeSpan = TimeSpan.FromSeconds(time);
         string formattedTime = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);
 
-        if (TimerText)
-            TimerText.text = formattedTime;
+
     }
 
     public void SetMoneyText(int money)
@@ -125,85 +105,20 @@ public class ViewManager : MonoSingleton<ViewManager>
             PropertyCanvas.SetActive(isOn);
     }
 
-    public Image GetCharacterImage() { if (CharacterImage == null) CharacterImage = GameObject.Find("CharacterImage").GetComponent<Image>(); return CharacterImage; }
     public MessageCanvasController GetMessageCanvas() { return FindObjectOfType<MessageCanvasController>(); }
 
-    public void UnloadAllCharacterArt()
-    {
-        BossCharacterArt_Day1.SetActive(false);
-        BossCharacterArt_Day4.SetActive(false);
-        LiCharacterArt.SetActive(false);
-    }
+   
 
-    public void SwitchDialogueCharacterArt(string c)
-    {
-        if (c == string.Empty || c == null)
-        {
-            GetCharacterImage().gameObject.SetActive(false);
-           
-            return;
-        } 
-        string name = c;
-        //Debug.Log(name);
-       
-        name = name.Replace(" ", "");
-     
-
-        GameManager.Character character;
-        if (System.Enum.TryParse<GameManager.Character>(name, out character))
-        {
-            GetCharacterImage().gameObject.SetActive(true);
-            switch (character)
-            {
-                case GameManager.Character.BossHe:
-                    UnloadAllCharacterArt();
-                    if (GameManager.instance.GetDay() < 3)
-                        BossCharacterArt_Day1.SetActive(true);
-                    else
-                        BossCharacterArt_Day4.SetActive(true);
-                    //GetCharacterImage().sprite = BossSprite;
-                    break;
-                case GameManager.Character.Li:
-                    UnloadAllCharacterArt();
-                    //LiCharacterArt.SetActive(true);
-                    //GetCharacterImage().sprite = LiSprite;
-                    break;
-                case GameManager.Character.CATgpt:
-                    //GetCharacterImage().sprite = CATSprite;
-                    break;
-                case GameManager.Character.You:
-                    //GetCharacterImage().sprite = YouSprite;
-                    break;
-                case GameManager.Character.Mom:
-                   // GetCharacterImage().sprite = MomSprite;
-                    break;
-                case GameManager.Character.Dad:
-                    //GetCharacterImage().sprite = DadSprite;
-                    break;
-                case GameManager.Character.Sister:
-                    //GetCharacterImage().sprite = SisSprite;
-
-                    break;
-            }
-        }
-       
-    }
 
 
     public void UnloadWorkView() { if (WorkCanvas != null) WorkCanvas.SetActive(false); }
-    public void UnloadNewsView() { if (NewsCanvas != null) NewsCanvas.SetActive(false); }
+ 
     public void UnloadTutorialView() { if (TutorialCanvas != null) TutorialCanvas.SetActive(false); }
 
     public void UnloadAllView()
     {
         if (WorkCanvas != null)
             WorkCanvas.SetActive(false);
-        if (DialogueCanvas != null)
-            DialogueCanvas.SetActive(false);
-        if (MoyuCanvas != null)
-            MoyuCanvas.SetActive(false);
-        if(NewsCanvas != null)
-            NewsCanvas.SetActive(false);
         if (TutorialCanvas != null)
             TutorialCanvas.SetActive(false);
         if (AfterWorkCanvas != null)
@@ -221,15 +136,6 @@ public class ViewManager : MonoSingleton<ViewManager>
     public void LoadWorkView(){ if (WorkCanvas != null) WorkCanvas.SetActive(true);}
 
     public void LoadWriteView()  { if (WriteCanvas != null) WriteCanvas.SetActive(true); }
-    public void LoadConversationView()
-    {
-        DialogueCanvas.SetActive(true);
-    }
-
-    public void LoadMoyuView()
-    {
-        MoyuCanvas.SetActive(true);
-    }
 
     public void LoadTutorialView(string s)
     {
@@ -240,14 +146,6 @@ public class ViewManager : MonoSingleton<ViewManager>
         }
         TutorialCanvas.SetActive(true);
         TutorialCanvas.GetComponent<TutorialCanvasController>().SetInstruction(s);
-    }
-
-
-    public void LoadNewsView()
-    {
-        if (NewsCanvas == null || NewsCanvas.GetComponent<NewsCanvasController>() == null) return;
-        NewsCanvas.SetActive(true);
-        NewsManager.instance.GeneratreNews();
     }
 
     public void LoadAfterWorkView()

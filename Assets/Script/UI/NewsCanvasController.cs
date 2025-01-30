@@ -55,7 +55,6 @@ public class NewsCanvasController : MonoBehaviour
         if (GameManager.instance.GetCurrentGameMode() == GameManager.GameMode.SaySomething)
         {
             LocalDialogueManager.instance.LoadDialogue("GoToSleepAfterReadNews");
-            ViewManager.instance.UnloadNewsView();
         }
 
     }

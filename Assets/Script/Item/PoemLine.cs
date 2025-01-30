@@ -15,6 +15,8 @@ public class PoemLine : MonoBehaviour
     public int wordCount = 0;
     public List<Word> wordList = new List<Word>();
 
+   
+
     [SerializeField]string[] _line;
     //[SerializeField]string _UnProcessLine;
 
@@ -34,16 +36,16 @@ public class PoemLine : MonoBehaviour
 
     }
 
-
     public virtual GameObject insertWord(string word)
     {
-        
         GameObject w;
+
+      
+
         if (currentLetterCount < oneLineMaxLetter)
         {
             w = Instantiate(wordPrefab, line01);
             Debug.Log("LetterCount" + currentLetterCount);
-
         }
         else
         {
@@ -51,11 +53,19 @@ public class PoemLine : MonoBehaviour
                 line02.gameObject.SetActive(true);
 
             w = Instantiate(wordPrefab, line02);
-            
         }
-        wordCount++;
-      
 
+        wordCount++;
+
+        // Check if word is enclosed in parentheses
+        if (word.StartsWith("(") && word.EndsWith(")"))
+        {
+            // Remove parentheses and set the boolean to true
+            word = word.Substring(1, word.Length - 2);
+            w.GetComponent<Word>().isTheWordHasSpecialReviseEvent = true;
+        }
+
+        // Handle different word types based on tags
         if (word.Contains("<v>"))
         {
             word = word.Replace("<v>", "");
@@ -74,8 +84,6 @@ public class PoemLine : MonoBehaviour
         else if (word.Contains("<>"))
         {
             word = word.Replace("<>", "[__________]");
-        
-
             w.GetComponent<Word>().SetWordType(Word.WordType.Empty);
         }
         else
@@ -83,19 +91,17 @@ public class PoemLine : MonoBehaviour
             w.GetComponent<Word>().SetWordType(Word.WordType.None);
         }
 
+        // Set the text and other properties
         w.GetComponent<Word>().indexInLine = wordList.Count;
         w.GetComponent<Word>().SetText(word);
-    
+
         wordList.Add(w.GetComponent<Word>());
-
         currentLetterCount += w.GetComponent<Word>().GetCleanText().Length;
-
-       
 
         return w;
     }
 
-     
+
     public void removeLastWord()
     {
         if (wordCount > 0)

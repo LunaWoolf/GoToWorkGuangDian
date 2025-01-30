@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Poem : MonoBehaviour
+public class Poem
 {
     public List<PoemLine> poemLines = new List<PoemLine>();
     public int wordConfirmed = 0;

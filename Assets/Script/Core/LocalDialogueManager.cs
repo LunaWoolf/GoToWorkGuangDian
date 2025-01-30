@@ -49,7 +49,7 @@ public class LocalDialogueManager : MonoSingleton<LocalDialogueManager>
     {
         if (ViewManager.instance)
         {
-            ViewManager.instance.LoadConversationView();
+            //ViewManager.instance.LoadConversationView();
             ViewManager.instance.UnloadTipView();
             ViewManager.instance.LoadTipView(TipViewController.TipType.DialogueTip);
         }

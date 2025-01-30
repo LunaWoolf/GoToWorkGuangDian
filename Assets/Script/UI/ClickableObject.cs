@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class ClickableObject : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 {
     public UnityEvent ButtonLeftClick;
+    public UnityEvent ButtonLeftHover;
     public UnityEvent ButtonRightClick;
     public UnityEvent ButtonMiddleClick;
     public bool CanUseHoveAsLeftClick;
@@ -33,7 +34,7 @@ public class ClickableObject : MonoBehaviour, IPointerClickHandler, IPointerEnte
     public void OnPointerEnter(PointerEventData eventData)
     {
         if(CanUseHoveAsLeftClick)
-            ButtonLeftClick.Invoke();
+            ButtonLeftHover.Invoke();
     }
 
 

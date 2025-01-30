@@ -24,8 +24,11 @@ public class FamilyWordButton : Word
         {
             _clickableObject.ButtonRightClick.RemoveAllListeners();
             _clickableObject.ButtonLeftClick.RemoveAllListeners();
+            _clickableObject.ButtonLeftHover.RemoveAllListeners();
+          
             _clickableObject.ButtonRightClick.AddListener(OnWordRightClicked);
             _clickableObject.ButtonLeftClick.AddListener(OnWordLeftClicked);
+            _clickableObject.ButtonLeftHover.AddListener(OnWordLeftHover);
         }
       
         ToggleReviseButton(false, true);
@@ -70,11 +73,18 @@ public class FamilyWordButton : Word
 
     void OnWordLeftClicked()
     {
-        
 
+        if (!circled && isReviseable)
+            CircledWord();
+        else if (circled && isReviseable)
+            CancleCircledWord();
     }
 
-   
+    void OnWordLeftHover()
+    {
+        isConfirm = true;
+    }
+
 
     public override void ReviseWord()
     {

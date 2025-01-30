@@ -5,6 +5,7 @@ using UnityEngine;
 public class Floating : MonoBehaviour
 {
     [SerializeField] bool isFloating = true;
+    [SerializeField] bool ifSetPositionOnStart = true;
     [SerializeField] private RectTransform targetRectTransform;
     [SerializeField] private Transform targetTransform;
     [SerializeField] private float floatSpeed = 1f;
@@ -15,6 +16,17 @@ public class Floating : MonoBehaviour
     private Vector2 startPos2;
     private Vector3 startPos3;
     private void Start()
+    {
+
+        targetRectTransform = this.GetComponent<RectTransform>();
+        targetTransform = this.GetComponent<Transform>();
+
+        if(ifSetPositionOnStart)
+            SetStartPosition();
+
+    }
+
+    public void SetStartPosition()
     {
         targetRectTransform = this.GetComponent<RectTransform>();
         targetTransform = this.GetComponent<Transform>();
@@ -28,18 +40,18 @@ public class Floating : MonoBehaviour
     {
         if (!isFloating) return;
         // Calculate the floating effect using a sine wave
-        float yOffset = Mathf.Sin(Time.time * floatSpeed * ySpeedMultiplier) * floatRange;
-        float xOffset = Mathf.Sin(Time.time * floatSpeed * xSpeedMultiplier) * floatRange;
-        float  zOffset = Mathf.Sin(Time.time * floatSpeed * zSpeedMultiplier) * floatRange;
+        float yOffset = Mathf.Sin(Time.time * floatSpeed * ySpeedMultiplier) * Random.Range(0f,floatRange);
+        float xOffset = Mathf.Sin(Time.time * floatSpeed * xSpeedMultiplier) * Random.Range(0f, floatRange);
+        float  zOffset = Mathf.Sin(Time.time * floatSpeed * zSpeedMultiplier) * Random.Range(0f, floatRange);
       
       
         if (targetRectTransform != null)
         {
-            Vector2 newPos2 = startPos2 + new Vector2(xOffset, yOffset);
-
-            targetRectTransform.anchoredPosition = newPos2;
+            Vector2 newPos2 = new Vector2(xOffset, yOffset);
+            targetRectTransform.anchoredPosition += newPos2;
         }
-        else
+
+        else if(targetTransform != null)
         {
             Vector3 newPos3 = startPos3 + new Vector3(xOffset, yOffset, zOffset);
             targetTransform.position = newPos3;

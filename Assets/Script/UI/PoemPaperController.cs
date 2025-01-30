@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 //[System.Serializable]
 public class UnityAnimationEvent : UnityEvent<string> { };
@@ -27,14 +28,20 @@ public class PoemPaperController : MonoBehaviour
     public PoemGenerator poemGenerator;
 
     [Header("UI Reference_Write")]
-    public GameObject PoemParent_Write;
-    public GameObject PoemPaper_Write;
-    public PoemPaperController poemPaperController_Write;
+    [HideInInspector]public GameObject PoemParent_Write;
+    [HideInInspector] public GameObject PoemPaper_Write;
+    [HideInInspector] public PoemPaperController poemPaperController_Write;
+
+    public Poem CurrentPoemOnCanvas;
+    public List<PoemLine> poemLinesList = new List<PoemLine>();
+
+    int currentSelectLineIndex = 0;
+
+    public GameObject Paragarphy;
 
     // Start is called before the first frame update
     void Start()
     {
-
         if (poemPaperMode == PoemPaperMode.Read)
         {
             PoemCanvasAnimator = this.GetComponent<Animator>();
@@ -116,7 +123,6 @@ public class PoemPaperController : MonoBehaviour
         if (workViewController == null) return;
         workViewController.SetDenyButtonActive(true);
         workViewController.SetPassButtonActive(true);
-        workViewController.SetNewsButtonActive(true);
     }
 
     public void OnPoemPaperExitAnimationStart()
@@ -125,7 +131,6 @@ public class PoemPaperController : MonoBehaviour
         if (workViewController == null) return;
         workViewController.SetDenyButtonActive(false);
         workViewController.SetPassButtonActive(false);
-        workViewController.SetNewsButtonActive(false);
     }
 
     public void OnPoemPaperExitAnimationEnd()
@@ -180,6 +185,60 @@ public class PoemPaperController : MonoBehaviour
         poemGenerator.AddWordToPoem(s);
     }
 
+    public void SetCurrentPoem(Poem p)
+    {
+        CurrentPoemOnCanvas = p;
+        currentSelectLineIndex = 0;
+        SetSelectLine(currentSelectLineIndex);
+    }
 
-   
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+
+            UnselectLine(currentSelectLineIndex);
+            if (currentSelectLineIndex == poemLinesList.Count - 1)
+            {
+                currentSelectLineIndex = 0;
+            }
+            else
+            {
+               
+                currentSelectLineIndex++;
+            }
+
+            SetSelectLine(currentSelectLineIndex);
+            Debug.Log("next line: " + currentSelectLineIndex);
+        }
+    }
+
+
+
+    public void SetSelectLine(int i)
+    {
+        //if (i == currentSelectLineIndex) return;
+        if (i >= poemLinesList.Count) return;
+       
+        currentSelectLineIndex = i;
+        Vector3 targetScale = new Vector3(1.26f, 1.26f, 1.26f);
+        LeanTween.scale(poemLinesList[i].gameObject, targetScale, 0.5f);
+
+        Vector3 targetPosition = new Vector3(Paragarphy.GetComponent<RectTransform>().anchoredPosition.x,
+                                             poemLinesList[i].gameObject.GetComponent<RectTransform>().rect.height * i
+                                             ,0);
+
+        LeanTween.move(Paragarphy.GetComponent<RectTransform>(), targetPosition, 0.5f);
+        // parag
+    }
+
+    public void UnselectLine(int i)
+    {
+        if (i >= poemLinesList.Count) return;
+        Vector3 targetScale = new Vector3(0.5f, 0.5f, 0.5f);
+        LeanTween.scale(poemLinesList[i].gameObject, targetScale, 0.5f);
+    }
+
+
+
 }

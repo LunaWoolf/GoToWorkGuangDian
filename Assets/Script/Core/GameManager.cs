@@ -173,14 +173,12 @@ public class GameManager : MonoSingleton<GameManager>
         //temp
         if (PropertyManager.instance.bHasWritePoem)
         {
-            // PoemGenerator.instance.MoveWritePoemToReadPoem();
-            //PoemGenerator.instance.GeneratorPoem(5);
             PropertyManager.instance.bHasWritePoem = false;
             PoemGenerator.instance.TearPoemAfterWrite();
         }
         else
         {
-            PoemGenerator.instance.GeneratorPoem(5);
+            PoemGenerator.instance.GeneratorPoem(PoemGenerator.instance.GernerateLineNum);
         }
 
         personalBannedWord_Day.Clear();
@@ -191,11 +189,6 @@ public class GameManager : MonoSingleton<GameManager>
         SetCurrentGameMode(GameMode.SaySomething);
         ViewManager.instance.UnloadAllView();
 
-        /*if (!PropertyManager.instance.hasShownWorkTutorial)
-        {
-            ViewManager.instance.LoadTutorialView("Tutorial_Write");
-            //PropertyManager.instance.hasShownWorkTutorial = true;
-        }*/
         ViewManager.instance.LoadWriteView();
         ViewManager.instance.UnloadTipView();
         ViewManager.instance.LoadTipView(TipViewController.TipType.SayTip);
@@ -203,27 +196,6 @@ public class GameManager : MonoSingleton<GameManager>
 
     }
 
-    public void StartMoyu()
-    {
-        //SetCurrentGameMode(GameMode.Moyu);
-        //ViewManager.instance.UnloadAllView();
-        //ViewManager.instance.LoadMoyuView();
-
-    }
-
-    public void StartNews()
-    {
-        //SetCurrentGameMode(GameMode.News);
-        ViewManager.instance.UnloadAllView();
-
-        if (!PropertyManager.instance.hasShownNewsTutorial)
-        {
-            //ViewManager.instance.LoadTutorialView("News");
-            ViewManager.instance.LoadTutorialView("Read News on your phone can help you have a better understanding about the work around you. \n But it will also take up your work time quickly. \n Be careful, you don't want to loose your job right now.");
-            PropertyManager.instance.hasShownNewsTutorial = true;
-        }
-        ViewManager.instance.LoadNewsView();
-    }
 
     public void GoBackToWork()
     {
@@ -283,28 +255,6 @@ public class GameManager : MonoSingleton<GameManager>
     // Update is called once per frame
     void Update()
     {
-
-      
-        /*
-        //increase Timer
-        if (!isPauseWorkDayTimer && currentGameMode == GameMode.Work)
-        {
-            if (workMode == WorkMode.Timer)
-            {
-                WorkDayTimer += Time.deltaTime;
-                ViewManager.instance.SetTimerText(WorkDayTimeLimit - WorkDayTimer);
-                if (WorkDayTimer > WorkDayTimeLimit)
-                {
-                    EndOfWorkDay();
-                }
-            }
-            else
-            {
-                //turn off timer text
-            }
-
-        }*/
-
 
     }
 
